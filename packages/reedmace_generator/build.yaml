@@ -1,0 +1,39 @@
+targets:
+  $default:
+    builders: {}
+
+builders:
+  definitions_descriptor:
+    import: "package:reedmace_generator/integrations.dart"
+    builder_factories: [ "definitionsDescriptor" ]
+    build_extensions: { ".dart": [ ".route.reed" ] }
+    runs_before: [ "reedmace_generator:definitions_subject" ]
+    auto_apply: dependents
+    build_to: cache
+    applies_builders:
+      - reedmace_generator|client_builder
+  definitions_subject:
+    import: "package:reedmace_generator/integrations.dart"
+    builder_factories: [ "definitionsSubject" ]
+    build_extensions: { ".dart": [ ".route.g.dart" ] }
+    auto_apply: dependents
+    build_to: source
+    applies_builders:
+      - reedmace_generator|client_builder
+  reedmace_reactor:
+    import: "package:reedmace_generator/integrations.dart"
+    builder_factories: [ "reactorBuilder" ]
+    build_extensions: { "$lib$": [ "reedmace.g.dart" ] }
+    required_inputs: [".route.reed",".route.g.dart"]
+    auto_apply: dependents
+    build_to: source
+    applies_builders:
+      - reedmace_generator|client_builder
+
+post_process_builders:
+  client_builder:
+    import: "package:reedmace_generator/integrations.dart"
+    builder_factory: "clientPostProcessBuilder"
+    defaults:
+      release_options:
+        enabled: true

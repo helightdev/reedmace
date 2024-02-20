@@ -1,0 +1,13 @@
+dependency_overrides:
+  reedmace:
+    path: ../../packages/reedmace
+  reedmace_shared:
+    path: ../../packages/reedmace_shared
+  reedmace_dogs:
+    path: ../../packages/reedmace_dogs
+  reedmace_client:
+    path: ../../packages/reedmace_client
+  reedmace_generator:
+    path: ../../packages/reedmace_generator
+  reedmace_client_generator:
+    path: ../../packages/reedmace_client_generator

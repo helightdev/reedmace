@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: reedmace,reedmace_shared
+dependency_overrides:
+  reedmace:
+    path: ../reedmace
+  reedmace_shared:
+    path: ../reedmace_shared

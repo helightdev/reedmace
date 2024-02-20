@@ -1,0 +1,18 @@
+name: reedmace_dogs
+description: Dogs support for reedmace
+version: 1.0.0-dev.1
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.2.6
+
+# Add regular dependencies here.
+dependencies:
+  dogs_core: ^8.3.0
+  uuid: ^4.3.3
+  conduit_open_api: ^4.4.0
+  reedmace_shared: any
+
+dev_dependencies:
+  lints: ^2.1.0
+  test: ^1.24.0

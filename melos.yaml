@@ -1,0 +1,8 @@
+name: reedmace_project
+packages:
+  - packages/*
+
+scripts:
+  install-cli:
+    description: Install the reedmace cli
+    run: dart pub global activate --source path packages/reedmace_cli

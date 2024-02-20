@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="GENERAL_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/reedmace/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace/build" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/build" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_generator/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_generator/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_generator/build" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/server/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/server/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/server/build" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_client/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_client/build" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_client_generator/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_client_generator/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_client_generator/build" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_dogs/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_dogs/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_dogs/build" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_shared/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_shared/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_shared/build" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/api_client/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/api_client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/api_client/build" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/shared/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/shared/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/shared/build" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_cli/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_cli/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/reedmace_cli/build" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/smoke/app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Dart SDK" level="project" />
+    <orderEntry type="library" name="Dart Packages" level="project" />
+  </component>
+</module>

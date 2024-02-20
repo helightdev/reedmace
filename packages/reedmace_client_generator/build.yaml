@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders: {}
+
+builders:
+  client_builder:
+    import: "package:reedmace_client_generator/integrations.dart"
+    builder_factories: [ "clientBuilder" ]
+    build_extensions: { "$lib$": [ "client.g.dart" ] }
+    auto_apply: dependents
+    build_to: source

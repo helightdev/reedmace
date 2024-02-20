@@ -1,0 +1,35 @@
+name: app
+description: "A flutter project using reedmace"
+publish_to: 'none'
+
+version: 0.0.1
+
+environment:
+  sdk: '>=3.2.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  {{#useDogs}}
+  dogs_core: ^8.3.0
+  {{/useDogs}}
+
+  reedmace_client: any
+  shared:
+    path: ../shared
+  client:
+    path: ../client
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.8
+  {{#useDogs}}
+  dogs_generator: ^5.3.0
+  {{/useDogs}}
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,5 @@
+structure:
+  server: server
+  shared_library: shared
+  generated_client: api_client
+  application: app

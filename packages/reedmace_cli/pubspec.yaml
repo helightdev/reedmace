@@ -1,0 +1,32 @@
+name: reedmace_cli
+description: A sample command-line application with basic argument parsing.
+version: 1.0.0-dev.1
+# repository: https://github.com/my_org/my_repo
+
+executables:
+  reedmace: "reedmace_cli"
+  reed: "reedmace_cli"
+environment:
+  sdk: ^3.2.6
+
+# Add regular dependencies here.
+dependencies:
+  args: ^2.4.2
+  mason_logger: ^0.2.12
+
+  dogs_core: ^8.3.0
+  dogs_yaml: ^2.0.34
+
+  shelf: ^1.4.1
+  shelf_router: ^1.1.4
+
+  watcher: ^1.1.0
+  mutex: ^3.1.0
+  pointycastle: ^3.7.4
+  canister: ^1.2.2
+
+dev_dependencies:
+  lints: ^2.1.0
+  test: ^1.24.0
+  build_runner: any
+  dogs_generator: ^5.3.0
