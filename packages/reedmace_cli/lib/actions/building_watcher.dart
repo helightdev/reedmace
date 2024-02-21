@@ -158,12 +158,12 @@ class BuildingWatcherAction {
 
     if (stage <= BuildStages.sharedLibrary) {
       await runBuildRunner(logger,
-          getPathFromRoot(config.structure.sharedLibrary), "shared library",
+          getPathFromRoot(config.structure.sharedLibrary).path, "shared library",
           throwOnFail: true);
     }
     if (stage <= BuildStages.server) {
       await runBuildRunner(
-          logger, getPathFromRoot(config.structure.server), "server",
+          logger, getPathFromRoot(config.structure.server).path, "server",
           throwOnFail: true);
       await buildOpenapiDocumentProgress(logger);
     }
@@ -176,7 +176,7 @@ class BuildingWatcherAction {
 
     if (stage <= BuildStages.application) {
       await runBuildRunner(
-          logger, getPathFromRoot(config.structure.application), "application",
+          logger, getPathFromRoot(config.structure.application).path, "application",
           throwOnFail: true);
     }
 

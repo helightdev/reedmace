@@ -105,6 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.9.0"
+  canister:
+    dependency: transitive
+    description:
+      name: canister
+      sha256: "7b011650187a0e908e283fec2a02f1f9fa6bfe87eade735ef5891e95592d33d0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.2"
   checked_yaml:
     dependency: transitive
     description:
@@ -249,6 +257,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  http:
+    dependency: transitive
+    description:
+      name: http
+      sha256: a2bbf9d017fcced29139daa8ed2bba4ece450ab222871df93ca9eec6f80c34ba
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
+  http_methods:
+    dependency: transitive
+    description:
+      name: http_methods
+      sha256: "6bccce8f1ec7b5d701e7921dca35e202d425b57e317ba1a37f2638590e29e566"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   http_multi_server:
     dependency: transitive
     description:
@@ -425,10 +449,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  reedmace:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/reedmace"
+      relative: true
+    source: path
+    version: "1.0.0-dev.1"
+  reedmace_client:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/reedmace_client"
+      relative: true
+    source: path
+    version: "1.0.0-dev.1"
+  reedmace_client_generator:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/reedmace_client_generator"
+      relative: true
+    source: path
+    version: "1.0.0-dev.1"
   reedmace_dogs:
     dependency: "direct main"
     description:
       path: "../../packages/reedmace_dogs"
+      relative: true
+    source: path
+    version: "1.0.0-dev.1"
+  reedmace_generator:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/reedmace_generator"
       relative: true
     source: path
     version: "1.0.0-dev.1"
@@ -439,6 +491,14 @@ packages:
       relative: true
     source: path
     version: "1.0.0-dev.1"
+  routingkit:
+    dependency: transitive
+    description:
+      name: routingkit
+      sha256: c39c0bbddb5f4261a21470b83e3a8795b77916049b0ae4a731f893787aa279a6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   shelf:
     dependency: transitive
     description:
@@ -455,6 +515,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  shelf_router:
+    dependency: transitive
+    description:
+      name: shelf_router
+      sha256: f5e5d492440a7fb165fe1e2e1a623f31f734d3370900070b2b1e0d0428d59864
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.4"
   shelf_static:
     dependency: transitive
     description:

@@ -60,6 +60,10 @@ class Route implements RetainedAnnotation {
       .map((e) => e.replaceFirst(":", ""))
       .join(" ")
   }".camelCase;
+
+  Route copyWith({String? path, String? verb}) {
+    return Route(path ?? this.path, verb: verb ?? this.verb);
+  }
 }
 
 class HeaderParam extends ArgumentSupplier {

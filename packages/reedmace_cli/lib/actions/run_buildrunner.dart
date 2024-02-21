@@ -15,17 +15,18 @@ Future buildGeneratedClient(Logger logger, ReedmaceConfig config, {bool clean = 
   getPathFromRoot(path.join(getPathFromRoot(config.structure.generatedClient).path, "lib", "mapping.json"))
     ..createSync()
     ..writeAsString(readReedmaceCache("mapping.json")!);
-  await runBuildRunner(logger, getPathFromRoot(config.structure.generatedClient), "generated client", throwOnFail: throwOnFail, clean: clean);
+  await runBuildRunner(logger, getPathFromRoot(config.structure.generatedClient).path, "generated client", throwOnFail: throwOnFail, clean: clean);
 }
 
-Future<int> runBuildRunner(Logger logger, File path, String name, {bool clean = false, bool throwOnFail = false}) async {
+Future<int> runBuildRunner(Logger logger, String path, String name, {bool clean = false, bool throwOnFail = false}) async {
+  name = styleBold.wrap(name)!;
   var progress = logger.interruptibleProgress("Building $name");
   if (clean) {
     progress.update("Cleaning build cache for $name");
-    var cleanProcess = await Process.start("dart",
-        ["run", "build_runner", "clean"],
+    var cleanProcess = await Process.start("flutter",
+        ["pub", "run", "build_runner", "clean"],
         runInShell: true,
-        workingDirectory: path.path
+        workingDirectory: path
     );
     var cleanExitCode = await cleanProcess.exitCode;
     if (cleanExitCode != 0) {
@@ -38,10 +39,10 @@ Future<int> runBuildRunner(Logger logger, File path, String name, {bool clean = 
     }
   }
   progress.update("Running build_runner for $name");
-  var process = await Process.start("dart",
-      ["run", "build_runner", "build", "--delete-conflicting-outputs"],
+  var process = await Process.start("flutter",
+      ["pub", "run", "build_runner", "build", "--delete-conflicting-outputs"],
       runInShell: true,
-      workingDirectory: path.path
+      workingDirectory: path
   );
   StringBuffer errorOutput = StringBuffer();
   process.stdout.listen((event) {

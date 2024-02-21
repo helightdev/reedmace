@@ -25,10 +25,11 @@ class ReedmaceBuildCommand extends ReedmaceCommand {
     var config = readConfig();
     var isClean = argResults?["clean"] as bool;
 
-    await runBuildRunner(logger, getPathFromRoot(config.structure.sharedLibrary), "shared library", clean: isClean);
-    await runBuildRunner(logger, getPathFromRoot(config.structure.server), "server", clean: isClean);
+    await runBuildRunner(logger, sharedLibraryDirectory.path, "shared library", clean: isClean, throwOnFail: true);
+    await runBuildRunner(logger, serverDirectory.path, "server", clean: isClean, throwOnFail: true);
     await buildOpenapiDocumentProgress(logger);
-    await buildGeneratedClient(logger, config, clean: isClean);
+    await buildGeneratedClient(logger, config, clean: isClean, throwOnFail: true);
+    await runBuildRunner(logger, applicationDirectory.path, "application", clean: isClean, throwOnFail: true);
 
     return ExitCode.success.code;
   }

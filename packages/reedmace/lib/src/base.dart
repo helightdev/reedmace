@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:conduit_open_api/v3.dart';
 import 'package:lyell/lyell.dart';
 import 'package:reedmace/reedmace.dart';
+import 'package:reedmace/src/cors.dart';
 import 'package:shelf/shelf.dart';
 import 'package:collection/collection.dart';
 
@@ -14,7 +15,8 @@ class Reedmace {
     PathVariableArgumentSupplier()
   ];
   final List<RegistrationInterceptor> registrationInterceptors = [
-    BodyHeadHandlerInterceptor()
+    BodyHeadHandlerInterceptor(),
+    CorsRegistrationInterceptor()
   ];
   SharedLibrary? sharedLibrary;
 
@@ -52,6 +54,8 @@ class Reedmace {
         .sortedBy<num>((element) => element.sortIndex)) {
       interceptor.postRegistration(this, registration, entry);
     }
+
+    registration.sortInterceptors();
   }
 
   ArgumentSupplier getFactory(

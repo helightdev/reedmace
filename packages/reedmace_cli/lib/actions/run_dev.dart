@@ -61,8 +61,8 @@ class RunDevAction {
     }
 
     var process = await Process.start(
-      "dart",
-      ["run", (path.join(serverPath.path, "bin", "server.dart"))],
+      "flutter",
+      ["pub", "run", (path.join(serverPath.path, "bin", "server.dart"))],
       workingDirectory: serverPath.path,
     );
     processes.add(process);

@@ -1,5 +1,5 @@
 name: reedmace_client
-description: A starting point for Dart libraries or applications.
+description: Library used by auto-generated the reedmace client
 version: 1.0.0-dev.1
 # repository: https://github.com/my_org/my_repo
 
@@ -12,6 +12,7 @@ dependencies:
   dio: ^5.4.0
   http: ^1.2.0
   lyell: ^1.1.0
+  path: ^1.9.0
   reedmace_shared: any
 
 dev_dependencies:

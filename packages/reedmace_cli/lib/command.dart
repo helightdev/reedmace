@@ -31,4 +31,11 @@ abstract class ReedmaceCommand extends Command<int> {
   Directory get generatedClientDirectory => Directory(getPathFromRoot(config.structure.generatedClient).path);
   Directory get applicationDirectory => Directory(getPathFromRoot(config.structure.application).path);
 
+  void flagFailGlobal() {
+    reedmaceRunner.failGlobal = true;
+    if (reedmaceRunner.failFast) {
+      exit(1);
+    }
+  }
+
 }

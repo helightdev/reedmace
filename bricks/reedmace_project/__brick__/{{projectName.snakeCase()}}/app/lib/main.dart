@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:reedmace_client/reedmace_client.dart';
+import 'package:shared/shared.dart';
+{{#useDogs}}import 'package:{{projectName.snakeCase()}}/dogs.g.dart';{{/useDogs}}
 
-void main() {
+Future<void> main() async {
+  {{#useDogs}}await initialiseDogs();{{/useDogs}}
+  await ReedmaceClient.configure(sharedLibrary: sharedLibrary);
   runApp(const MyApp());
 }
 

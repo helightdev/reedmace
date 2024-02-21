@@ -9,7 +9,7 @@ import 'package:reedmace/reedmace.dart' as gen;
 import 'package:smoke/health.route.g.dart' as gen0;
 import 'package:smoke/test.route.g.dart' as gen1;
 
-const String _incrementalBuildId = "4fc905d8-92b2-4f7d-a2a6-2609ba4f9f38";
+const String _incrementalBuildId = "a7725aaa-c378-498c-8129-c41af4f7f392";
 
 const generatedRoutes = [
   gen0.health_descriptor,

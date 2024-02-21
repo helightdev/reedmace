@@ -16,6 +16,21 @@
       <excludeFolder url="file://$MODULE_DIR$/smoke/shared/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/smoke/shared/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/smoke/shared/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/hooks/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/hooks/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/hooks/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/client/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/client/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/server/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/server/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/server/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/shared/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/shared/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/shared/build" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />

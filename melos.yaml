@@ -6,3 +6,6 @@ scripts:
   install-cli:
     description: Install the reedmace cli
     run: dart pub global activate --source path packages/reedmace_cli
+  install-bricks:
+    description: Install the reedmace bricks
+    run: mason add -g reedmace_project --path bricks/reedmace_project

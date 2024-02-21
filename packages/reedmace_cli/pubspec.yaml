@@ -1,5 +1,5 @@
 name: reedmace_cli
-description: A sample command-line application with basic argument parsing.
+description: Cli tool for managing reedmace projects
 version: 1.0.0-dev.1
 # repository: https://github.com/my_org/my_repo
 
@@ -13,7 +13,10 @@ environment:
 dependencies:
   args: ^2.4.2
   mason_logger: ^0.2.12
+  path: ^1.9.0
+  mason: ^0.1.0-dev.52
 
+  lyell: ^1.1.0
   dogs_core: ^8.3.0
   dogs_yaml: ^2.0.34
 

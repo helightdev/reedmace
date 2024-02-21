@@ -16,8 +16,8 @@ dependencies:
   routingkit: ^0.2.1
   canister: ^1.2.2
   recase: ^4.1.0
-  reedmace_shared:
-    path: ../reedmace_shared
+  collection: ^1.18.0
+  reedmace_shared: any
 
 dev_dependencies:
   lints: ^2.1.0
