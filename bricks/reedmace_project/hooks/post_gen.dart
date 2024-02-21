@@ -6,7 +6,7 @@ Future<void> run(HookContext context) async {
   var projectDir = context.vars["projectName"].toString().snakeCase;
   await Process.run("dart", ["format", "."]);
   await Process.run("flutter", ["create", ".", "--platform", "android,ios,web", "--empty"], workingDirectory: "${projectDir}/app");
-  await runReedmaceCommand(context, ["pub","-v"]);
+  await runReedmaceCommand(context, ["pub","get","-v"]);
   await runReedmaceCommand(context, ["build"]);
   context.logger.info("Project built successfully");
 }

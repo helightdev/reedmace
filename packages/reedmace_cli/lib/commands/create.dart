@@ -17,15 +17,23 @@ class ReedmaceCreateCommand extends ReedmaceCommand {
 
   @override
   Future<int> run() async {
+    var projectName = styleBold.wrap(argResults!['name']);
+    var progress = logger.progress("Creating project");
     final brick = Brick.git(
       const GitPath(
         'https://github.com/helightdev/reedmace',
         path: 'bricks/reedmace_project',
       ),
     );
+    progress.update("Downloading brick");
     final generator = await MasonGenerator.fromBrick(brick);
     final target = DirectoryGeneratorTarget(Directory.current);
-    await generator.generate(target, vars: <String, dynamic>{'name': argResults!['name']}, logger: logger);
+    var vars = <String, dynamic>{'projectName': argResults!['name']};
+    progress.update("Generating project $projectName");
+    await generator.generate(target, vars: vars, logger: logger);
+    progress.update("Running post generation hooks");
+    await generator.hooks.postGen(vars: vars);
+    progress.complete("Project $projectName created!");
     return ExitCode.success.code;
   }
 
