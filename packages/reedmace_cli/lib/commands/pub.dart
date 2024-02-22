@@ -17,7 +17,6 @@ class ReedmacePubCommand extends ReedmaceCommand {
 }
 
 class ReedmacePubGetCommand extends ReedmaceCommand {
-
   @override
   String get description => 'Run pub get in all packages';
 
@@ -34,9 +33,12 @@ class ReedmacePubGetCommand extends ReedmaceCommand {
   }
 
   Future<void> runPubGet(Directory directory) async {
-    var directoryName = directory.uri.pathSegments.where((element) => element.isNotEmpty).last;
-    var progress = logger.interruptibleProgress("Running pub get in ${styleBold.wrap(directoryName)}");
-    var process = await Process.start("flutter", ["pub", "get"], workingDirectory: directory.path);
+    var directoryName =
+        directory.uri.pathSegments.where((element) => element.isNotEmpty).last;
+    var progress = logger.interruptibleProgress(
+        "Running pub get in ${styleBold.wrap(directoryName)}");
+    var process = await Process.start("flutter", ["pub", "get"],
+        workingDirectory: directory.path);
     process.stdout.listen((event) {
       progress.insert(() => logger.detail(utf8.decode(event).trim()));
     });
@@ -47,9 +49,11 @@ class ReedmacePubGetCommand extends ReedmaceCommand {
     var pubExitCode = await process.exitCode;
     if (pubExitCode != 0) {
       flagFailGlobal();
-      progress.fail("Failed to resolve dependencies for ${styleBold.wrap(directoryName)}");
+      progress.fail(
+          "Failed to resolve dependencies for ${styleBold.wrap(directoryName)}");
     } else {
-      progress.complete("Finished resolving dependencies for ${styleBold.wrap(directoryName)}");
+      progress.complete(
+          "Finished resolving dependencies for ${styleBold.wrap(directoryName)}");
     }
   }
 }

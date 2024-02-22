@@ -19,10 +19,12 @@ class AutomaticHeadInterceptor extends RegistrationInterceptor {
   const AutomaticHeadInterceptor();
 
   @override
-  void postRegistration(Reedmace reedmace, RouteRegistration registration, RouterTerminalNode node) {
+  void postRegistration(Reedmace reedmace, RouteRegistration registration,
+      RouterTerminalNode node) {
     if (registration.definition.routeAnnotation.verb == "GET") {
       if (node.verbs["HEAD"] == null) {
-        var headRegistration = reedmace.buildRegistration(registration.definition);
+        var headRegistration =
+            reedmace.buildRegistration(registration.definition);
         headRegistration.afterInterceptors.insert(0, RemoveBodyInterceptor());
         node.verbs["HEAD"] = headRegistration;
       }

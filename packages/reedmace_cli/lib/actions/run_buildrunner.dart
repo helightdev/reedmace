@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -8,26 +7,37 @@ import 'package:reedmace_cli/config.dart';
 import 'package:path/path.dart' as path;
 import 'package:reedmace_cli/utils/interruptable_progress.dart';
 
-Future buildGeneratedClient(Logger logger, ReedmaceConfig config, {bool clean = false, bool throwOnFail = false}) async {
-  getPathFromRoot(path.join(getPathFromRoot(config.structure.generatedClient).path, "lib", "api_specs.json"))
+Future buildGeneratedClient(Logger logger, ReedmaceConfig config,
+    {bool clean = false, bool throwOnFail = false}) async {
+  getPathFromRoot(path.join(
+      getPathFromRoot(config.structure.generatedClient).path,
+      "lib",
+      "api_specs.json"))
     ..createSync()
     ..writeAsString(readReedmaceCache("api_specs.json")!);
-  getPathFromRoot(path.join(getPathFromRoot(config.structure.generatedClient).path, "lib", "mapping.json"))
+  getPathFromRoot(path.join(
+      getPathFromRoot(config.structure.generatedClient).path,
+      "lib",
+      "mapping.json"))
     ..createSync()
     ..writeAsString(readReedmaceCache("mapping.json")!);
-  await runBuildRunner(logger, getPathFromRoot(config.structure.generatedClient).path, "generated client", throwOnFail: throwOnFail, clean: clean);
+  await runBuildRunner(
+      logger,
+      getPathFromRoot(config.structure.generatedClient).path,
+      "generated client",
+      throwOnFail: throwOnFail,
+      clean: clean);
 }
 
-Future<int> runBuildRunner(Logger logger, String path, String name, {bool clean = false, bool throwOnFail = false}) async {
+Future<int> runBuildRunner(Logger logger, String path, String name,
+    {bool clean = false, bool throwOnFail = false}) async {
   name = styleBold.wrap(name)!;
   var progress = logger.interruptibleProgress("Building $name");
   if (clean) {
     progress.update("Cleaning build cache for $name");
-    var cleanProcess = await Process.start("flutter",
-        ["pub", "run", "build_runner", "clean"],
-        runInShell: true,
-        workingDirectory: path
-    );
+    var cleanProcess = await Process.start(
+        "flutter", ["pub", "run", "build_runner", "clean"],
+        runInShell: true, workingDirectory: path);
     var cleanExitCode = await cleanProcess.exitCode;
     if (cleanExitCode != 0) {
       progress.fail("Failed to clean $name");
@@ -41,9 +51,7 @@ Future<int> runBuildRunner(Logger logger, String path, String name, {bool clean 
   progress.update("Running build_runner for $name");
   var process = await Process.start("flutter",
       ["pub", "run", "build_runner", "build", "--delete-conflicting-outputs"],
-      runInShell: true,
-      workingDirectory: path
-  );
+      runInShell: true, workingDirectory: path);
   StringBuffer errorOutput = StringBuffer();
   process.stdout.listen((event) {
     errorOutput.write(utf8.decode(event));

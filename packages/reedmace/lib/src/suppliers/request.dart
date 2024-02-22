@@ -12,9 +12,10 @@ class ReqArgumentSupplier extends ArgumentSupplier {
         false => argument.type.arguments[0] as QualifiedTypeTree
       };
       var bodySerializer =
-      reedmace.sharedLibrary!.resolveBodySerializer(argumentTree);
+          reedmace.sharedLibrary!.resolveBodySerializer(argumentTree);
       if (bodySerializer == null) {
-        throw ArgumentError("No serializer found for request argument '${argument.name}'(${argumentTree.qualified})");
+        throw ArgumentError(
+            "No serializer found for request argument '${argument.name}'(${argumentTree.qualified})");
       }
       //print("Req '${argument.name}'@${definition.routeAnnotation.path}, serializer: $bodySerializer");
       return (context) => argumentTree
@@ -31,7 +32,7 @@ class ReqArgumentSupplier extends ArgumentSupplier {
       false => argument.type.arguments[0] as QualifiedTypeTree
     };
     var bodySerializer =
-    reedmace.sharedLibrary!.resolveBodySerializer(argumentTree)!;
+        reedmace.sharedLibrary!.resolveBodySerializer(argumentTree)!;
     operation.extensions["x-request-identifier"] = bodySerializer.identifier;
     if (bodySerializer.getSchema() == null) return;
     operation.requestBody = APIRequestBody.schema(

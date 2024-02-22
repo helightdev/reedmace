@@ -48,7 +48,8 @@ class DefinitionBuilder extends SimpleAdapter<Route> {
           (element) => reqChecker.isAssignableFromType(element.type),
           orElse: () => throw "No Req parameter found for ${element.name}");
 
-      dataEntry["takes"] = serializeType((req.type as InterfaceType).typeArguments[0]);
+      dataEntry["takes"] =
+          serializeType((req.type as InterfaceType).typeArguments[0]);
       dataEntry["operationId"] = element.name;
 
       print(dataEntry);

@@ -41,39 +41,42 @@ Map<String, String> _defaultHeaders = {
 };
 
 final _defaultHeadersAll =
-_defaultHeaders.map((key, value) => MapEntry(key, [value]));
+    _defaultHeaders.map((key, value) => MapEntry(key, [value]));
 
 typedef OriginChecker = bool Function(String origin);
 
 bool originAllowAll(String origin) => true;
 
 OriginChecker originOneOf(List<String> origins) =>
-        (origin) => origins.contains(origin);
-
+    (origin) => origins.contains(origin);
 
 class CorsRegistrationInterceptor extends RegistrationInterceptor {
-
   final OriginChecker originChecker;
   CorsRegistrationInterceptor([this.originChecker = originAllowAll]);
 
-  late final CorsRequestInterceptor corsRequestInterceptor = CorsRequestInterceptor(originChecker);
+  late final CorsRequestInterceptor corsRequestInterceptor =
+      CorsRequestInterceptor(originChecker);
 
   @override
-  void postRegistration(Reedmace reedmace, RouteRegistration registration, RouterTerminalNode node) {
+  void postRegistration(Reedmace reedmace, RouteRegistration registration,
+      RouterTerminalNode node) {
     registration.beforeInterceptors.add(corsRequestInterceptor);
     if (node.verbs[HttpVerb.options] == null) {
-      reedmace.registerRoute(RouteDefinition.fromFunction<dynamic,dynamic>((request) async {
+      reedmace.registerRoute(RouteDefinition.fromFunction<dynamic, dynamic>(
+          (request) async {
         return Res(null, statusCode: 200);
-      }, registration.definition.routeAnnotation.copyWith(verb: HttpVerb.options)));
+      },
+          registration.definition.routeAnnotation
+              .copyWith(verb: HttpVerb.options)));
     }
   }
 }
 
 class CorsRequestInterceptor extends Interceptor {
-
   final OriginChecker originsChecker;
 
-  CorsRequestInterceptor(this.originsChecker) : super(type: InterceptorType.before, sortIndex: -25);
+  CorsRequestInterceptor(this.originsChecker)
+      : super(type: InterceptorType.before, sortIndex: -25);
 
   @override
   FutureOr<Response?> intercept(RequestContext context, Response? response) {
@@ -91,5 +94,4 @@ class CorsRequestInterceptor extends Interceptor {
     });
     return null;
   }
-
 }

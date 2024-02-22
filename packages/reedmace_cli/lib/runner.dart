@@ -10,7 +10,6 @@ import 'package:reedmace_cli/commands/watch.dart';
 import 'package:reedmace_cli/config.dart';
 
 class ReedmaceCommandRunner extends CommandRunner<int> {
-
   static late ReedmaceCommandRunner instance;
 
   late Logger logger;
@@ -21,8 +20,7 @@ class ReedmaceCommandRunner extends CommandRunner<int> {
 
   ReedmaceConfig get config => _config ??= readConfig();
 
-  ReedmaceCommandRunner()
-      : super("reedmace", "Reedmace CLI") {
+  ReedmaceCommandRunner() : super("reedmace", "Reedmace CLI") {
     instance = this;
     logger = Logger();
     argParser.addFlag("verbose", abbr: "v", help: "Print verbose output");

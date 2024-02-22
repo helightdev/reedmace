@@ -17,7 +17,10 @@ class ReedmaceBuildCommand extends ReedmaceCommand {
   String get name => "build";
 
   ReedmaceBuildCommand() {
-    argParser.addFlag("clean", abbr: "c", defaultsTo: false, help: "Clean the build cache before building");
+    argParser.addFlag("clean",
+        abbr: "c",
+        defaultsTo: false,
+        help: "Clean the build cache before building");
   }
 
   @override
@@ -25,11 +28,15 @@ class ReedmaceBuildCommand extends ReedmaceCommand {
     var config = readConfig();
     var isClean = argResults?["clean"] as bool;
 
-    await runBuildRunner(logger, sharedLibraryDirectory.path, "shared library", clean: isClean, throwOnFail: true);
-    await runBuildRunner(logger, serverDirectory.path, "server", clean: isClean, throwOnFail: true);
+    await runBuildRunner(logger, sharedLibraryDirectory.path, "shared library",
+        clean: isClean, throwOnFail: true);
+    await runBuildRunner(logger, serverDirectory.path, "server",
+        clean: isClean, throwOnFail: true);
     await buildOpenapiDocumentProgress(logger);
-    await buildGeneratedClient(logger, config, clean: isClean, throwOnFail: true);
-    await runBuildRunner(logger, applicationDirectory.path, "application", clean: isClean, throwOnFail: true);
+    await buildGeneratedClient(logger, config,
+        clean: isClean, throwOnFail: true);
+    await runBuildRunner(logger, applicationDirectory.path, "application",
+        clean: isClean, throwOnFail: true);
 
     return ExitCode.success.code;
   }

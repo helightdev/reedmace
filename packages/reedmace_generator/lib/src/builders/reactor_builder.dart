@@ -39,8 +39,10 @@ const generatedRoutes = [${descriptors.expand((e) {
           .map((e) => import.str("${e}_descriptor"));
     }).join(",")}];""");
 
-    var maps = Map.fromEntries(descriptors.expand((element) => element.meta["data"] as List).map((e) {
-      return MapEntry<String,dynamic>(e["operationId"], [e["takes"], e["returns"]]);
+    var maps = Map.fromEntries(
+        descriptors.expand((element) => element.meta["data"] as List).map((e) {
+      return MapEntry<String, dynamic>(
+          e["operationId"], [e["takes"], e["returns"]]);
     }));
 
     var root = getNthParent(File(_buildStep.inputId.path), 3);
@@ -100,6 +102,6 @@ const generatedRoutes = [${descriptors.expand((e) {
 
   @override
   Map<String, List<String>> get buildExtensions => {
-    r"$lib$": [reactorFileName]
-  };
+        r"$lib$": [reactorFileName]
+      };
 }

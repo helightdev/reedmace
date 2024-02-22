@@ -36,13 +36,13 @@ class RouteDefinition {
         false => response.arguments[0] as QualifiedTypeTree
       };
 
+  static RouteDefinition fromShelf(Handler handler, Route route) =>
+      fromFunction<dynamic, dynamic>((request) async {
+        var response = await handler(request.context.request);
+        return Res.response(response);
+      }, route);
 
-  static RouteDefinition fromShelf(Handler handler, Route route) => fromFunction<dynamic,dynamic>((request) async {
-    var response = await handler(request.context.request);
-    return Res.response(response);
-  }, route);
-
-  static RouteDefinition fromFunction<FROM,TO>(
+  static RouteDefinition fromFunction<FROM, TO>(
     FutureOr<Res<TO>> Function(Req<FROM> request) function,
     Route route, {
     QualifiedTypeTree? responseTree,
@@ -50,8 +50,10 @@ class RouteDefinition {
     List<RetainedAnnotation>? annotations,
   }) {
     var arguments = [
-      MethodArgument(requestTree ?? QualifiedTypeTree.arg1<Req<FROM>, Req, FROM>(),
-          false, "request", [])
+      MethodArgument(
+          requestTree ?? QualifiedTypeTree.arg1<Req<FROM>, Req, FROM>(),
+          false,
+          "request", [])
     ];
     return RouteDefinition(
         function.toString(),

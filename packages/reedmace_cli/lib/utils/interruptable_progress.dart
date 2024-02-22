@@ -1,18 +1,15 @@
-
 import 'dart:async';
 import 'dart:io' as io;
 
 import 'package:mason_logger/mason_logger.dart';
 
 extension LoggerExtension on Logger {
-
   InterruptibleProgress interruptibleProgress(
     String message, {
     ProgressOptions options = const ProgressOptions(),
   }) {
     return InterruptibleProgress._(message, io.stdout, level, options: options);
   }
-
 }
 
 /// {@template progress}
@@ -21,11 +18,11 @@ extension LoggerExtension on Logger {
 class InterruptibleProgress {
   /// {@macro progress}
   InterruptibleProgress._(
-      this._message,
-      this._stdout,
-      this._level, {
-        ProgressOptions options = const ProgressOptions(),
-      })  : _stopwatch = Stopwatch(),
+    this._message,
+    this._stdout,
+    this._level, {
+    ProgressOptions options = const ProgressOptions(),
+  })  : _stopwatch = Stopwatch(),
         _options = options {
     _stopwatch
       ..reset()
@@ -134,7 +131,7 @@ class InterruptibleProgress {
     final displayInMilliseconds = elapsedTime < 100;
     final time = displayInMilliseconds ? elapsedTime : elapsedTime / 1000;
     final formattedTime =
-    displayInMilliseconds ? '${time}ms' : '${time.toStringAsFixed(1)}s';
+        displayInMilliseconds ? '${time}ms' : '${time.toStringAsFixed(1)}s';
     return '${darkGray.wrap('($formattedTime)')}';
   }
 }

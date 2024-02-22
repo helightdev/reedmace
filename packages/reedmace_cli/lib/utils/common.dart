@@ -59,7 +59,5 @@ String bin2hex(List<int> data) {
   return data.map((e) => e.toRadixString(16).padLeft(2, "0")).join();
 }
 
-String get currentApiDefHash => combineHashes([
-  readCacheHash("api_specs.json"),
-  readCacheHash("mapping.json")
-]);
+String get currentApiDefHash => combineHashes(
+    [readCacheHash("api_specs.json"), readCacheHash("mapping.json")]);

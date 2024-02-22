@@ -1,4 +1,3 @@
-
 import 'package:conduit_open_api/v3.dart';
 import 'package:recase/recase.dart';
 import 'package:reedmace/reedmace.dart';
@@ -20,25 +19,25 @@ class RequestVariableArgumentSupplier extends ArgumentSupplier {
       return switch (argument.nullable) {
         true => (context) => context.request.headers[name],
         false => (context) {
-          var header = context.request.headers[name];
-          if (header == null) {
-            throw HttpExceptions.badRequest("Missing required header $name");
+            var header = context.request.headers[name];
+            if (header == null) {
+              throw HttpExceptions.badRequest("Missing required header $name");
+            }
+            return header;
           }
-          return header;
-        }
       };
     } else if (argument.name.startsWith(r"$")) {
       var name = argument.name.substring(1).snakeCase;
       return switch (argument.nullable) {
         true => (context) => context.queryParameters[name],
         false => (context) {
-          var parameter = context.queryParameters[name];
-          if (parameter == null) {
-            throw HttpExceptions.badRequest(
-                "Missing required query parameter $name");
+            var parameter = context.queryParameters[name];
+            if (parameter == null) {
+              throw HttpExceptions.badRequest(
+                  "Missing required query parameter $name");
+            }
+            return parameter;
           }
-          return parameter;
-        }
       };
     }
     return null;

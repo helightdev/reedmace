@@ -5,6 +5,8 @@ import 'package:reedmace/reedmace.dart';
 import 'package:shelf/shelf.dart';
 import 'package:collection/collection.dart';
 
+typedef StartupHookFunction = FutureOr<void> Function(Reedmace reedmace);
+
 class Reedmace {
   final ReedmaceRouter router = ReedmaceRouter();
   final List<ArgumentSupplier> argumentSuppliers = [
@@ -15,6 +17,7 @@ class Reedmace {
     AutomaticHeadInterceptor(),
     CorsRegistrationInterceptor()
   ];
+  final List<StartupHookFunction> startupFunctions = [];
   SharedLibrary? sharedLibrary;
   HttpServerConfiguration serverConfiguration = HttpServerConfiguration();
   Pipeline pipeline = Pipeline();
@@ -32,6 +35,14 @@ class Reedmace {
     pipeline = pipeline.addMiddleware(middleware);
   }
 
+  void addInterceptor(RegistrationInterceptor interceptor) {
+    registrationInterceptors.add(interceptor);
+  }
+
+  void onStartup(StartupHookFunction function) {
+    startupFunctions.add(function);
+  }
+
   Future<Response> handle(Request request) async {
     var watch = Stopwatch()..start();
     var routerResult = router.handle(request);
@@ -39,7 +50,8 @@ class Reedmace {
       return Response.notFound("Not found");
     }
     var (registration, params) = routerResult;
-    var context = RequestContext.fromRequest(this, request, registration, params);
+    var context =
+        RequestContext.fromRequest(this, request, registration, params);
     var result = await registration.run(context);
     watch.stop();
     print("Request took ${watch.elapsedMicroseconds}μs");
@@ -47,7 +59,8 @@ class Reedmace {
   }
 
   void registerRoute(RouteDefinition definition) {
-    print("Registering with auto route id: ${definition.routeAnnotation.toString()}");
+    print(
+        "Registering with auto route id: ${definition.routeAnnotation.toString()}");
     var registration = buildRegistration(definition);
     var entry = router.register(registration);
     for (var interceptor
@@ -153,9 +166,11 @@ class Reedmace {
         .map((e) => e.$2.supply(e.$1, this, definition)!)
         .toList());
 
-    var resolvedBodySerializer = sharedLibrary!.resolveBodySerializer(definition.innerResponse);
+    var resolvedBodySerializer =
+        sharedLibrary!.resolveBodySerializer(definition.innerResponse);
     if (resolvedBodySerializer == null) {
-      throw ArgumentError("No body serializer found for ${definition.innerResponse}");
+      throw ArgumentError(
+          "No body serializer found for ${definition.innerResponse}");
     }
 
     var registration = RouteRegistration(
@@ -172,7 +187,13 @@ class Reedmace {
         definition,
         assembler,
         assemblerArguments.map((e) => e.$2).toList(),
-        resolvedBodySerializer!);
+        resolvedBodySerializer);
     return registration;
+  }
+
+  Future<void> runStartupHooks() async {
+    for (var function in startupFunctions) {
+      await function(this);
+    }
   }
 }

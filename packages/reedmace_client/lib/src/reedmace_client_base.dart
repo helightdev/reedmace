@@ -16,33 +16,30 @@ class ReedmaceClient {
     await sharedLibrary.configure();
   }
 
-  final List<ReedmaceSerializerModule> serializerModules = [DefaultReedmaceModule()];
+  final List<ReedmaceSerializerModule> serializerModules = [
+    DefaultReedmaceModule()
+  ];
   Uri baseUri = Uri.http("localhost:8080");
   final http.Client httpClient = http.Client();
   SharedLibrary? sharedLibrary;
 
+  Future<T?> send<T>(String verb, String path,
+      {required Object? body,
+      required Encoding? encoding,
+      required bool hasBody,
+      required bool hasTypedResponse,
+      required TypeTree reqBodyIdentifier,
+      required TypeTree resBodyIdentifier,
+      required Map<String, String> queryParameters,
+      required Map<String, String> headerParameters}) async {
+    var uri = baseUri.resolve(path).replace(queryParameters: queryParameters);
 
-  Future<T?> send<T>(String verb,
-      String path,
-      {
-        required Object? body,
-        required Encoding? encoding,
-        required bool hasBody,
-        required bool hasTypedResponse,
-        required TypeTree reqBodyIdentifier,
-        required TypeTree resBodyIdentifier,
-        required Map<String, String> queryParameters,
-        required Map<String, String> headerParameters
-      }) async {
-    
-    var uri = baseUri.resolve(path).replace(
-      queryParameters: queryParameters
-    );
-    
-    var reqBodySerializer = sharedLibrary!.resolveBodySerializer(reqBodyIdentifier as QualifiedTypeTree)!;
+    var reqBodySerializer = sharedLibrary!
+        .resolveBodySerializer(reqBodyIdentifier as QualifiedTypeTree)!;
     var reqBodyEncoding = reqBodySerializer.descriptor.encoding;
-    
-    var resBodySerializer = sharedLibrary!.resolveBodySerializer(resBodyIdentifier as QualifiedTypeTree)!;
+
+    var resBodySerializer = sharedLibrary!
+        .resolveBodySerializer(resBodyIdentifier as QualifiedTypeTree)!;
 
     var request = http.Request(verb, uri);
     request.headers.addAll(headerParameters);
@@ -64,8 +61,10 @@ class ReedmaceClient {
     }
 
     var streamedResponse = await httpClient.send(request);
-    if (streamedResponse.statusCode < 200 || streamedResponse.statusCode >= 300) {
-      throw HttpClientException(streamedResponse.statusCode, "Request failed with status code ${streamedResponse.reasonPhrase}");
+    if (streamedResponse.statusCode < 200 ||
+        streamedResponse.statusCode >= 300) {
+      throw HttpClientException(streamedResponse.statusCode,
+          "Request failed with status code ${streamedResponse.reasonPhrase}");
     }
 
     if (hasTypedResponse) {

@@ -4,6 +4,8 @@ import 'package:reedmace/reedmace.dart';
 import 'package:shelf/shelf_io.dart' as io;
 
 Future reedmaceBootstrap(Reedmace reedmace) async {
+  print("Starting up reedmace server...");
+  await reedmace.runStartupHooks();
   var configuration = reedmace.serverConfiguration;
   var server = await io.serve(
     reedmace.handler,

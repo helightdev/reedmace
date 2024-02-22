@@ -16,4 +16,3 @@ Directory getNthParent(File file, int n) {
   }
   return parent;
 }
-

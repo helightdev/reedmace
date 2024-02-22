@@ -15,8 +15,10 @@ class ClientBuilder extends Builder {
   FutureOr<void> build(BuildStep buildStep) async {
     await tryInitialize(buildStep);
 
-    var mappingData = await buildStep.readAsString(AssetId.resolve(Uri.parse("mapping.json"), from: buildStep.inputId));
-    var apiSpecsData = await buildStep.readAsString(AssetId.resolve(Uri.parse("api_specs.json"), from: buildStep.inputId));
+    var mappingData = await buildStep.readAsString(
+        AssetId.resolve(Uri.parse("mapping.json"), from: buildStep.inputId));
+    var apiSpecsData = await buildStep.readAsString(
+        AssetId.resolve(Uri.parse("api_specs.json"), from: buildStep.inputId));
 
     var aliasCounter = AliasCounter();
     var cachedCounter = CachedAliasCounter(aliasCounter);
@@ -38,12 +40,13 @@ class ClientBuilder extends Builder {
         .map((entry) async {
       var takes = await deserializeType(entry.value[0], buildStep);
       var returns = await deserializeType(entry.value[1], buildStep);
-      var operationId = entry.key;;
+      var operationId = entry.key;
+      ;
       var resolvedOpmode = resolveOperationId(document, operationId);
       if (resolvedOpmode == null) {
         return;
       }
-      var (path,verb, opmode) = resolvedOpmode;
+      var (path, verb, opmode) = resolvedOpmode;
 
       List<String> positionalParameters = [];
       List<String> namedParameters = [];
@@ -98,7 +101,7 @@ class ClientBuilder extends Builder {
           "'${sqsLiteralEscape(path)}'.${pathParams.map((e) => "replaceFirst('{${sqsLiteralEscape(e)}}', $e)").join(".")}"
       };
 
-      var returnType = switch(returns is DynamicType) {
+      var returnType = switch (returns is DynamicType) {
         true => "Future<http.Response>",
         false => "Future<${cachedCounter.get(returns)}?>"
       };

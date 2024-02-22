@@ -20,8 +20,6 @@ class OutputDescriptor {
 }
 
 class DefaultReedmaceModule extends ReedmaceSerializerModule {
-
-
   final Map<Type, ReedmaceBodySerializer> serializers = {
     List<int>: IntListSerializer(),
     String: StringSerializer(),
@@ -82,9 +80,8 @@ class ReedmaceUnsupportedBodySerializer extends ReedmaceBodySerializer {
 }
 
 abstract class ReedmaceUtf8Serializer extends ReedmaceBodySerializer {
-
   final String contentType;
-  
+
   ReedmaceUtf8Serializer(this.contentType);
 
   @override
@@ -115,7 +112,8 @@ class IntListSerializer extends ReedmaceBodySerializer {
       body.expand((element) => element).toList();
 
   @override
-  OutputDescriptor get descriptor => OutputDescriptor(utf8, "application/octet-stream");
+  OutputDescriptor get descriptor =>
+      OutputDescriptor(utf8, "application/octet-stream");
 
   @override
   Object serialize(object) {
@@ -128,7 +126,6 @@ class IntListSerializer extends ReedmaceBodySerializer {
 }
 
 class StringSerializer extends ReedmaceUtf8Serializer {
-  
   StringSerializer() : super("text/plain");
 
   @override
@@ -145,9 +142,8 @@ class StringSerializer extends ReedmaceUtf8Serializer {
 }
 
 class JsonStringSerializer extends ReedmaceUtf8Serializer {
-  
   JsonStringSerializer() : super("application/json");
-  
+
   @override
   String get identifier => "Json";
 

@@ -4,4 +4,3 @@
 library;
 
 export 'src/reedmace_generator_base.dart';
-

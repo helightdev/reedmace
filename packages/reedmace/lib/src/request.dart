@@ -3,7 +3,6 @@ import 'package:lyell/lyell.dart';
 import 'package:reedmace/reedmace.dart';
 
 class Req<T> {
-
   final ReedmaceBodySerializer _bodySerializer;
   final RequestContext context;
 
@@ -20,7 +19,8 @@ class Req<T> {
     return value;
   }
 
-  static Req<T> assemblerCreate<T>((RequestContext context, ReedmaceBodySerializer bodySerializer) arg) {
+  static Req<T> assemblerCreate<T>(
+      (RequestContext context, ReedmaceBodySerializer bodySerializer) arg) {
     return Req<T>(arg.$1, arg.$2);
   }
 }

@@ -4,7 +4,9 @@ import 'package:lyell/lyell.dart';
 import 'package:reedmace_shared/reedmace_shared.dart';
 
 class SharedLibrary {
-  final List<ReedmaceSerializerModule> serializerModules = [DefaultReedmaceModule()];
+  final List<ReedmaceSerializerModule> serializerModules = [
+    DefaultReedmaceModule()
+  ];
   final FutureOr Function(SharedLibrary library) configureFunction;
 
   SharedLibrary(this.configureFunction);

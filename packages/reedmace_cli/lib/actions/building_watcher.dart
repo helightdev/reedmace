@@ -96,7 +96,7 @@ class BuildingWatcherAction {
     stdin.lineMode = false;
     var stdInListener = stdin.listen((event) {
       var str = utf8.decode(event);
-      if (str== "r") {
+      if (str == "r") {
         logger.info("Forcing rebuild");
         enqueueBuild(0);
       }
@@ -157,8 +157,10 @@ class BuildingWatcherAction {
     var config = readConfig();
 
     if (stage <= BuildStages.sharedLibrary) {
-      await runBuildRunner(logger,
-          getPathFromRoot(config.structure.sharedLibrary).path, "shared library",
+      await runBuildRunner(
+          logger,
+          getPathFromRoot(config.structure.sharedLibrary).path,
+          "shared library",
           throwOnFail: true);
     }
     if (stage <= BuildStages.server) {
@@ -175,8 +177,8 @@ class BuildingWatcherAction {
     }
 
     if (stage <= BuildStages.application) {
-      await runBuildRunner(
-          logger, getPathFromRoot(config.structure.application).path, "application",
+      await runBuildRunner(logger,
+          getPathFromRoot(config.structure.application).path, "application",
           throwOnFail: true);
     }
 

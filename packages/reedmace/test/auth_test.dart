@@ -16,7 +16,8 @@ void main() {
       }));
     });
 
-    reedmace.registerRoute(RouteDefinition.fromFunction<dynamic, String>((request) {
+    reedmace
+        .registerRoute(RouteDefinition.fromFunction<dynamic, String>((request) {
       return Res.ok("Test");
     }, Route("/hello", verb: "GET"), annotations: [authenticated]));
 

@@ -10,15 +10,17 @@ void main() {
       reedmace.sharedLibrary = SharedLibrary.empty();
     });
 
-    reedmace.registerRoute(RouteDefinition.fromShelf((request) => Response.ok("Test"), GET("/hello")));
+    reedmace.registerRoute(RouteDefinition.fromShelf(
+        (request) => Response.ok("Test"), GET("/hello")));
 
-    var request1 = Request("OPTIONS", Uri.parse("http://localhost:8080/hello"), headers: {
-      "Origin": "http://localhost:8080"
-    });
+    var request1 = Request("OPTIONS", Uri.parse("http://localhost:8080/hello"),
+        headers: {"Origin": "http://localhost:8080"});
     var response1 = await reedmace.handle(request1);
     expect(response1.statusCode, 200);
-    expect(response1.headers["Access-Control-Allow-Origin"], "http://localhost:8080");
-    expect(response1.headers["Access-Control-Allow-Methods"], "DELETE,GET,OPTIONS,PATCH,POST,PUT");
+    expect(response1.headers["Access-Control-Allow-Origin"],
+        "http://localhost:8080");
+    expect(response1.headers["Access-Control-Allow-Methods"],
+        "DELETE,GET,OPTIONS,PATCH,POST,PUT");
 
     // Request without origin
     var request2 = Request("OPTIONS", Uri.parse("http://localhost:8080/hello"));

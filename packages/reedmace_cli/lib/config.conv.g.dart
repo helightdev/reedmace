@@ -9,15 +9,26 @@ import 'package:reedmace_cli/config.dart' as gen0;
 import 'dart:core' as gen1;
 import 'package:reedmace_cli/config.dart';
 
-class ReedmaceConfigConverter extends gen.DefaultStructureConverter<gen0.ReedmaceConfig> {
+class ReedmaceConfigConverter
+    extends gen.DefaultStructureConverter<gen0.ReedmaceConfig> {
   ReedmaceConfigConverter()
       : super(
             struct: const gen.DogStructure<gen0.ReedmaceConfig>(
                 'ReedmaceConfig',
                 gen.StructureConformity.basic,
-                [gen.DogStructureField(gen.QualifiedTerminal<gen0.ReedmaceStructure>(), gen.TypeToken<gen0.ReedmaceStructure>(), null, gen.IterableKind.none, 'structure', false, true, [])],
+                [
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen0.ReedmaceStructure>(),
+                      gen.TypeToken<gen0.ReedmaceStructure>(),
+                      null,
+                      gen.IterableKind.none,
+                      'structure',
+                      false,
+                      true, [])
+                ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.ReedmaceConfig>(_activator, [_$structure], _values)));
+                gen.ObjectFactoryStructureProxy<gen0.ReedmaceConfig>(
+                    _activator, [_$structure], _values)));
 
   static dynamic _$structure(gen0.ReedmaceConfig obj) => obj.structure;
 
@@ -71,30 +82,70 @@ extension ReedmaceConfigDogsExtension on gen0.ReedmaceConfig {
   }
 }
 
-class ReedmaceStructureConverter extends gen.DefaultStructureConverter<gen0.ReedmaceStructure> {
+class ReedmaceStructureConverter
+    extends gen.DefaultStructureConverter<gen0.ReedmaceStructure> {
   ReedmaceStructureConverter()
       : super(
             struct: const gen.DogStructure<gen0.ReedmaceStructure>(
                 'ReedmaceStructure',
                 gen.StructureConformity.basic,
                 [
-                  gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'server', false, false, []),
-                  gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'shared_library', false, false, []),
-                  gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'generated_client', false, false, []),
-                  gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'application', false, false, [])
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen1.String>(),
+                      gen.TypeToken<gen1.String>(),
+                      null,
+                      gen.IterableKind.none,
+                      'server',
+                      false,
+                      false, []),
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen1.String>(),
+                      gen.TypeToken<gen1.String>(),
+                      null,
+                      gen.IterableKind.none,
+                      'shared_library',
+                      false,
+                      false, []),
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen1.String>(),
+                      gen.TypeToken<gen1.String>(),
+                      null,
+                      gen.IterableKind.none,
+                      'generated_client',
+                      false,
+                      false, []),
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen1.String>(),
+                      gen.TypeToken<gen1.String>(),
+                      null,
+                      gen.IterableKind.none,
+                      'application',
+                      false,
+                      false, [])
                 ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.ReedmaceStructure>(_activator, [_$server, _$sharedLibrary, _$generatedClient, _$application], _values)));
+                gen.ObjectFactoryStructureProxy<gen0.ReedmaceStructure>(
+                    _activator,
+                    [
+                      _$server,
+                      _$sharedLibrary,
+                      _$generatedClient,
+                      _$application
+                    ],
+                    _values)));
 
   static dynamic _$server(gen0.ReedmaceStructure obj) => obj.server;
 
-  static dynamic _$sharedLibrary(gen0.ReedmaceStructure obj) => obj.sharedLibrary;
+  static dynamic _$sharedLibrary(gen0.ReedmaceStructure obj) =>
+      obj.sharedLibrary;
 
-  static dynamic _$generatedClient(gen0.ReedmaceStructure obj) => obj.generatedClient;
+  static dynamic _$generatedClient(gen0.ReedmaceStructure obj) =>
+      obj.generatedClient;
 
   static dynamic _$application(gen0.ReedmaceStructure obj) => obj.application;
 
-  static List<dynamic> _values(gen0.ReedmaceStructure obj) => [obj.server, obj.sharedLibrary, obj.generatedClient, obj.application];
+  static List<dynamic> _values(gen0.ReedmaceStructure obj) =>
+      [obj.server, obj.sharedLibrary, obj.generatedClient, obj.application];
 
   static gen0.ReedmaceStructure _activator(List list) {
     return gen0.ReedmaceStructure(list[0], list[1], list[2], list[3]);
@@ -162,15 +213,26 @@ extension ReedmaceStructureDogsExtension on gen0.ReedmaceStructure {
   }
 }
 
-class ServerConfigSectionConverter extends gen.DefaultStructureConverter<gen0.ServerConfigSection> {
+class ServerConfigSectionConverter
+    extends gen.DefaultStructureConverter<gen0.ServerConfigSection> {
   ServerConfigSectionConverter()
       : super(
             struct: const gen.DogStructure<gen0.ServerConfigSection>(
                 'ServerConfigSection',
                 gen.StructureConformity.basic,
-                [gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'path', false, false, [])],
+                [
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen1.String>(),
+                      gen.TypeToken<gen1.String>(),
+                      null,
+                      gen.IterableKind.none,
+                      'path',
+                      false,
+                      false, [])
+                ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.ServerConfigSection>(_activator, [_$path], _values)));
+                gen.ObjectFactoryStructureProxy<gen0.ServerConfigSection>(
+                    _activator, [_$path], _values)));
 
   static dynamic _$path(gen0.ServerConfigSection obj) => obj.path;
 
@@ -224,19 +286,32 @@ extension ServerConfigSectionDogsExtension on gen0.ServerConfigSection {
   }
 }
 
-class SharedLibraryConfigSectionConverter extends gen.DefaultStructureConverter<gen0.SharedLibraryConfigSection> {
+class SharedLibraryConfigSectionConverter
+    extends gen.DefaultStructureConverter<gen0.SharedLibraryConfigSection> {
   SharedLibraryConfigSectionConverter()
       : super(
             struct: const gen.DogStructure<gen0.SharedLibraryConfigSection>(
                 'SharedLibraryConfigSection',
                 gen.StructureConformity.basic,
-                [gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'path', false, false, [])],
+                [
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen1.String>(),
+                      gen.TypeToken<gen1.String>(),
+                      null,
+                      gen.IterableKind.none,
+                      'path',
+                      false,
+                      false, [])
+                ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.SharedLibraryConfigSection>(_activator, [_$path], _values)));
+                gen.ObjectFactoryStructureProxy<
+                        gen0.SharedLibraryConfigSection>(
+                    _activator, [_$path], _values)));
 
   static dynamic _$path(gen0.SharedLibraryConfigSection obj) => obj.path;
 
-  static List<dynamic> _values(gen0.SharedLibraryConfigSection obj) => [obj.path];
+  static List<dynamic> _values(gen0.SharedLibraryConfigSection obj) =>
+      [obj.path];
 
   static gen0.SharedLibraryConfigSection _activator(List list) {
     return gen0.SharedLibraryConfigSection(list[0]);
@@ -270,8 +345,10 @@ class SharedLibraryConfigSectionBuilder {
   }
 }
 
-extension SharedLibraryConfigSectionDogsExtension on gen0.SharedLibraryConfigSection {
-  gen0.SharedLibraryConfigSection rebuild(Function(SharedLibraryConfigSectionBuilder b) f) {
+extension SharedLibraryConfigSectionDogsExtension
+    on gen0.SharedLibraryConfigSection {
+  gen0.SharedLibraryConfigSection rebuild(
+      Function(SharedLibraryConfigSectionBuilder b) f) {
     var builder = SharedLibraryConfigSectionBuilder(this);
     f(builder);
     return builder.build();
@@ -282,23 +359,37 @@ extension SharedLibraryConfigSectionDogsExtension on gen0.SharedLibraryConfigSec
   }
 
   Map<String, dynamic> toNative() {
-    return gen.dogs.convertObjectToNative(this, gen0.SharedLibraryConfigSection);
+    return gen.dogs
+        .convertObjectToNative(this, gen0.SharedLibraryConfigSection);
   }
 }
 
-class GeneratedClientConfigSectionConverter extends gen.DefaultStructureConverter<gen0.GeneratedClientConfigSection> {
+class GeneratedClientConfigSectionConverter
+    extends gen.DefaultStructureConverter<gen0.GeneratedClientConfigSection> {
   GeneratedClientConfigSectionConverter()
       : super(
             struct: const gen.DogStructure<gen0.GeneratedClientConfigSection>(
                 'GeneratedClientConfigSection',
                 gen.StructureConformity.basic,
-                [gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'path', false, false, [])],
+                [
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen1.String>(),
+                      gen.TypeToken<gen1.String>(),
+                      null,
+                      gen.IterableKind.none,
+                      'path',
+                      false,
+                      false, [])
+                ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.GeneratedClientConfigSection>(_activator, [_$path], _values)));
+                gen.ObjectFactoryStructureProxy<
+                        gen0.GeneratedClientConfigSection>(
+                    _activator, [_$path], _values)));
 
   static dynamic _$path(gen0.GeneratedClientConfigSection obj) => obj.path;
 
-  static List<dynamic> _values(gen0.GeneratedClientConfigSection obj) => [obj.path];
+  static List<dynamic> _values(gen0.GeneratedClientConfigSection obj) =>
+      [obj.path];
 
   static gen0.GeneratedClientConfigSection _activator(List list) {
     return gen0.GeneratedClientConfigSection(list[0]);
@@ -306,7 +397,8 @@ class GeneratedClientConfigSectionConverter extends gen.DefaultStructureConverte
 }
 
 class GeneratedClientConfigSectionBuilder {
-  GeneratedClientConfigSectionBuilder([gen0.GeneratedClientConfigSection? $src]) {
+  GeneratedClientConfigSectionBuilder(
+      [gen0.GeneratedClientConfigSection? $src]) {
     if ($src == null) {
       $values = List.filled(1, null);
     } else {
@@ -332,8 +424,10 @@ class GeneratedClientConfigSectionBuilder {
   }
 }
 
-extension GeneratedClientConfigSectionDogsExtension on gen0.GeneratedClientConfigSection {
-  gen0.GeneratedClientConfigSection rebuild(Function(GeneratedClientConfigSectionBuilder b) f) {
+extension GeneratedClientConfigSectionDogsExtension
+    on gen0.GeneratedClientConfigSection {
+  gen0.GeneratedClientConfigSection rebuild(
+      Function(GeneratedClientConfigSectionBuilder b) f) {
     var builder = GeneratedClientConfigSectionBuilder(this);
     f(builder);
     return builder.build();
@@ -344,19 +438,31 @@ extension GeneratedClientConfigSectionDogsExtension on gen0.GeneratedClientConfi
   }
 
   Map<String, dynamic> toNative() {
-    return gen.dogs.convertObjectToNative(this, gen0.GeneratedClientConfigSection);
+    return gen.dogs
+        .convertObjectToNative(this, gen0.GeneratedClientConfigSection);
   }
 }
 
-class ApplicationConfigSectionConverter extends gen.DefaultStructureConverter<gen0.ApplicationConfigSection> {
+class ApplicationConfigSectionConverter
+    extends gen.DefaultStructureConverter<gen0.ApplicationConfigSection> {
   ApplicationConfigSectionConverter()
       : super(
             struct: const gen.DogStructure<gen0.ApplicationConfigSection>(
                 'ApplicationConfigSection',
                 gen.StructureConformity.basic,
-                [gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'path', false, false, [])],
+                [
+                  gen.DogStructureField(
+                      gen.QualifiedTerminal<gen1.String>(),
+                      gen.TypeToken<gen1.String>(),
+                      null,
+                      gen.IterableKind.none,
+                      'path',
+                      false,
+                      false, [])
+                ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.ApplicationConfigSection>(_activator, [_$path], _values)));
+                gen.ObjectFactoryStructureProxy<gen0.ApplicationConfigSection>(
+                    _activator, [_$path], _values)));
 
   static dynamic _$path(gen0.ApplicationConfigSection obj) => obj.path;
 
@@ -394,8 +500,10 @@ class ApplicationConfigSectionBuilder {
   }
 }
 
-extension ApplicationConfigSectionDogsExtension on gen0.ApplicationConfigSection {
-  gen0.ApplicationConfigSection rebuild(Function(ApplicationConfigSectionBuilder b) f) {
+extension ApplicationConfigSectionDogsExtension
+    on gen0.ApplicationConfigSection {
+  gen0.ApplicationConfigSection rebuild(
+      Function(ApplicationConfigSectionBuilder b) f) {
     var builder = ApplicationConfigSectionBuilder(this);
     f(builder);
     return builder.build();

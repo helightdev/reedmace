@@ -1,4 +1,3 @@
-
 import 'package:reedmace/reedmace.dart';
 import 'package:routingkit/routingkit.dart';
 import 'package:shelf/shelf.dart';
@@ -32,7 +31,8 @@ class ReedmaceRouter {
 
   RouterTerminalNode register(RouteRegistration registration) {
     var path = registration.definition.routeAnnotation.path;
-    var segments = path.split("/")
+    var segments = path
+        .split("/")
         .where((element) => element.isNotEmpty)
         .map((e) => Segment(e))
         .toList();
@@ -47,14 +47,15 @@ class ReedmaceRouter {
     if (terminalNode == null) {
       terminalNode = RouterTerminalNode();
       _router.register(terminalNode, segments);
-      apiRoutes[registration.definition.routeAnnotation.openApiPath] = terminalNode;
+      apiRoutes[registration.definition.routeAnnotation.openApiPath] =
+          terminalNode;
     }
     if (registration.definition.routeAnnotation.verb == "ALL") {
       terminalNode.catchAll = registration;
     } else {
-      terminalNode.verbs[registration.definition.routeAnnotation.verb] = registration;
+      terminalNode.verbs[registration.definition.routeAnnotation.verb] =
+          registration;
     }
     return terminalNode;
   }
-
 }

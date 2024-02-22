@@ -32,7 +32,6 @@ Future<Res<String>> getHeaders(Req req, String $$Authorization,
   return Res.content("Authorization: ${$$Authorization}, $a, $b");
 }
 
-
 @POST('/untyped')
 Future<Res> getUntypedResponse(Req req) async {
   return Res.content("Hello World!");

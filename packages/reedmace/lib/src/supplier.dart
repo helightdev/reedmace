@@ -15,7 +15,7 @@ abstract class ArgumentSupplier extends RetainedAnnotation {
   const ArgumentSupplier([this.sortIndex = 100]);
 
   bool check(MethodArgument argument, Reedmace reedmace,
-      RouteDefinition definition) =>
+          RouteDefinition definition) =>
       supply(argument, reedmace, definition) != null;
 
   ArgumentFactory? supply(

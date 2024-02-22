@@ -5,28 +5,25 @@ import 'package:reedmace/src/context.dart';
 import 'package:shelf/shelf.dart';
 
 sealed class Res<T> with TypeCaptureMixin<T> {
-
   const Res._();
 
   Response build(RequestContext context);
-  factory Res.response(Response response, {bool addDefaultHeaders = true}) => RawRes<T>(response, addDefaultHeaders);
+  factory Res.response(Response response, {bool addDefaultHeaders = true}) =>
+      RawRes<T>(response, addDefaultHeaders);
   factory Res(T? content, {int? statusCode, Map<String, String>? headers}) =>
       ContentRes<T>(content, statusCode, headers);
-  factory Res.content(T? content, {int? statusCode, Map<String, String>? headers}) =>
+  factory Res.content(T? content,
+          {int? statusCode, Map<String, String>? headers}) =>
       ContentRes<T>(content, statusCode, headers);
 
   // Short hand methods for successful responses
-  factory Res.ok([T? content]) =>
-      ContentRes<T>(content, 200, {});
-  factory Res.created([T? content]) =>
-      ContentRes<T>(content, 201, {});
-  factory Res.noContent() =>
-      ContentRes<T>(null, 204, {});
+  factory Res.ok([T? content]) => ContentRes<T>(content, 200, {});
+  factory Res.created([T? content]) => ContentRes<T>(content, 201, {});
+  factory Res.noContent() => ContentRes<T>(null, 204, {});
 
-
-  factory Res.error(int statusCode, String message, {Map<String, String>? headers}) =>
+  factory Res.error(int statusCode, String message,
+          {Map<String, String>? headers}) =>
       ErrorRes<T>(message, statusCode, headers);
-
 }
 
 class HttpExceptions {
@@ -60,7 +57,7 @@ class ContentRes<T> extends Res<T> {
 
   @override
   Response build(RequestContext context) {
-    var headers = <String,Object>{
+    var headers = <String, Object>{
       ...context.defaultResponseHeaders,
       ...?this.headers
     };
@@ -72,11 +69,7 @@ class ContentRes<T> extends Res<T> {
       body = context.routeRegistration.encodeResponseBody(content);
     }
 
-    return Response(
-      statusCode ?? successStatus,
-      headers: headers,
-      body: body
-    );
+    return Response(statusCode ?? successStatus, headers: headers, body: body);
   }
 }
 
@@ -89,18 +82,17 @@ class ErrorRes<T> extends Res<T> {
 
   @override
   Response build(RequestContext context) {
-    var headers = <String,Object>{
+    var headers = <String, Object>{
       ...context.defaultResponseHeaders,
       ...?this.headers
     };
-    
-    return Response(statusCode, body: message, headers: headers, encoding: utf8);
-  }
 
+    return Response(statusCode,
+        body: message, headers: headers, encoding: utf8);
+  }
 }
 
 class RawRes<T> extends Res<T> {
-
   final Response response;
   final bool addDefaultHeaders;
 
@@ -109,10 +101,8 @@ class RawRes<T> extends Res<T> {
   @override
   Response build(RequestContext context) {
     if (addDefaultHeaders) {
-      return response.change(headers: {
-        ...context.defaultResponseHeaders,
-        ...response.headers
-      });
+      return response.change(
+          headers: {...context.defaultResponseHeaders, ...response.headers});
     } else {
       return response;
     }

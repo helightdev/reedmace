@@ -56,11 +56,9 @@ class Route implements RetainedAnnotation {
       .toList();
 
   @override
-  String toString() => "${verb.toLowerCase()} ${path
-      .split("/")
-      .map((e) => e.replaceFirst(":", ""))
-      .join(" ")
-  }".camelCase;
+  String toString() =>
+      "${verb.toLowerCase()} ${path.split("/").map((e) => e.replaceFirst(":", "")).join(" ")}"
+          .camelCase;
 
   Route copyWith({String? path, String? verb}) {
     return Route(path ?? this.path, verb: verb ?? this.verb);
@@ -93,8 +91,10 @@ class HeaderParam extends ArgumentSupplier {
   @override
   void modifyApiOperation(APIOperation operation, MethodArgument argument,
       Reedmace reedmace, RouteDefinition definition) {
-    operation.addParameter(APIParameter.header(name ?? argument.name.constantCase,
-        isRequired: !argument.nullable, schema: APISchemaObject.string()));
+    operation.addParameter(APIParameter.header(
+        name ?? argument.name.constantCase,
+        isRequired: !argument.nullable,
+        schema: APISchemaObject.string()));
   }
 }
 
@@ -152,7 +152,7 @@ class HttpVerb {
   static const trace = "TRACE";
 
   static const List<String> all = [post, get, patch, put, delete, trace];
-  static List<String> getFreeVerbs(Map<String,Object> map) {
+  static List<String> getFreeVerbs(Map<String, Object> map) {
     return all.where((element) => !map.containsKey(element)).toList();
   }
 }

@@ -4,15 +4,16 @@ import 'package:lyell/lyell.dart';
 import 'package:reedmace/reedmace.dart';
 import 'package:shelf/src/response.dart';
 
-class AuthSchemeInterceptor extends RegistrationInterceptor implements Interceptor {
-
+class AuthSchemeInterceptor extends RegistrationInterceptor
+    implements Interceptor {
   final String authType;
   final FutureOr<Principal?> Function(String? token) authenticator;
 
   const AuthSchemeInterceptor(this.authType, this.authenticator);
 
   @override
-  Future<Response?> intercept(RequestContext context, Response? response) async {
+  Future<Response?> intercept(
+      RequestContext context, Response? response) async {
     // If principal is already set, do nothing
     if (context.getOrNull<Principal>() != null) return null;
 
@@ -29,7 +30,7 @@ class AuthSchemeInterceptor extends RegistrationInterceptor implements Intercept
         if (principal != null) {
           context.set<Principal>(principal);
         }
-      } on Res catch(e) {
+      } on Res catch (e) {
         return e.build(context);
       } catch (e) {
         return Response.forbidden("Invalid authentication");
@@ -54,7 +55,8 @@ class AuthSchemeInterceptor extends RegistrationInterceptor implements Intercept
 const RequiresAuthentication authenticated = RequiresAuthentication();
 
 class RequiresAuthentication extends Interceptor implements RetainedAnnotation {
-  const RequiresAuthentication() : super(type: InterceptorType.before, sortIndex: -5);
+  const RequiresAuthentication()
+      : super(type: InterceptorType.before, sortIndex: -5);
 
   @override
   FutureOr<Response?> intercept(RequestContext context, Response? response) {
@@ -68,7 +70,8 @@ class RequiresAuthentication extends Interceptor implements RetainedAnnotation {
 class RequiresRole extends Interceptor implements RetainedAnnotation {
   final String role;
 
-  const RequiresRole(this.role) : super(type: InterceptorType.before, sortIndex: -5);
+  const RequiresRole(this.role)
+      : super(type: InterceptorType.before, sortIndex: -5);
 
   @override
   FutureOr<Response?> intercept(RequestContext context, Response? response) {

@@ -28,13 +28,20 @@ class ClientPostProcessBuilder extends PostProcessBuilder {
           onError: errorsPort.sendPort,
           onExit: exitPort.sendPort);
 
-      var result = await Future.any([callbackPort.first, exitPort.first, errorsPort.first.then((value) => ErrorWrapper(value))]);
+      var result = await Future.any([
+        callbackPort.first,
+        exitPort.first,
+        errorsPort.first.then((value) => ErrorWrapper(value))
+      ]);
       isolate.kill(priority: Isolate.immediate);
 
       if (result != null) {
         if (result is ErrorWrapper) {
           var (exception, stackTrace) = result.unwrap();
-          log.severe("Error while running a dry server startup for route introspection", exception, stackTrace);
+          log.severe(
+              "Error while running a dry server startup for route introspection",
+              exception,
+              stackTrace);
         } else {
           var str = result as String;
 
@@ -63,9 +70,9 @@ class ErrorWrapper {
 
   ErrorWrapper(this.message);
 
-  (Object,StackTrace) unwrap() {
-    var [exception,stackTrace,...] = message;
-    return (exception,StackTrace.fromString(stackTrace));
+  (Object, StackTrace) unwrap() {
+    var [exception, stackTrace, ...] = message;
+    return (exception, StackTrace.fromString(stackTrace));
   }
 
   @override

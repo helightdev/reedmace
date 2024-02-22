@@ -8,7 +8,6 @@ export 'dogs.g.dart';
 export 'models.dart';
 
 SharedLibrary get sharedLibrary => SharedLibrary((library) {
-  library.addSerializerModule(ReedmaceDogsModule(
-      converters: sharedConverters
-  ));
-});
+      library.addSerializerModule(
+          ReedmaceDogsModule(converters: sharedConverters));
+    });

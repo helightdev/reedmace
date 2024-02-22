@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:glob/glob.dart';
@@ -24,13 +23,13 @@ abstract class Interceptor {
   FutureOr<Response?> intercept(RequestContext context, Response? response);
 }
 
-abstract class RegistrationInterceptor{
-
+abstract class RegistrationInterceptor {
   final int sortIndex;
 
   const RegistrationInterceptor({this.sortIndex = 0});
 
-  void postRegistration(Reedmace reedmace, RouteRegistration registration, RouterTerminalNode node);
+  void postRegistration(Reedmace reedmace, RouteRegistration registration,
+      RouterTerminalNode node);
 
   RegistrationInterceptor restrictedTo(String pathGlob) {
     return RestrictedInterceptor(this, Glob(pathGlob));
@@ -38,14 +37,15 @@ abstract class RegistrationInterceptor{
 }
 
 class RestrictedInterceptor extends RegistrationInterceptor {
-
   final RegistrationInterceptor delegate;
   final Glob pathGlob;
 
-  RestrictedInterceptor(this.delegate, this.pathGlob) : super(sortIndex: delegate.sortIndex);
+  RestrictedInterceptor(this.delegate, this.pathGlob)
+      : super(sortIndex: delegate.sortIndex);
 
   @override
-  void postRegistration(Reedmace reedmace, RouteRegistration registration, RouterTerminalNode node) {
+  void postRegistration(Reedmace reedmace, RouteRegistration registration,
+      RouterTerminalNode node) {
     if (pathGlob.matches(registration.definition.routeAnnotation.openApiPath)) {
       delegate.postRegistration(reedmace, registration, node);
     }

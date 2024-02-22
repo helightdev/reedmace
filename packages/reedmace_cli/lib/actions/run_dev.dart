@@ -56,7 +56,7 @@ class RunDevAction {
     var config = readConfig();
     var serverPath = getPathFromRoot(config.structure.server);
 
-    while(processes.isNotEmpty) {
+    while (processes.isNotEmpty) {
       await Future.delayed(Duration(milliseconds: 250));
     }
 
@@ -73,7 +73,7 @@ class RunDevAction {
       }
     });
     process.stderr.listen((event) {
-      logger.moduleErr("Server",utf8.decode(event).trim());
+      logger.moduleErr("Server", utf8.decode(event).trim());
     });
     var exitCode = await process.exitCode;
     logger.detail("Server exited with code $exitCode");

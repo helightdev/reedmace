@@ -4,7 +4,6 @@ import 'package:mason/mason.dart';
 import 'package:reedmace_cli/command.dart';
 
 class ReedmaceCreateCommand extends ReedmaceCommand {
-
   @override
   String get description => 'Create a new Reedmace project.';
 
@@ -12,7 +11,10 @@ class ReedmaceCreateCommand extends ReedmaceCommand {
   String get name => 'create';
 
   ReedmaceCreateCommand() {
-    argParser.addOption('name', abbr: 'n', defaultsTo: 'reedmace_project', help: 'The name of the project.');
+    argParser.addOption('name',
+        abbr: 'n',
+        defaultsTo: 'reedmace_project',
+        help: 'The name of the project.');
   }
 
   @override
@@ -36,5 +38,4 @@ class ReedmaceCreateCommand extends ReedmaceCommand {
     progress.complete("Project $projectName created!");
     return ExitCode.success.code;
   }
-
 }

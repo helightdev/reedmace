@@ -11,7 +11,6 @@ export 'utils/interruptable_progress.dart';
 export 'utils/styling.dart';
 
 abstract class ReedmaceCommand extends Command<int> {
-
   Logger? _logger;
   ReedmaceCommandRunner? _runner;
 
@@ -19,17 +18,19 @@ abstract class ReedmaceCommand extends Command<int> {
     Logger? logger,
   }) : _logger = logger;
 
-
-
   Logger get logger => _logger ??= reedmaceRunner.logger;
   ReedmaceCommandRunner get reedmaceRunner => (runner as ReedmaceCommandRunner);
 
   ReedmaceConfig get config => reedmaceRunner.config;
 
-  Directory get serverDirectory => Directory(getPathFromRoot(config.structure.server).path);
-  Directory get sharedLibraryDirectory => Directory(getPathFromRoot(config.structure.sharedLibrary).path);
-  Directory get generatedClientDirectory => Directory(getPathFromRoot(config.structure.generatedClient).path);
-  Directory get applicationDirectory => Directory(getPathFromRoot(config.structure.application).path);
+  Directory get serverDirectory =>
+      Directory(getPathFromRoot(config.structure.server).path);
+  Directory get sharedLibraryDirectory =>
+      Directory(getPathFromRoot(config.structure.sharedLibrary).path);
+  Directory get generatedClientDirectory =>
+      Directory(getPathFromRoot(config.structure.generatedClient).path);
+  Directory get applicationDirectory =>
+      Directory(getPathFromRoot(config.structure.application).path);
 
   void flagFailGlobal() {
     reedmaceRunner.failGlobal = true;
@@ -37,5 +38,4 @@ abstract class ReedmaceCommand extends Command<int> {
       exit(1);
     }
   }
-
 }

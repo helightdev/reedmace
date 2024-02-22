@@ -6,7 +6,6 @@ import 'package:collection/collection.dart';
 import 'package:uuid/uuid.dart';
 
 class ReedmaceDogsModule extends ReedmaceSerializerModule {
-
   DogEngine? engine;
   List<DogConverter> converters = [];
 
@@ -48,7 +47,7 @@ class ReedmaceDogsModule extends ReedmaceSerializerModule {
       var serializer = DogsConverterSerializer(engine!, type, treeConverter);
       createdSerializers.add(serializer);
       return serializer;
-    } catch(e) {
+    } catch (e) {
       print("Dogs can't resolve $type");
       return null;
     }
@@ -56,7 +55,8 @@ class ReedmaceDogsModule extends ReedmaceSerializerModule {
 
   @override
   ReedmaceBodySerializer? resolveBodySerializerByIdentifier(String identifier) {
-    return createdSerializers.firstWhereOrNull((e) => e.identifier == identifier);
+    return createdSerializers
+        .firstWhereOrNull((e) => e.identifier == identifier);
   }
 }
 
@@ -73,7 +73,8 @@ class DogsConverterSerializer extends ReedmaceUtf8Serializer {
   @override
   APISchemaObject? getSchema() => converter.output;
 
-  DogsConverterSerializer(this.engine, this.tree, this.converter) : super("application/json");
+  DogsConverterSerializer(this.engine, this.tree, this.converter)
+      : super("application/json");
 
   @override
   deserializeString(String string) {
@@ -88,10 +89,10 @@ class DogsConverterSerializer extends ReedmaceUtf8Serializer {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is DogsConverterSerializer &&
-              runtimeType == other.runtimeType && tree.typeArgument == other.tree.typeArgument;
+      other is DogsConverterSerializer &&
+          runtimeType == other.runtimeType &&
+          tree.typeArgument == other.tree.typeArgument;
 
   @override
   int get hashCode => tree.typeArgument.hashCode;
-
 }
