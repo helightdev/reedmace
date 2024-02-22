@@ -1,3 +1,9 @@
+## 1.0.0-dev.2
+
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: various updates (not tracking at this point).
+ - **FEAT**: initial commit.
+
 ## 1.0.0-dev.1
 
 - Initial version.
