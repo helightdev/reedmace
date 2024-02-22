@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -5,6 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:lyell/lyell.dart';
 import 'package:reedmace_shared/reedmace_shared.dart';
 import 'package:http/http.dart' as http;
+
+typedef RequestInterceptor = FutureOr<http.Request> Function(http.Request request);
 
 class ReedmaceClient {
   static ReedmaceClient global = ReedmaceClient();
@@ -19,9 +22,12 @@ class ReedmaceClient {
   final List<ReedmaceSerializerModule> serializerModules = [
     DefaultReedmaceModule()
   ];
-  Uri baseUri = Uri.http("localhost:8080");
   final http.Client httpClient = http.Client();
   SharedLibrary? sharedLibrary;
+
+  Uri baseUri = Uri.http("localhost:8080");
+  Map<String, String> defaultHeaders = {};
+  List<RequestInterceptor> requestInterceptor = [];
 
   Future<T?> send<T>(String verb, String path,
       {required Object? body,
@@ -42,6 +48,7 @@ class ReedmaceClient {
         .resolveBodySerializer(resBodyIdentifier as QualifiedTypeTree)!;
 
     var request = http.Request(verb, uri);
+    request.headers.addAll(defaultHeaders);
     request.headers.addAll(headerParameters);
     if (hasBody) {
       if (reqBodyEncoding != null) request.encoding = reqBodyEncoding;
@@ -60,7 +67,12 @@ class ReedmaceClient {
       }
     }
 
+    for (var interceptor in requestInterceptor) {
+      request = await interceptor(request);
+    }
+
     var streamedResponse = await httpClient.send(request);
+
     if (streamedResponse.statusCode < 200 ||
         streamedResponse.statusCode >= 300) {
       throw HttpClientException(streamedResponse.statusCode,
