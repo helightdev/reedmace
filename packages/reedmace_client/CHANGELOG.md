@@ -1,3 +1,7 @@
+## 1.0.0-dev.4
+
+ - **FEAT**: add request interceptors.
+
 ## 1.0.0-dev.3
 
  - **FEAT**: cleanup, cors/auth, major internal rework.

@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`reedmace_client` - `v1.0.0-dev.4`](#reedmace_client---v100-dev4)
+
+---
+
+#### `reedmace_client` - `v1.0.0-dev.4`
+
+ - **FEAT**: add request interceptors.
+
+
+## 2024-02-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`reedmace` - `v1.0.0-dev.3`](#reedmace---v100-dev3)
  - [`reedmace_cli` - `v1.0.0-dev.3`](#reedmace_cli---v100-dev3)
  - [`reedmace_client` - `v1.0.0-dev.3`](#reedmace_client---v100-dev3)
