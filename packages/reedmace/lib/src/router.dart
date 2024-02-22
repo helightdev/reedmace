@@ -3,6 +3,9 @@ import 'package:reedmace/reedmace.dart';
 import 'package:routingkit/routingkit.dart';
 import 'package:shelf/shelf.dart';
 
+export 'route/definition.dart';
+export 'route/registration.dart';
+
 class RouterTerminalNode {
   Map<String, RouteRegistration> verbs = {};
   RouteRegistration? catchAll;

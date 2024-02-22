@@ -52,14 +52,17 @@ OriginChecker originOneOf(List<String> origins) =>
 
 
 class CorsRegistrationInterceptor extends RegistrationInterceptor {
-  const CorsRegistrationInterceptor();
+
+  final OriginChecker originChecker;
+  CorsRegistrationInterceptor([this.originChecker = originAllowAll]);
+
+  late final CorsRequestInterceptor corsRequestInterceptor = CorsRequestInterceptor(originChecker);
 
   @override
   void postRegistration(Reedmace reedmace, RouteRegistration registration, RouterTerminalNode node) {
-    OriginChecker originChecker = originAllowAll;
-    registration.beforeInterceptors.add(CorsRequestInterceptor(originChecker));
+    registration.beforeInterceptors.add(corsRequestInterceptor);
     if (node.verbs[HttpVerb.options] == null) {
-      reedmace.registerRoute(RouteDefinition.fromFunction((request) async {
+      reedmace.registerRoute(RouteDefinition.fromFunction<dynamic,dynamic>((request) async {
         return Res(null, statusCode: 200);
       }, registration.definition.routeAnnotation.copyWith(verb: HttpVerb.options)));
     }
@@ -70,7 +73,7 @@ class CorsRequestInterceptor extends Interceptor {
 
   final OriginChecker originsChecker;
 
-  CorsRequestInterceptor(this.originsChecker) : super(type: InterceptorType.before);
+  CorsRequestInterceptor(this.originsChecker) : super(type: InterceptorType.before, sortIndex: -25);
 
   @override
   FutureOr<Response?> intercept(RequestContext context, Response? response) {

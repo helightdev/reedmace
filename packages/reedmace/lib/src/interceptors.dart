@@ -1,8 +1,13 @@
 
 import 'dart:async';
 
+import 'package:glob/glob.dart';
 import 'package:reedmace/reedmace.dart';
 import 'package:shelf/shelf.dart';
+
+export 'interceptors/head.dart';
+export 'interceptors/cors.dart';
+export 'interceptors/auth.dart';
 
 enum InterceptorType {
   before,
@@ -26,31 +31,23 @@ abstract class RegistrationInterceptor{
   const RegistrationInterceptor({this.sortIndex = 0});
 
   void postRegistration(Reedmace reedmace, RouteRegistration registration, RouterTerminalNode node);
-}
 
-class RemoveBodyInterceptor extends Interceptor {
-  const RemoveBodyInterceptor() : super(type: InterceptorType.after);
-
-  @override
-  FutureOr<Response?> intercept(RequestContext context, Response? response) {
-    if (response != null) {
-      return response.change(body: null);
-    }
-    return null;
+  RegistrationInterceptor restrictedTo(String pathGlob) {
+    return RestrictedInterceptor(this, Glob(pathGlob));
   }
 }
 
-class BodyHeadHandlerInterceptor extends RegistrationInterceptor {
-  const BodyHeadHandlerInterceptor();
+class RestrictedInterceptor extends RegistrationInterceptor {
+
+  final RegistrationInterceptor delegate;
+  final Glob pathGlob;
+
+  RestrictedInterceptor(this.delegate, this.pathGlob) : super(sortIndex: delegate.sortIndex);
 
   @override
   void postRegistration(Reedmace reedmace, RouteRegistration registration, RouterTerminalNode node) {
-    if (registration.definition.routeAnnotation.verb == "GET") {
-      if (node.verbs["HEAD"] == null) {
-        var headRegistration = reedmace.buildRegistration(registration.definition);
-        headRegistration.afterInterceptors.insert(0, RemoveBodyInterceptor());
-        node.verbs["HEAD"] = headRegistration;
-      }
+    if (pathGlob.matches(registration.definition.routeAnnotation.openApiPath)) {
+      delegate.postRegistration(reedmace, registration, node);
     }
   }
 }

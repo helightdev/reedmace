@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:lyell/lyell.dart';
 import 'package:reedmace/reedmace.dart';
+import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart';
 
 class RouteDefinition {
   final String functionName;
@@ -34,24 +36,30 @@ class RouteDefinition {
         false => response.arguments[0] as QualifiedTypeTree
       };
 
-  static RouteDefinition fromFunction<A, B>(
-    FutureOr<Res<A>> Function(Req<B> request) function,
+
+  static RouteDefinition fromShelf(Handler handler, Route route) => fromFunction<dynamic,dynamic>((request) async {
+    var response = await handler(request.context.request);
+    return Res.response(response);
+  }, route);
+
+  static RouteDefinition fromFunction<FROM,TO>(
+    FutureOr<Res<TO>> Function(Req<FROM> request) function,
     Route route, {
     QualifiedTypeTree? responseTree,
     QualifiedTypeTree? requestTree,
     List<RetainedAnnotation>? annotations,
   }) {
     var arguments = [
-      MethodArgument(requestTree ?? QualifiedTypeTree.arg1<Req<B>, Req, B>(),
+      MethodArgument(requestTree ?? QualifiedTypeTree.arg1<Req<FROM>, Req, FROM>(),
           false, "request", [])
     ];
     return RouteDefinition(
         function.toString(),
         route,
         [route, ...?annotations],
-        responseTree ?? QualifiedTypeTree.arg1<Res<A>, Res, A>(),
+        responseTree ?? QualifiedTypeTree.arg1<Res<TO>, Res, TO>(),
         arguments,
-        (args) => function(args[0] as Req<B>));
+        (args) => function(args[0] as Req<FROM>));
   }
 }
 

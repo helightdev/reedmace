@@ -31,6 +31,33 @@
       <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/shared/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/shared/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/example/reedmace_app/shared/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/client/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/client/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/server/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/server/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/server/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/shared/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/shared/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bricks/reedmace_project/__brick__/{{projectName.snakeCase()}}/shared/build" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/client/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/client/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/server/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/server/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/server/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/shared/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/shared/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/reedmace_project/shared/build" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />

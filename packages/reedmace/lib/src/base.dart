@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:conduit_open_api/v3.dart';
-import 'package:lyell/lyell.dart';
 import 'package:reedmace/reedmace.dart';
-import 'package:reedmace/src/cors.dart';
 import 'package:shelf/shelf.dart';
 import 'package:collection/collection.dart';
 
@@ -12,13 +9,16 @@ class Reedmace {
   final ReedmaceRouter router = ReedmaceRouter();
   final List<ArgumentSupplier> argumentSuppliers = [
     ReqArgumentSupplier(),
-    PathVariableArgumentSupplier()
+    RequestVariableArgumentSupplier()
   ];
   final List<RegistrationInterceptor> registrationInterceptors = [
-    BodyHeadHandlerInterceptor(),
+    AutomaticHeadInterceptor(),
     CorsRegistrationInterceptor()
   ];
   SharedLibrary? sharedLibrary;
+  HttpServerConfiguration serverConfiguration = HttpServerConfiguration();
+  Pipeline pipeline = Pipeline();
+  Handler get handler => pipeline.addHandler(handle);
 
   List<ReedmaceSerializerModule> get modules =>
       sharedLibrary!.serializerModules;
@@ -26,6 +26,10 @@ class Reedmace {
   Future configure(dynamic Function(Reedmace reedmace) function) async {
     await (function(this) as FutureOr<dynamic>);
     await sharedLibrary!.configure();
+  }
+
+  void addMiddleware(Middleware middleware) {
+    pipeline = pipeline.addMiddleware(middleware);
   }
 
   Future<Response> handle(Request request) async {
@@ -149,6 +153,11 @@ class Reedmace {
         .map((e) => e.$2.supply(e.$1, this, definition)!)
         .toList());
 
+    var resolvedBodySerializer = sharedLibrary!.resolveBodySerializer(definition.innerResponse);
+    if (resolvedBodySerializer == null) {
+      throw ArgumentError("No body serializer found for ${definition.innerResponse}");
+    }
+
     var registration = RouteRegistration(
         interceptors
             .where((element) =>
@@ -163,7 +172,7 @@ class Reedmace {
         definition,
         assembler,
         assemblerArguments.map((e) => e.$2).toList(),
-        sharedLibrary!.resolveBodySerializer(definition.innerResponse)!);
+        resolvedBodySerializer!);
     return registration;
   }
 }

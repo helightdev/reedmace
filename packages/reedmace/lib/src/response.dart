@@ -9,7 +9,7 @@ sealed class Res<T> with TypeCaptureMixin<T> {
   const Res._();
 
   Response build(RequestContext context);
-  factory Res.response(Response response) => RawRes<T>(response);
+  factory Res.response(Response response, {bool addDefaultHeaders = true}) => RawRes<T>(response, addDefaultHeaders);
   factory Res(T? content, {int? statusCode, Map<String, String>? headers}) =>
       ContentRes<T>(content, statusCode, headers);
   factory Res.content(T? content, {int? statusCode, Map<String, String>? headers}) =>
@@ -102,11 +102,19 @@ class ErrorRes<T> extends Res<T> {
 class RawRes<T> extends Res<T> {
 
   final Response response;
+  final bool addDefaultHeaders;
 
-  const RawRes(this.response) : super._();
+  const RawRes(this.response, this.addDefaultHeaders) : super._();
 
   @override
   Response build(RequestContext context) {
-    return response;
+    if (addDefaultHeaders) {
+      return response.change(headers: {
+        ...context.defaultResponseHeaders,
+        ...response.headers
+      });
+    } else {
+      return response;
+    }
   }
 }

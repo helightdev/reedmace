@@ -17,6 +17,7 @@ dependencies:
   canister: ^1.2.2
   recase: ^4.1.0
   collection: ^1.18.0
+  glob: ^2.1.2
   reedmace_shared: any
 
 dev_dependencies:

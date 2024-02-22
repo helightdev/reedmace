@@ -9,6 +9,10 @@ class SharedLibrary {
 
   SharedLibrary(this.configureFunction);
 
+  factory SharedLibrary.empty() {
+    return SharedLibrary((_) {});
+  }
+
   Future configure() async {
     await configureFunction(this);
     for (var module in serializerModules) {

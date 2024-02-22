@@ -20,12 +20,15 @@ class OutputDescriptor {
 }
 
 class DefaultReedmaceModule extends ReedmaceSerializerModule {
+
+
   final Map<Type, ReedmaceBodySerializer> serializers = {
     List<int>: IntListSerializer(),
     String: StringSerializer(),
     Map<String, dynamic>: JsonStringSerializer(),
     Map: JsonStringSerializer(),
-    dynamic: ReedmaceUnsupportedBodySerializer()
+    dynamic: ReedmaceUnsupportedBodySerializer(),
+    (TypeToken<Object?>().typeArgument): ReedmaceUnsupportedBodySerializer(),
   };
 
   DefaultReedmaceModule();
