@@ -15,6 +15,57 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`reedmace` - `v1.0.0-dev.3`](#reedmace---v100-dev3)
+ - [`reedmace_cli` - `v1.0.0-dev.3`](#reedmace_cli---v100-dev3)
+ - [`reedmace_client` - `v1.0.0-dev.3`](#reedmace_client---v100-dev3)
+ - [`reedmace_client_generator` - `v1.0.0-dev.3`](#reedmace_client_generator---v100-dev3)
+ - [`reedmace_dogs` - `v1.0.0-dev.3`](#reedmace_dogs---v100-dev3)
+ - [`reedmace_generator` - `v1.0.0-dev.3`](#reedmace_generator---v100-dev3)
+ - [`reedmace_shared` - `v1.0.0-dev.3`](#reedmace_shared---v100-dev3)
+
+---
+
+#### `reedmace` - `v1.0.0-dev.3`
+
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+
+#### `reedmace_cli` - `v1.0.0-dev.3`
+
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+
+#### `reedmace_client` - `v1.0.0-dev.3`
+
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+
+#### `reedmace_client_generator` - `v1.0.0-dev.3`
+
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+
+#### `reedmace_dogs` - `v1.0.0-dev.3`
+
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+
+#### `reedmace_generator` - `v1.0.0-dev.3`
+
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+
+#### `reedmace_shared` - `v1.0.0-dev.3`
+
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+
+
+## 2024-02-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`reedmace` - `v1.0.0-dev.2`](#reedmace---v100-dev2)
  - [`reedmace_cli` - `v1.0.0-dev.2`](#reedmace_cli---v100-dev2)
  - [`reedmace_client` - `v1.0.0-dev.2`](#reedmace_client---v100-dev2)

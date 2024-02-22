@@ -1,6 +1,6 @@
 name: reedmace_dogs
 description: Dogs support for reedmace
-version: 1.0.0-dev.2
+version: 1.0.0-dev.3
 # repository: https://github.com/my_org/my_repo
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
   conduit_open_api: ^4.4.0
   lyell: ^1.1.0
   collection: ^1.18.0
-  reedmace_shared: ^1.0.0-dev.2
+  reedmace_shared: ^1.0.0-dev.3
 
 dev_dependencies:
   lints: ^2.1.0
