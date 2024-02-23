@@ -1,3 +1,7 @@
+## 1.0.0-dev.5
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+
 ## 1.0.0-dev.4
 
  - **FEAT**: add request interceptors.

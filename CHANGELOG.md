@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-02-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`reedmace` - `v1.0.0-dev.4`](#reedmace---v100-dev4)
+ - [`reedmace_cli` - `v1.0.0-dev.4`](#reedmace_cli---v100-dev4)
+ - [`reedmace_client` - `v1.0.0-dev.5`](#reedmace_client---v100-dev5)
+ - [`reedmace_client_generator` - `v1.0.0-dev.4`](#reedmace_client_generator---v100-dev4)
+ - [`reedmace_dogs` - `v1.0.0-dev.4`](#reedmace_dogs---v100-dev4)
+ - [`reedmace_generator` - `v1.0.0-dev.4`](#reedmace_generator---v100-dev4)
+ - [`reedmace_shared` - `v1.0.0-dev.4`](#reedmace_shared---v100-dev4)
+
+---
+
+#### `reedmace` - `v1.0.0-dev.4`
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+
+#### `reedmace_cli` - `v1.0.0-dev.4`
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+
+#### `reedmace_client` - `v1.0.0-dev.5`
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+
+#### `reedmace_client_generator` - `v1.0.0-dev.4`
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+
+#### `reedmace_dogs` - `v1.0.0-dev.4`
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+
+#### `reedmace_generator` - `v1.0.0-dev.4`
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+
+#### `reedmace_shared` - `v1.0.0-dev.4`
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+
+
 ## 2024-02-22
 
 ### Changes
