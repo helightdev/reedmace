@@ -10,6 +10,11 @@ extension LoggerExtension on Logger {
   }) {
     return InterruptibleProgress._(message, io.stdout, level, options: options);
   }
+  
+  Logger cln() {
+    io.stdout.write('\u001b[2K\r');
+    return this;
+  }
 }
 
 /// {@template progress}

@@ -16,34 +16,12 @@ class PersonConverter extends gen.DefaultStructureConverter<gen1.Person> {
                 'Person',
                 gen.StructureConformity.dataclass,
                 [
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen0.String>(),
-                      gen.TypeToken<gen0.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'name',
-                      false,
-                      false, []),
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen0.int>(),
-                      gen.TypeToken<gen0.int>(),
-                      null,
-                      gen.IterableKind.none,
-                      'age',
-                      false,
-                      false, []),
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen0.String>(),
-                      gen.TypeToken<gen0.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'tag',
-                      false,
-                      false, [])
+                  gen.DogStructureField(gen.QualifiedTerminal<gen0.String>(), gen.TypeToken<gen0.String>(), null, gen.IterableKind.none, 'name', false, false, []),
+                  gen.DogStructureField(gen.QualifiedTerminal<gen0.int>(), gen.TypeToken<gen0.int>(), null, gen.IterableKind.none, 'age', false, false, []),
+                  gen.DogStructureField(gen.QualifiedTerminal<gen0.String>(), gen.TypeToken<gen0.String>(), null, gen.IterableKind.none, 'tag', false, false, [])
                 ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen1.Person>(_activator,
-                    [_$name, _$age, _$tag], _values, _hash, _equals)));
+                gen.ObjectFactoryStructureProxy<gen1.Person>(_activator, [_$name, _$age, _$tag], _values, _hash, _equals)));
 
   static dynamic _$name(gen1.Person obj) => obj.name;
 
@@ -57,8 +35,7 @@ class PersonConverter extends gen.DefaultStructureConverter<gen1.Person> {
     return gen1.Person(list[0], list[1], list[2]);
   }
 
-  static int _hash(gen1.Person obj) =>
-      obj.name.hashCode ^ obj.age.hashCode ^ obj.tag.hashCode;
+  static int _hash(gen1.Person obj) => obj.name.hashCode ^ obj.age.hashCode ^ obj.tag.hashCode;
 
   static bool _equals(
     gen1.Person a,

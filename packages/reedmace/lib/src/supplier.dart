@@ -6,6 +6,9 @@ import 'package:reedmace/reedmace.dart';
 
 export 'suppliers/request.dart';
 export 'suppliers/request_variable.dart';
+export 'suppliers/header_params.dart';
+export 'suppliers/query_params.dart';
+export 'suppliers/value_request.dart';
 
 typedef ArgumentFactory = FutureOr<dynamic> Function(RequestContext context);
 

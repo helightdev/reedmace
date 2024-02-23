@@ -28,7 +28,15 @@ class ReedmaceDevCommand extends ReedmaceCommand {
       if (stage <= BuildStages.server) {
         runDevAction.enqueueRestart();
       }
-    }, (stage) {});
+    }, (stage) {
+      if (stage <= BuildStages.server) {
+        runDevAction.killAll();
+      }
+    }, (stage) {
+      if (stage <= BuildStages.server) {
+        runDevAction.killAll();
+      }
+    });
     await runDevAction.stop();
     return ExitCode.success.code;
   }

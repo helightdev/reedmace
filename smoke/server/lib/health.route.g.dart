@@ -17,16 +17,9 @@ const health_descriptor = gen.RouteDefinition(
     'health',
     gen1.Route('/health', verb: 'GET'),
     [gen1.Route('/health', verb: 'GET')],
-    gen.QualifiedTypeTreeN<gen2.Res<gen3.String>, gen2.Res<dynamic>>(
-        [gen.QualifiedTerminal<gen3.String>()]),
+    gen.QualifiedTypeTreeN<gen2.Res<gen3.String>, gen2.Res<dynamic>>([gen.QualifiedTerminal<gen3.String>()]),
     [
-      gen.MethodArgument(
-          gen.QualifiedTypeTreeN<gen0.Req<dynamic>, gen0.Req<dynamic>>(
-              [gen.QualifiedTerminal<dynamic>()]),
-          false,
-          'req',
-          [])
+      gen.MethodArgument(gen.QualifiedTypeTreeN<gen0.Req<dynamic>, gen0.Req<dynamic>>([gen.QualifiedTerminal<dynamic>()]), false, 'req', [])
     ],
     _$health);
-FutureOr<gen2.Res<gen3.String>> _$health(List<dynamic> args) =>
-    gen4.health(args[0]);
+FutureOr<gen2.Res<gen3.String>> _$health(List<dynamic> args) => gen4.health(args[0]);

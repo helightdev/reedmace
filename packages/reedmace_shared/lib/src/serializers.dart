@@ -25,8 +25,9 @@ class DefaultReedmaceModule extends ReedmaceSerializerModule {
     String: StringSerializer(),
     Map<String, dynamic>: JsonStringSerializer(),
     Map: JsonStringSerializer(),
-    dynamic: ReedmaceUnsupportedBodySerializer(),
-    (TypeToken<Object?>().typeArgument): ReedmaceUnsupportedBodySerializer(),
+    dynamic: ReedmaceUndefinedBodySerializer(),
+    (TypeToken<Object?>().typeArgument): ReedmaceUndefinedBodySerializer(),
+    (TypeToken<void>().typeArgument): ReedmaceUndefinedBodySerializer(),
   };
 
   DefaultReedmaceModule();
@@ -61,7 +62,7 @@ abstract class ReedmaceBodySerializer {
   APISchemaObject? getSchema() => APISchemaObject.freeForm();
 }
 
-class ReedmaceUnsupportedBodySerializer extends ReedmaceBodySerializer {
+class ReedmaceUndefinedBodySerializer extends ReedmaceBodySerializer {
   @override
   String get identifier => "none";
 
@@ -98,6 +99,9 @@ abstract class ReedmaceUtf8Serializer extends ReedmaceBodySerializer {
   dynamic deserializeString(String string);
 
   String serializeString(dynamic object);
+
+  @override
+  OutputDescriptor get descriptor => OutputDescriptor(utf8, contentType);
 }
 
 class IntListSerializer extends ReedmaceBodySerializer {

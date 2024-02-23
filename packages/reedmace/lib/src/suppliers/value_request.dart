@@ -2,14 +2,13 @@ import 'package:conduit_open_api/v3.dart';
 import 'package:lyell/lyell.dart';
 import 'package:reedmace/reedmace.dart';
 
-class ReqArgumentSupplier extends ArgumentSupplier {
-
-  ReqArgumentSupplier() : super(0);
+class ValueReqArgumentSupplier extends ArgumentSupplier {
+  ValueReqArgumentSupplier() : super(0);
 
   @override
   ArgumentFactory? supply(
       MethodArgument argument, Reedmace reedmace, RouteDefinition definition) {
-    if (argument.type.base.typeArgument == Req) {
+    if (argument.type.base.typeArgument == ValReq) {
       var argumentTree = switch (argument.type.arguments.isEmpty) {
         true => QualifiedTypeTree.terminal<dynamic>(),
         false => argument.type.arguments[0] as QualifiedTypeTree
@@ -21,8 +20,11 @@ class ReqArgumentSupplier extends ArgumentSupplier {
             "No serializer found for request argument '${argument.name}'(${argumentTree.qualified})");
       }
       //print("Req '${argument.name}'@${definition.routeAnnotation.path}, serializer: $bodySerializer");
-      return (context) => argumentTree
-          .consumeTypeArg(Req.assemblerCreate, (context, bodySerializer));
+      return (context) async {
+        var body = await bodySerializer.deserialize(context.request.read());
+        return argumentTree
+            .consumeTypeArg(ValReq.assemblerCreate, (context, body));
+      };
     }
     return null;
   }

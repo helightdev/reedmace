@@ -35,13 +35,16 @@ class ClientBuilder extends Builder {
         .expand((element) => element!.operations.entries)
         .toList();
 
+    StringBuffer methodBuffer = StringBuffer();
+    StringBuffer invocationBuffer = StringBuffer();
+
     var futures = (jsonDecode(mappingData) as Map<String, dynamic>)
         .entries
         .map((entry) async {
       var takes = await deserializeType(entry.value[0], buildStep);
       var returns = await deserializeType(entry.value[1], buildStep);
       var operationId = entry.key;
-      ;
+
       var resolvedOpmode = resolveOperationId(document, operationId);
       if (resolvedOpmode == null) {
         return;
@@ -67,14 +70,20 @@ class ClientBuilder extends Builder {
           pathParams.add(element.name!);
         }
         if (element.location == APIParameterLocation.query) {
+          var type = switch(element.schema?.type) {
+            APIType.string => "String",
+            APIType.integer => "int",
+            APIType.boolean => "bool",
+            _ => throw ArgumentError("Unsupported query parameter type ${element.schema?.type}")
+          };
           if (element.isRequired ?? true) {
-            namedParameters.add("required String \$${element.name}");
+            namedParameters.add("required $type \$${element.name}");
             bodyInserts.add(
-                "queryParameters['${sqsLiteralEscape(element.name!)}'] = \$${element.name};");
+                "queryParameters['${sqsLiteralEscape(element.name!)}'] = (\$${element.name}).toString();");
           } else {
-            namedParameters.add("String? \$${element.name}");
+            namedParameters.add("$type? \$${element.name}");
             bodyInserts.add(
-                "if (\$${element.name} != null) queryParameters['${sqsLiteralEscape(element.name!)}'] = \$${element.name};");
+                "if (\$${element.name} != null) queryParameters['${sqsLiteralEscape(element.name!)}'] = (\$${element.name}).toString();");
           }
         }
         if (element.location == APIParameterLocation.header) {
@@ -95,37 +104,52 @@ class ClientBuilder extends Builder {
         namedParameters.isEmpty ? "" : "{${namedParameters.join(",")}}"
       ].where((element) => element.isNotEmpty).join(",");
 
-      var pathInitializer = switch (pathParams.isEmpty) {
-        true => "'${sqsLiteralEscape(path)}'",
-        false =>
-          "'${sqsLiteralEscape(path)}'.${pathParams.map((e) => "replaceFirst('{${sqsLiteralEscape(e)}}', $e)").join(".")}"
-      };
+      final pathMap = "{${pathParams.map((e) => "'${sqsLiteralEscape(e)}': $e").join(",")}}";
 
       var returnType = switch (returns is DynamicType) {
-        true => "Future<http.Response>",
-        false => "Future<${cachedCounter.get(returns)}?>"
+        true => "http.Response",
+        false => cachedCounter.get(returns)
       };
 
-      code.writeln("""
-$returnType $operationId($parts) async {
-  var path = $pathInitializer;
+      methodBuffer.writeln("""
+static const ReedmaceClientMethod<$returnType> \$$operationId = ReedmaceClientMethod(
+  '${sqsLiteralEscape(verb.toUpperCase())}', '${sqsLiteralEscape(path)}',
+  ${takes is DynamicType ? "false" : "true"},
+  ${returns is DynamicType ? "false" : "true"},
+  ${getTypeTree(takes).code(cachedCounter)}, 
+  ${getTypeTree(returns).code(cachedCounter)},
+);
+""");
+
+      invocationBuffer.writeln("""
+static ReedmaceClientMethodInvocation<$returnType> $operationId($parts) {
   var queryParameters = <String,String>{};
   var headerParameters = <String,String>{};
   ${bodyInserts.join("\n")}
   
-  return ReedmaceClient.global.send<${cachedCounter.get(returns)}>('${sqsLiteralEscape(verb.toUpperCase())}', path,
-  body: body,
-  encoding: $encoding,
-  hasBody: ${takes is DynamicType ? "false" : "true"},
-  hasTypedResponse: ${returns is DynamicType ? "false" : "true"},
-  reqBodyIdentifier: ${getTypeTree(takes).code(cachedCounter)}, 
-  resBodyIdentifier: ${getTypeTree(returns).code(cachedCounter)}, 
-  queryParameters: queryParameters, headerParameters: headerParameters)
-  ${(returns is DynamicType) ? ".then((e) => e! as http.Response);" : ";"}
+  return \$$operationId.createInvocation(
+    client: ReedmaceClient.global,
+    body: body,
+    encoding: $encoding,
+    pathParameters: $pathMap,
+    queryParameters: queryParameters,
+    headerParameters: headerParameters
+  );
 }
 """);
     });
     await Future.wait(futures);
+    code.writeln("""class Reedmace {
+    
+Reedmace._();
+
+// Method Definitions
+$methodBuffer
+
+// Method Invocations
+$invocationBuffer
+
+}""");
 
     var importString = createImports(
         library: null,

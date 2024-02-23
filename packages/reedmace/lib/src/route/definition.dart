@@ -50,18 +50,48 @@ class RouteDefinition {
     List<RetainedAnnotation>? annotations,
   }) {
     var arguments = [
-      MethodArgument(
-          requestTree ?? QualifiedTypeTree.arg1<Req<FROM>, Req, FROM>(),
-          false,
-          "request", [])
+      MethodArgument(requestTree ?? Req.tree<FROM>(), false, "request", [])
     ];
     return RouteDefinition(
         function.toString(),
         route,
         [route, ...?annotations],
-        responseTree ?? QualifiedTypeTree.arg1<Res<TO>, Res, TO>(),
+        responseTree ?? Res.tree<TO>(),
         arguments,
         (args) => function(args[0] as Req<FROM>));
+  }
+
+  static RouteDefinition create<REQ, RES>(
+    FutureOr<RES> Function(REQ request, Map<String, dynamic> args) function,
+    Route route, {
+    required QualifiedTypeTree request,
+    required QualifiedTypeTree response,
+    required List<MethodArgument> args,
+    List<RetainedAnnotation> annotations = const [],
+  }) {
+    return RouteDefinition(
+        route.toString(),
+        route,
+        [route, ...annotations],
+        response,
+        [MethodArgument(request, false, "request", []), ...args], (argList) {
+      var req = argList[0] as REQ;
+      var argsMap = <String, dynamic>{};
+      for (var i = 1; i < argList.length; i++) {
+        argsMap[args[i-1].name] = argList[i];
+      }
+
+      return function(req, argsMap);
+    });
+  }
+
+  MethodArgument? findArgument(String name) {
+    for (var i = 0; i < arguments.length; i++) {
+      if (arguments[i].name == name) {
+        return arguments[i];
+      }
+    }
+    return null;
   }
 }
 

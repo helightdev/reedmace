@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:lyell/lyell.dart';
 import 'package:reedmace/reedmace.dart';
-import 'package:shelf/src/response.dart';
+import 'package:shelf/shelf.dart';
 
 class AuthSchemeInterceptor extends RegistrationInterceptor
     implements Interceptor {
@@ -81,6 +81,23 @@ class RequiresRole extends Interceptor implements RetainedAnnotation {
     }
     if (!principal.roles.contains(role)) {
       return Response.forbidden("Insufficient permissions");
+    }
+    return null;
+  }
+}
+
+class PrincipalSupplier extends ArgumentSupplier {
+
+  PrincipalSupplier() : super();
+
+  @override
+  ArgumentFactory? supply(
+      MethodArgument argument, Reedmace reedmace, RouteDefinition definition) {
+    if (argument.type.typeArgument == Principal) {
+      return switch(argument.nullable) {
+        true => (context) => context.getOrNull<Principal>(),
+        false => (context) => context.get<Principal>()
+      };
     }
     return null;
   }

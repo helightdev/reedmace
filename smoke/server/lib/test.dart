@@ -22,7 +22,7 @@ Future<Res<String>> getUser(Req req, String id) async {
 }
 
 @GET('/query')
-Future<Res<String>> getQuery(Req req, String $skip, String? $limit) async {
+Future<Res<String>> getQuery(Req req, int $skip, int? $limit) async {
   return Res.content("Query: ${$skip}, ${$limit}");
 }
 
@@ -49,7 +49,12 @@ Future<Res<String>> extractName(Req<Person> req) async {
   return Res.content(body.name);
 }
 
-@Route("/anotherTest")
+@GET("/anotherTest")
 Future<Res<String>> anotherTest(Req<String> req) async {
   return Res.content("Another test: ${await req.receive()}+1");
+}
+
+@GET("/anotherTest2")
+Future<Res<String>> anotherTest2(Req<String> req) async {
+  return Res.content("Another test: ${await req.receive()}+2");
 }

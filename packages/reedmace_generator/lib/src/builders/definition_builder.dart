@@ -5,7 +5,6 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:lyell/lyell.dart';
 import 'package:lyell_gen/lyell_gen.dart';
-import 'package:lyell_gen/src/subject.dart';
 import 'package:reedmace/reedmace.dart';
 import 'package:reedmace_generator/reedmace_generator.dart';
 import 'package:source_gen/source_gen.dart';

@@ -18,9 +18,6 @@ class ReedmaceDogsModule extends ReedmaceSerializerModule {
   Set<ReedmaceBodySerializer> createdSerializers = {};
 
   @override
-  Iterable<ReedmaceBodySerializer> get allBodySerializers => createdSerializers;
-
-  @override
   Future configure() async {
     if (engine == null) {
       if (!DogEngine.hasValidInstance) {
@@ -51,12 +48,6 @@ class ReedmaceDogsModule extends ReedmaceSerializerModule {
       print("Dogs can't resolve $type");
       return null;
     }
-  }
-
-  @override
-  ReedmaceBodySerializer? resolveBodySerializerByIdentifier(String identifier) {
-    return createdSerializers
-        .firstWhereOrNull((e) => e.identifier == identifier);
   }
 }
 

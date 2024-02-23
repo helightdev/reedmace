@@ -5,13 +5,13 @@ import 'package:shared/shared.dart';
 
 Future main() async {
   await ReedmaceClient.configure(sharedLibrary: sharedLibrary);
-  print(await sync());
-  print(await getTest());
-  print(await getQuery($skip: "1", $limit: "2"));
-  print(await postTest("Test"));
-  print(await getUser("body"));
-  print((await getUntypedResponse()).statusCode);
-  print(await getPerson());
-  print(await extractName(Person("Mannie", 60, "mammoth")));
-  print(await anotherTest("body"));
+  print(await Reedmace.sync());
+  print(await Reedmace.getTest());
+  print(await Reedmace.getQuery($skip: 1, $limit: 2));
+  print(await Reedmace.postTest("Test"));
+  print(await Reedmace.getUser("body"));
+  print((await Reedmace.getUntypedResponse()).statusCode);
+  print(await Reedmace.getPerson());
+  print(await Reedmace.extractName(Person("Mannie", 60, "mammoth")));
+  print(await Reedmace.anotherTest("body"));
 }

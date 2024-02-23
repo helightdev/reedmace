@@ -1,13 +1,127 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:lyell/lyell.dart';
+import 'package:reedmace_client/src/future.dart';
 import 'package:reedmace_shared/reedmace_shared.dart';
 import 'package:http/http.dart' as http;
 
-typedef RequestInterceptor = FutureOr<http.Request> Function(http.Request request);
+typedef RequestInterceptor = FutureOr<http.Request> Function(
+    http.Request request);
+
+class ReedmaceClientMethod<T> {
+  final String verb;
+  final String path;
+  final bool hasSchematicBody;
+  final bool hasSchematicResponse;
+  final TypeTree reqBodyType;
+  final TypeTree resBodyType;
+
+  const ReedmaceClientMethod(this.verb, this.path, this.hasSchematicBody,
+      this.hasSchematicResponse, this.reqBodyType, this.resBodyType);
+
+  Future<T?> send(ReedmaceClient client,
+      {required Object? body,
+      required Encoding? encoding,
+      required Map<String, String> pathParameters,
+      required Map<String, String> queryParameters,
+      required Map<String, String> headerParameters}) async {
+    var request = await client.createRequest(this,
+        body: body,
+        encoding: encoding,
+        pathParameters: pathParameters,
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+    return await client.sendRequest(request, this) as T?;
+  }
+
+  ReedmaceClientMethodInvocation<T> createInvocation(
+      {required ReedmaceClient client,
+      required Object? body,
+      required Encoding? encoding,
+      required Map<String, String> pathParameters,
+      required Map<String, String> queryParameters,
+      required Map<String, String> headerParameters}) {
+    return ReedmaceClientMethodInvocation(
+      client: client,
+      method: this,
+      body: body,
+      encoding: encoding,
+      pathParameters: pathParameters,
+      queryParameters: queryParameters,
+      headerParameters: headerParameters,
+    );
+  }
+}
+
+class ReedmaceClientMethodInvocation<T> with FutureMixin<T> {
+  final ReedmaceClient client;
+  final ReedmaceClientMethod<T> method;
+
+  // Request Args
+  final Object? body;
+  final Encoding? encoding;
+  final Map<String, String> pathParameters;
+  final Map<String, String> queryParameters;
+  final Map<String, String> headerParameters;
+
+  ReedmaceClientMethodInvocation({
+    required this.client,
+    required this.method,
+    this.body,
+    this.encoding,
+    required this.pathParameters,
+    required this.queryParameters,
+    required this.headerParameters,
+  });
+
+  Future<T> exec() async {
+    var value = await method.send(client,
+        body: body,
+        encoding: encoding,
+        pathParameters: pathParameters,
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+    if (value == null) {
+      throw HttpClientException(404, "Response was empty");
+    }
+    return value;
+  }
+
+  Future<T?> execOrNoContent() async {
+    return await method.send(client,
+        body: body,
+        encoding: encoding,
+        pathParameters: pathParameters,
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  ReedmaceClientMethodInvocation copyWith({
+    ReedmaceClient? client,
+    ReedmaceClientMethod<T>? method,
+    Object? body,
+    Encoding? encoding,
+    Map<String, String>? pathParameters,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headerParameters,
+  }) {
+    return ReedmaceClientMethodInvocation(
+      client: client ?? this.client,
+      method: method ?? this.method,
+      body: body ?? this.body,
+      encoding: encoding ?? this.encoding,
+      pathParameters: pathParameters ?? this.pathParameters,
+      queryParameters: queryParameters ?? this.queryParameters,
+      headerParameters: headerParameters ?? this.headerParameters,
+    );
+  }
+
+  Future<T>? _future;
+
+  @override
+  Future<T> get future => _future ??= exec();
+}
 
 class ReedmaceClient {
   static ReedmaceClient global = ReedmaceClient();
@@ -19,9 +133,6 @@ class ReedmaceClient {
     await sharedLibrary.configure();
   }
 
-  final List<ReedmaceSerializerModule> serializerModules = [
-    DefaultReedmaceModule()
-  ];
   final http.Client httpClient = http.Client();
   SharedLibrary? sharedLibrary;
 
@@ -29,28 +140,25 @@ class ReedmaceClient {
   Map<String, String> defaultHeaders = {};
   List<RequestInterceptor> requestInterceptor = [];
 
-  Future<T?> send<T>(String verb, String path,
+  Future<http.Request> createRequest(ReedmaceClientMethod method,
       {required Object? body,
       required Encoding? encoding,
-      required bool hasBody,
-      required bool hasTypedResponse,
-      required TypeTree reqBodyIdentifier,
-      required TypeTree resBodyIdentifier,
+      required Map<String, String> pathParameters,
       required Map<String, String> queryParameters,
       required Map<String, String> headerParameters}) async {
+    var path = method.path;
+    for (var entry in pathParameters.entries) {
+      path = path.replaceFirst("{${entry.key}}", entry.value);
+    }
     var uri = baseUri.resolve(path).replace(queryParameters: queryParameters);
-
     var reqBodySerializer = sharedLibrary!
-        .resolveBodySerializer(reqBodyIdentifier as QualifiedTypeTree)!;
+        .resolveBodySerializer(method.reqBodyType as QualifiedTypeTree)!;
     var reqBodyEncoding = reqBodySerializer.descriptor.encoding;
 
-    var resBodySerializer = sharedLibrary!
-        .resolveBodySerializer(resBodyIdentifier as QualifiedTypeTree)!;
-
-    var request = http.Request(verb, uri);
+    var request = http.Request(method.verb, uri);
     request.headers.addAll(defaultHeaders);
     request.headers.addAll(headerParameters);
-    if (hasBody) {
+    if (method.hasSchematicBody) {
       if (reqBodyEncoding != null) request.encoding = reqBodyEncoding;
       Object? encodedBody = reqBodySerializer.serialize(body);
       if (encodedBody is List<int>) {
@@ -71,6 +179,14 @@ class ReedmaceClient {
       request = await interceptor(request);
     }
 
+    return request;
+  }
+
+  Future<Object?> sendRequest(
+      http.Request request, ReedmaceClientMethod method) async {
+    var resBodySerializer = sharedLibrary!
+        .resolveBodySerializer(method.resBodyType as QualifiedTypeTree)!;
+
     var streamedResponse = await httpClient.send(request);
 
     if (streamedResponse.statusCode < 200 ||
@@ -79,13 +195,13 @@ class ReedmaceClient {
           "Request failed with status code ${streamedResponse.reasonPhrase}");
     }
 
-    if (hasTypedResponse) {
+    if (method.hasSchematicResponse) {
       if (streamedResponse.statusCode == 204) {
         return null;
       }
       return await resBodySerializer.deserialize(streamedResponse.stream);
     } else {
-      return await http.Response.fromStream(streamedResponse) as T;
+      return await http.Response.fromStream(streamedResponse);
     }
   }
 }

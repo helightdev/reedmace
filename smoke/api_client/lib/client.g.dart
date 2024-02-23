@@ -7,196 +7,303 @@ import 'package:lyell/lyell.dart' as gen;
 import 'dart:core' as gen0;
 import 'package:shared/models.dart' as gen1;
 
-Future<http.Response> getUntypedResponse(
-    {dynamic body, Encoding? encoding}) async {
-  var path = '/untyped';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+class Reedmace {
+  Reedmace._();
 
-  return ReedmaceClient.global
-      .send<dynamic>('POST', path,
-          body: body,
-          encoding: encoding,
-          hasBody: false,
-          hasTypedResponse: false,
-          reqBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-          resBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-          queryParameters: queryParameters,
-          headerParameters: headerParameters)
-      .then((e) => e! as http.Response);
-}
+// Method Definitions
+  static const ReedmaceClientMethod<http.Response> $getUntypedResponse =
+      ReedmaceClientMethod(
+    'POST',
+    '/untyped',
+    false,
+    false,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<dynamic>(),
+  );
 
-Future<gen0.String?> health({dynamic body, Encoding? encoding}) async {
-  var path = '/health';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+  static const ReedmaceClientMethod<gen0.String> $health = ReedmaceClientMethod(
+    'GET',
+    '/health',
+    false,
+    true,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-  return ReedmaceClient.global.send<gen0.String>('GET', path,
-      body: body,
-      encoding: encoding,
-      hasBody: false,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+  static const ReedmaceClientMethod<gen0.String> $sync = ReedmaceClientMethod(
+    'GET',
+    '/sync',
+    false,
+    true,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-Future<gen0.String?> sync({dynamic body, Encoding? encoding}) async {
-  var path = '/sync';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+  static const ReedmaceClientMethod<gen0.String> $getTest =
+      ReedmaceClientMethod(
+    'GET',
+    '/test',
+    false,
+    true,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-  return ReedmaceClient.global.send<gen0.String>('GET', path,
-      body: body,
-      encoding: encoding,
-      hasBody: false,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+  static const ReedmaceClientMethod<gen0.String> $getUser =
+      ReedmaceClientMethod(
+    'GET',
+    '/user/{id}',
+    false,
+    true,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-Future<gen0.String?> getTest({dynamic body, Encoding? encoding}) async {
-  var path = '/test';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+  static const ReedmaceClientMethod<gen0.String> $getQuery =
+      ReedmaceClientMethod(
+    'GET',
+    '/query',
+    false,
+    true,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-  return ReedmaceClient.global.send<gen0.String>('GET', path,
-      body: body,
-      encoding: encoding,
-      hasBody: false,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+  static const ReedmaceClientMethod<gen0.String> $getHeaders =
+      ReedmaceClientMethod(
+    'GET',
+    '/headers',
+    false,
+    true,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-Future<gen0.String?> getUser(String id,
-    {dynamic body, Encoding? encoding}) async {
-  var path = '/user/{id}'.replaceFirst('{id}', id);
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+  static const ReedmaceClientMethod<gen0.String> $postTest =
+      ReedmaceClientMethod(
+    'POST',
+    '/test',
+    true,
+    true,
+    gen.QualifiedTerminal<gen0.String>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-  return ReedmaceClient.global.send<gen0.String>('GET', path,
-      body: body,
-      encoding: encoding,
-      hasBody: false,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+  static const ReedmaceClientMethod<gen0.String> $anotherTest =
+      ReedmaceClientMethod(
+    'GET',
+    '/anotherTest',
+    true,
+    true,
+    gen.QualifiedTerminal<gen0.String>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-Future<gen0.String?> getQuery(
-    {dynamic body,
-    Encoding? encoding,
-    required String $skip,
-    String? $limit}) async {
-  var path = '/query';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
-  queryParameters['skip'] = $skip;
-  if ($limit != null) queryParameters['limit'] = $limit;
+  static const ReedmaceClientMethod<gen0.String> $anotherTest2 =
+      ReedmaceClientMethod(
+    'GET',
+    '/anotherTest2',
+    true,
+    true,
+    gen.QualifiedTerminal<gen0.String>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-  return ReedmaceClient.global.send<gen0.String>('GET', path,
-      body: body,
-      encoding: encoding,
-      hasBody: false,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+  static const ReedmaceClientMethod<gen0.String> $extractName =
+      ReedmaceClientMethod(
+    'POST',
+    '/person/name',
+    true,
+    true,
+    gen.QualifiedTerminal<gen1.Person>(),
+    gen.QualifiedTerminal<gen0.String>(),
+  );
 
-Future<gen0.String?> getHeaders(
-    {dynamic body,
-    Encoding? encoding,
-    required String $$Authorization,
-    String? $$A,
-    String? $$B}) async {
-  var path = '/headers';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
-  headerParameters['Authorization'] = $$Authorization;
-  if ($$A != null) headerParameters['A'] = $$A;
-  if ($$B != null) headerParameters['B'] = $$B;
+  static const ReedmaceClientMethod<gen1.Person> $getPerson =
+      ReedmaceClientMethod(
+    'GET',
+    '/person',
+    false,
+    true,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<gen1.Person>(),
+  );
 
-  return ReedmaceClient.global.send<gen0.String>('GET', path,
-      body: body,
-      encoding: encoding,
-      hasBody: false,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+// Method Invocations
+  static ReedmaceClientMethodInvocation<http.Response> getUntypedResponse(
+      {dynamic body, Encoding? encoding}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
 
-Future<gen0.String?> postTest(gen0.String body) async {
-  var path = '/test';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+    return $getUntypedResponse.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
 
-  return ReedmaceClient.global.send<gen0.String>('POST', path,
-      body: body,
-      encoding: null,
-      hasBody: true,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+  static ReedmaceClientMethodInvocation<gen0.String> health(
+      {dynamic body, Encoding? encoding}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
 
-Future<gen0.String?> anotherTest(gen0.String body) async {
-  var path = '/anotherTest';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+    return $health.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
 
-  return ReedmaceClient.global.send<gen0.String>('POST', path,
-      body: body,
-      encoding: null,
-      hasBody: true,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+  static ReedmaceClientMethodInvocation<gen0.String> sync(
+      {dynamic body, Encoding? encoding}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
 
-Future<gen0.String?> extractName(gen1.Person body) async {
-  var path = '/person/name';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+    return $sync.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
 
-  return ReedmaceClient.global.send<gen0.String>('POST', path,
-      body: body,
-      encoding: null,
-      hasBody: true,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<gen1.Person>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen0.String>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
-}
+  static ReedmaceClientMethodInvocation<gen0.String> getTest(
+      {dynamic body, Encoding? encoding}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
 
-Future<gen1.Person?> getPerson({dynamic body, Encoding? encoding}) async {
-  var path = '/person';
-  var queryParameters = <String, String>{};
-  var headerParameters = <String, String>{};
+    return $getTest.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
 
-  return ReedmaceClient.global.send<gen1.Person>('GET', path,
-      body: body,
-      encoding: encoding,
-      hasBody: false,
-      hasTypedResponse: true,
-      reqBodyIdentifier: gen.QualifiedTerminal<dynamic>(),
-      resBodyIdentifier: gen.QualifiedTerminal<gen1.Person>(),
-      queryParameters: queryParameters,
-      headerParameters: headerParameters);
+  static ReedmaceClientMethodInvocation<gen0.String> getUser(String id,
+      {dynamic body, Encoding? encoding}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+
+    return $getUser.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {'id': id},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<gen0.String> getQuery(
+      {dynamic body, Encoding? encoding, required int $skip, int? $limit}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+    queryParameters['skip'] = ($skip).toString();
+    if ($limit != null) queryParameters['limit'] = ($limit).toString();
+
+    return $getQuery.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<gen0.String> getHeaders(
+      {dynamic body,
+      Encoding? encoding,
+      required String $$Authorization,
+      String? $$A,
+      String? $$B}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+    headerParameters['Authorization'] = $$Authorization;
+    if ($$A != null) headerParameters['A'] = $$A;
+    if ($$B != null) headerParameters['B'] = $$B;
+
+    return $getHeaders.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<gen0.String> postTest(
+      gen0.String body) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+
+    return $postTest.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: null,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<gen0.String> anotherTest(
+      gen0.String body) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+
+    return $anotherTest.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: null,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<gen0.String> anotherTest2(
+      gen0.String body) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+
+    return $anotherTest2.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: null,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<gen0.String> extractName(
+      gen1.Person body) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+
+    return $extractName.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: null,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<gen1.Person> getPerson(
+      {dynamic body, Encoding? encoding}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+
+    return $getPerson.createInvocation(
+        client: ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:cancellation_token/cancellation_token.dart';
 import 'package:canister/canister.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mutex/mutex.dart';
@@ -21,14 +22,16 @@ Future launchBuildingWatcher(Logger logger) async {
 }
 
 Future launchBuildingWatcherWithCallback(Logger logger,
-    void Function(int) callback, void Function(int) startCallback) async {
+    void Function(int) callback, void Function(int) startCallback, void Function(int) cancelCallback) async {
   var action = BuildingWatcherAction(logger);
   var subscription = action.buildController.stream.listen(callback);
   var startSubscription =
       action.buildStartController.stream.listen(startCallback);
+  var cancelSubscription = action.cancelController.stream.listen(cancelCallback);
   await action.launch();
   await subscription.cancel();
   await startSubscription.cancel();
+  await cancelSubscription.cancel();
 }
 
 class BuildStages {
@@ -48,6 +51,8 @@ class BuildingWatcherAction {
   StreamController<int> buildController = StreamController<int>.broadcast();
   StreamController<int> buildStartController =
       StreamController<int>.broadcast();
+  StreamController<int> cancelController = StreamController<int>.broadcast();
+  
   Cache<String, String> hashCache = Cache.lru(50);
 
   bool debounceFileAction(String path) {
@@ -66,7 +71,7 @@ class BuildingWatcherAction {
       if (debounceFileAction(event.path)) {
         return false;
       }
-      logger.detail("Detected change in ${event.path}");
+      logger.cln().detail("Detected change in ${event.path}");
       return true;
     }
     return false;
@@ -97,7 +102,7 @@ class BuildingWatcherAction {
     var stdInListener = stdin.listen((event) {
       var str = utf8.decode(event);
       if (str == "r") {
-        logger.info("Forcing rebuild");
+        logger.cln().info("Forcing rebuild");
         enqueueBuild(0);
       }
     });
@@ -116,6 +121,8 @@ class BuildingWatcherAction {
   }
 
   DateTime lastBuild = DateTime(2023);
+  int currentBuild = -1;
+  CancellationToken cancellationToken = CancellationToken();
 
   void enqueueBuild(int step) async {
     if (!mutex.isLocked) {
@@ -125,10 +132,12 @@ class BuildingWatcherAction {
         while (enqueuedBuild != null) {
           var nextStep = enqueuedBuild!;
           enqueuedBuild = null;
+          currentBuild = nextStep;
+          cancellationToken = CancellationToken();
           try {
-            await performBuild(nextStep);
+            await performBuild(nextStep, cancellationToken);
           } catch (error, stack) {
-            logger.err("Failed to rebuild: $error\n$stack");
+            logger.cln().err("Failed to rebuild: $error\n$stack");
           }
         }
       });
@@ -144,6 +153,13 @@ class BuildingWatcherAction {
     } else {
       enqueuedBuild = min(step, enqueuedBuild!);
     }
+
+    if (enqueuedBuild == currentBuild) {
+      // Interrupt
+      logger.cln().info("Interrupting build");
+      cancelController.add(enqueuedBuild!);
+      cancellationToken.cancel();
+    }
   }
 
   bool checkYield(int step) {
@@ -151,38 +167,62 @@ class BuildingWatcherAction {
     return enqueuedBuild! <= step;
   }
 
-  Future performBuild(int stage) async {
-    logger.detail("Starting build from $stage");
-    buildStartController.add(stage);
-    var config = readConfig();
+  Future performBuild(int stage, CancellationToken cancellationToken) {
+    var scaffold = BuildScaffold(stage, this, cancellationToken);
+    cancellationToken.attachCancellable(scaffold);
+    return scaffold.run();
+  }
+}
 
+class BuildScaffold with Cancellable {
+
+  int stage;
+  BuildingWatcherAction parent;
+  CancellationToken cancellationToken;
+
+  BuildScaffold(this.stage, this.parent, this.cancellationToken);
+
+  bool hasBeenCancelled = false;
+
+  Future run() async {
+    parent.logger.detail("Starting build from $stage");
+    parent.buildStartController.add(stage);
+    var config = readConfig();
     if (stage <= BuildStages.sharedLibrary) {
       await runBuildRunner(
-          logger,
+          parent.logger,
           getPathFromRoot(config.structure.sharedLibrary).path,
           "shared library",
-          throwOnFail: true);
+          throwOnFail: true, cancellationToken: cancellationToken);
     }
+    if (hasBeenCancelled) return; // Yield
     if (stage <= BuildStages.server) {
       await runBuildRunner(
-          logger, getPathFromRoot(config.structure.server).path, "server",
-          throwOnFail: true);
-      await buildOpenapiDocumentProgress(logger);
+          parent.logger, getPathFromRoot(config.structure.server).path, "server",
+          throwOnFail: true, cancellationToken: cancellationToken);
+      if (hasBeenCancelled) return; // Yield
+      await buildOpenapiDocumentProgress(parent.logger);
     }
-
+    if (hasBeenCancelled) return; // Yield
     var apiDefHash = currentApiDefHash;
-    if (apiDefHash != latestApiDefHash) {
-      await buildGeneratedClient(logger, config, throwOnFail: true);
-      latestApiDefHash = apiDefHash;
+    if (apiDefHash != parent.latestApiDefHash) {
+      await buildGeneratedClient(parent.logger, config, throwOnFail: true, cancellationToken: cancellationToken);
+      parent.latestApiDefHash = apiDefHash;
     }
-
+    if (hasBeenCancelled) return; // Yield
     if (stage <= BuildStages.application) {
-      await runBuildRunner(logger,
+      await runBuildRunner(parent.logger,
           getPathFromRoot(config.structure.application).path, "application",
-          throwOnFail: true);
+          throwOnFail: true, cancellationToken: cancellationToken);
     }
+    if (hasBeenCancelled) return; // Yield
+    parent.logger.success("Completed build from $stage");
+    parent.buildController.add(stage);
+  }
 
-    logger.success("Completed build from $stage");
-    buildController.add(stage);
+  @override
+  void onCancel(Exception cancelException) {
+    hasBeenCancelled = true;
+    super.onCancel(cancelException);
   }
 }

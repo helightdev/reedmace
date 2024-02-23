@@ -6,7 +6,7 @@ import 'package:shelf/shelf.dart';
 
 export 'interceptors/head.dart';
 export 'interceptors/cors.dart';
-export 'interceptors/auth.dart';
+export 'features/auth.dart';
 
 enum InterceptorType {
   before,

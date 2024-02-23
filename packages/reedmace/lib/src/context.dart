@@ -47,12 +47,5 @@ class RequestContext {
   }
 
   void set<T>(T value, {Object? key}) => _contextData[key ?? T] = value;
-
   //endregion
-
-  static RequestContext fromRequest(Reedmace reedmace, Request request,
-      RouteRegistration registration, Params params) {
-    return RequestContext(
-        reedmace, params, request.url.queryParameters, request, registration);
-  }
 }

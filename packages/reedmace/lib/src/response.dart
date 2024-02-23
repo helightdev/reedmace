@@ -24,6 +24,8 @@ sealed class Res<T> with TypeCaptureMixin<T> {
   factory Res.error(int statusCode, String message,
           {Map<String, String>? headers}) =>
       ErrorRes<T>(message, statusCode, headers);
+
+  static QualifiedTypeTree tree<T>() => QualifiedTypeTree.arg1<Res<T>, Res, T>();
 }
 
 class HttpExceptions {

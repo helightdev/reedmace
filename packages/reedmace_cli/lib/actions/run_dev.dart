@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:canister/canister.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mutex/mutex.dart';
 import 'package:reedmace_cli/command.dart';
@@ -13,7 +15,7 @@ class RunDevAction {
   RunDevAction(this.logger);
 
   Mutex mutex = Mutex();
-  List<Process> processes = [];
+  List<Lazy<int>> processKillers = [];
   bool isEnqueued = false;
 
   void enqueueRestart() async {
@@ -22,7 +24,7 @@ class RunDevAction {
         isEnqueued = true;
         while (isEnqueued) {
           isEnqueued = false;
-          await killAll();
+          await killAll(true);
           await Future.delayed(Duration(milliseconds: 50));
           await run();
         }
@@ -35,14 +37,12 @@ class RunDevAction {
     killAll();
   }
 
-  Future<void> killAll() async {
-    var waitForAllExit = Future.wait(processes.map((e) => e.exitCode));
-    for (var process in processes) {
-      var success = process.kill();
-      logger.detail("Killing server: $success");
+  Future<void> killAll([bool clear = false]) async {
+    for (var killer in processKillers) {
+      var success = await killer.value;
+      logger.detail("Killed server: $success");
     }
-    await waitForAllExit;
-    processes.clear();
+    if (clear) processKillers.clear();
     logger.detail("All servers killed");
   }
 
@@ -56,7 +56,7 @@ class RunDevAction {
     var config = readConfig();
     var serverPath = getPathFromRoot(config.structure.server);
 
-    while (processes.isNotEmpty) {
+    while (processKillers.isNotEmpty) {
       await Future.delayed(Duration(milliseconds: 250));
     }
 
@@ -65,17 +65,30 @@ class RunDevAction {
       ["pub", "run", (path.join(serverPath.path, "bin", "server.dart"))],
       workingDirectory: serverPath.path,
     );
-    processes.add(process);
+    processKillers.add(getProcessKiller(process));
+    var outDoneCompleter = Completer();
     process.stdout.listen((event) {
       var lines = utf8.decode(event).trim().split("\n");
       for (var line in lines) {
         logger.moduleInfo("Server", line);
       }
-    });
+    }, onDone: outDoneCompleter.complete);
     process.stderr.listen((event) {
       logger.moduleErr("Server", utf8.decode(event).trim());
     });
     var exitCode = await process.exitCode;
     logger.detail("Server exited with code $exitCode");
+    await outDoneCompleter.future;
+    logger.detail("Server stdout closed");
   }
 }
+
+Lazy<int> getProcessKiller(Process process) => Lazy.by(() async {
+      var exitFuture = process.exitCode;
+      print("Killing server");
+      // Send exit command to server since sometimes signals don't get through
+      process.stdin.writeln("exit");
+      process.stdin.flush();
+      process.kill(ProcessSignal.sigterm);
+      return await exitFuture;
+    });

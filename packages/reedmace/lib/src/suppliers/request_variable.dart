@@ -3,6 +3,9 @@ import 'package:recase/recase.dart';
 import 'package:reedmace/reedmace.dart';
 
 class RequestVariableArgumentSupplier extends ArgumentSupplier {
+
+  RequestVariableArgumentSupplier() : super(110);
+
   @override
   ArgumentFactory? supply(
       MethodArgument argument, Reedmace reedmace, RouteDefinition definition) {
@@ -14,32 +17,6 @@ class RequestVariableArgumentSupplier extends ArgumentSupplier {
     if (argument.name == r"$catchall") {
       return (context) => context.pathParams.catchall.toList();
     }
-    if (argument.name.startsWith(r"$$")) {
-      var name = argument.name.substring(2).headerCase;
-      return switch (argument.nullable) {
-        true => (context) => context.request.headers[name],
-        false => (context) {
-            var header = context.request.headers[name];
-            if (header == null) {
-              throw HttpExceptions.badRequest("Missing required header $name");
-            }
-            return header;
-          }
-      };
-    } else if (argument.name.startsWith(r"$")) {
-      var name = argument.name.substring(1).snakeCase;
-      return switch (argument.nullable) {
-        true => (context) => context.queryParameters[name],
-        false => (context) {
-            var parameter = context.queryParameters[name];
-            if (parameter == null) {
-              throw HttpExceptions.badRequest(
-                  "Missing required query parameter $name");
-            }
-            return parameter;
-          }
-      };
-    }
     return null;
   }
 
@@ -49,14 +26,6 @@ class RequestVariableArgumentSupplier extends ArgumentSupplier {
     var pathVariables = definition.routeAnnotation.pathVariables;
     if (pathVariables.contains(argument.name)) {
       operation.addParameter(APIParameter.path(argument.name));
-    } else if (argument.name.startsWith(r"$$")) {
-      var name = argument.name.substring(2).headerCase;
-      operation.addParameter(APIParameter.header(name,
-          isRequired: !argument.nullable, schema: APISchemaObject.string()));
-    } else if (argument.name.startsWith(r"$")) {
-      var name = argument.name.substring(1).snakeCase;
-      operation.addParameter(APIParameter.query(name,
-          isRequired: !argument.nullable, schema: APISchemaObject.string()));
     }
   }
 }
