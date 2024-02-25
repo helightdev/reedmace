@@ -37,21 +37,25 @@ class RouteRegistration {
     Response? response;
     // Early interceptor breakout
     for (var interceptor in beforeInterceptors) {
-      var intercepted = await interceptor.intercept(context, null);
-      response = intercepted ?? response;
+      var intercepted = interceptor.intercept(context, response);
+      response = (intercepted is Response?) ? (intercepted ?? response) : (await intercepted ?? response);
     }
     if (response != null) return response;
 
     // Default method invocation
     try {
-      var invoke = await assembler.assembleArguments(context);
-      FutureOr<dynamic> resultFuture = definition.proxy(invoke);
-      var result = await resultFuture;
-      if (result is! Res) {
-        throw Exception(
-            "Result of route ${definition.routeAnnotation.path} is not a Res");
+      var args = await assembler.assembleArguments(context);
+      FutureOr<dynamic> resultFuture = definition.proxy(args);
+      if (resultFuture is Res) {
+        response = resultFuture.build(context);
+      } else {
+        var result = await resultFuture;
+        if (result is! Res) {
+          throw Exception(
+              "Result of route ${definition.routeAnnotation.path} is not a Res");
+        }
+        response = result.build(context);
       }
-      response = result.build(context);
     } on Res catch (e) {
       response = e.build(context);
     } catch (e, st) {
@@ -61,8 +65,8 @@ class RouteRegistration {
 
     // Late interceptor breakout
     for (var interceptor in afterInterceptors) {
-      var intercepted = await interceptor.intercept(context, null);
-      response = intercepted ?? response;
+      var intercepted = interceptor.intercept(context, response);
+      response = (intercepted is Response?) ? (intercepted ?? response) : (await intercepted ?? response);
     }
     return response!;
   }

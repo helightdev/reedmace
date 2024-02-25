@@ -29,23 +29,26 @@ sealed class Res<T> with TypeCaptureMixin<T> {
 }
 
 class HttpExceptions {
-  static Object notFound([String message = ""]) {
+
+  HttpExceptions._();
+
+  static Res<T> notFound<T>([String message = ""]) {
     return Res.error(404, message);
   }
 
-  static Object badRequest([String message = ""]) {
+  static Res<T> badRequest<T>([String message = ""]) {
     return Res.error(400, message);
   }
 
-  static Object unauthorized([String message = ""]) {
+  static Res<T> unauthorized<T>([String message = ""]) {
     return Res.error(401, message);
   }
 
-  static Object forbidden([String message = ""]) {
+  static Res<T> forbidden<T>([String message = ""]) {
     return Res.error(403, message);
   }
 
-  static Object internalServerError([String message = ""]) {
+  static Res<T> internalServerError<T>([String message = ""]) {
     return Res.error(500, message);
   }
 }

@@ -16,6 +16,7 @@ class Reedmace {
   final ReedmaceRouter router = ReedmaceRouter();
   final List<ArgumentSupplier> argumentSuppliers = [
     ReqArgumentSupplier(),
+    ValueReqArgumentSupplier(),
     RequestVariableArgumentSupplier(),
     QueryParamArgumentSupplier(),
     HeaderParamArgumentSupplier(),

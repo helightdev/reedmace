@@ -21,7 +21,7 @@ class DefinitionBuilder extends SimpleAdapter<Route> {
     descriptor.meta["build"] = Uuid().v4();
 
     var futureTypeChecker = TypeChecker.fromRuntime(Future);
-    var reqChecker = TypeChecker.fromRuntime(Req);
+    var reqChecker = TypeChecker.fromRuntime(ReqBase);
     var resChecker = TypeChecker.fromRuntime(Res);
 
     var dataList = [];

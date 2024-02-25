@@ -3,8 +3,9 @@ import 'package:shared/models.dart';
 
 @GET('/sync')
 Res<String> sync(Req req) {
-  return Res.content("Hello World!");
+  return Res.ok("Hello World!");
 }
+
 
 @GET('/test')
 Future<Res<String>> getTest(Req req) async {
@@ -44,9 +45,8 @@ Future<Res<Person>> getPerson(Req req) async {
 }
 
 @POST('/person/name')
-Future<Res<String>> extractName(Req<Person> req) async {
-  var body = await req.receive();
-  return Res.content(body.name);
+Res<String> extractName(ValReq<Person> req) {
+  return Res.ok(req.value.name);
 }
 
 @GET("/anotherTest")

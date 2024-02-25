@@ -106,7 +106,7 @@ const extractName_descriptor = gen.RouteDefinition(
     [gen1.POST('/person/name')],
     gen.QualifiedTypeTreeN<gen2.Res<gen3.String>, gen2.Res<dynamic>>([gen.QualifiedTerminal<gen3.String>()]),
     [
-      gen.MethodArgument(gen.QualifiedTypeTreeN<gen0.Req<gen5.Person>, gen0.Req<dynamic>>([gen.QualifiedTerminal<gen5.Person>()]), false, 'req', [])
+      gen.MethodArgument(gen.QualifiedTypeTreeN<gen0.ValReq<gen5.Person>, gen0.ValReq<dynamic>>([gen.QualifiedTerminal<gen5.Person>()]), false, 'req', [])
     ],
     _$extractName);
 FutureOr<gen2.Res<gen3.String>> _$extractName(List<dynamic> args) => gen4.extractName(args[0]);
