@@ -1,6 +1,6 @@
 name: reedmace
 description: Easy to use minimalistic web framework for dart
-version: 1.0.0-dev.4
+version: 1.0.0-dev.5
 # repository: https://github.com/my_org/my_repo
 
 environment:

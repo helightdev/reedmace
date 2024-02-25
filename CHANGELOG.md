@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-02-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`reedmace` - `v1.0.0-dev.5`](#reedmace---v100-dev5)
+ - [`reedmace_generator` - `v1.0.0-dev.5`](#reedmace_generator---v100-dev5)
+ - [`reedmace_client_generator` - `v1.0.0-dev.5`](#reedmace_client_generator---v100-dev5)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `reedmace_client_generator` - `v1.0.0-dev.5`
+
+---
+
+#### `reedmace` - `v1.0.0-dev.5`
+
+ - **FEAT**: start docs and some bugfixes and reworks.
+
+#### `reedmace_generator` - `v1.0.0-dev.5`
+
+ - **FEAT**: start docs and some bugfixes and reworks.
+
+
 ## 2024-02-23
 
 ### Changes
