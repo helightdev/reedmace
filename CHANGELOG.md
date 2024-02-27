@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-02-27
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`reedmace_dogs` - `v1.0.0-dev.5`](#reedmace_dogs---v100-dev5)
+
+---
+
+#### `reedmace_dogs` - `v1.0.0-dev.5`
+
+
 ## 2024-02-25
 
 ### Changes
