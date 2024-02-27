@@ -8,7 +8,7 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  dogs_core: ^8.3.0
+  dogs_core: ^9.0.0
   uuid: ^4.3.3
   conduit_open_api: ^4.4.0
   lyell: ^1.1.0
