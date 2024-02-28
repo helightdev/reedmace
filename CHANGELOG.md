@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-02-29
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`reedmace_cli` - `v1.0.0-dev.5`](#reedmace_cli---v100-dev5)
+ - [`reedmace_client` - `v1.0.0-dev.6`](#reedmace_client---v100-dev6)
+ - [`reedmace_client_generator` - `v1.0.0-dev.6`](#reedmace_client_generator---v100-dev6)
+
+---
+
+#### `reedmace_cli` - `v1.0.0-dev.5`
+
+ - **FEAT**: copyable client and named client parameter.
+
+#### `reedmace_client` - `v1.0.0-dev.6`
+
+ - **FEAT**: copyable client and named client parameter.
+
+#### `reedmace_client_generator` - `v1.0.0-dev.6`
+
+ - **FEAT**: copyable client and named client parameter.
+
+
 ## 2024-02-27
 
 ### Changes

@@ -1,3 +1,7 @@
+## 1.0.0-dev.6
+
+ - **FEAT**: copyable client and named client parameter.
+
 ## 1.0.0-dev.5
 
  - Update a dependency to the latest release.

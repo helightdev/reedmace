@@ -1,3 +1,7 @@
+## 1.0.0-dev.6
+
+ - **FEAT**: copyable client and named client parameter.
+
 ## 1.0.0-dev.5
 
  - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.

@@ -1,6 +1,6 @@
 name: reedmace_client_generator
 description: Code generator for the reedmace client library
-version: 1.0.0-dev.5
+version: 1.0.0-dev.6
 # repository: https://github.com/my_org/my_repo
 
 environment:
