@@ -140,6 +140,22 @@ class ReedmaceClient {
   Map<String, String> defaultHeaders = {};
   List<RequestInterceptor> requestInterceptor = [];
 
+  ReedmaceClient copyWith({
+    http.Client? httpClient,
+    SharedLibrary? sharedLibrary,
+    Uri? baseUri,
+    Map<String, String>? defaultHeaders,
+    List<RequestInterceptor>? requestInterceptor,
+    Map<String,String>? additionalHeaders,
+    List<RequestInterceptor>? additionalRequestInterceptors,
+  }) {
+    return ReedmaceClient()
+      ..sharedLibrary = sharedLibrary ?? this.sharedLibrary
+      ..baseUri = baseUri ?? this.baseUri
+      ..defaultHeaders = {...defaultHeaders ?? this.defaultHeaders, ...?additionalHeaders}
+      ..requestInterceptor = [...requestInterceptor ?? this.requestInterceptor, ...?additionalRequestInterceptors];
+  }
+
   Future<http.Request> createRequest(ReedmaceClientMethod method,
       {required Object? body,
       required Encoding? encoding,

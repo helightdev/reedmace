@@ -62,6 +62,7 @@ class ClientBuilder extends Builder {
         namedParameters.add("Encoding? encoding");
         encoding = "encoding";
       }
+      namedParameters.add("ReedmaceClient? client");
 
       var bodyInserts = <String>[];
       for (var element in (opmode.parameters ?? <APIParameter?>[])) {
@@ -128,7 +129,7 @@ static ReedmaceClientMethodInvocation<$returnType> $operationId($parts) {
   ${bodyInserts.join("\n")}
   
   return \$$operationId.createInvocation(
-    client: ReedmaceClient.global,
+    client: client ?? ReedmaceClient.global,
     body: body,
     encoding: $encoding,
     pathParameters: $pathMap,

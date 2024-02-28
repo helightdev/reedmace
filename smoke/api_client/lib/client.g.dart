@@ -131,12 +131,12 @@ class Reedmace {
 
 // Method Invocations
   static ReedmaceClientMethodInvocation<http.Response> getUntypedResponse(
-      {dynamic body, Encoding? encoding}) {
+      {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $getUntypedResponse.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,
         pathParameters: {},
@@ -145,12 +145,12 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen0.String> health(
-      {dynamic body, Encoding? encoding}) {
+      {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $health.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,
         pathParameters: {},
@@ -159,12 +159,12 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen0.String> sync(
-      {dynamic body, Encoding? encoding}) {
+      {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $sync.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,
         pathParameters: {},
@@ -173,12 +173,12 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen0.String> getTest(
-      {dynamic body, Encoding? encoding}) {
+      {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $getTest.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,
         pathParameters: {},
@@ -187,12 +187,12 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen0.String> getUser(String id,
-      {dynamic body, Encoding? encoding}) {
+      {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $getUser.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,
         pathParameters: {'id': id},
@@ -201,14 +201,18 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen0.String> getQuery(
-      {dynamic body, Encoding? encoding, required int $skip, int? $limit}) {
+      {dynamic body,
+      Encoding? encoding,
+      ReedmaceClient? client,
+      required int $skip,
+      int? $limit}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
     queryParameters['skip'] = ($skip).toString();
     if ($limit != null) queryParameters['limit'] = ($limit).toString();
 
     return $getQuery.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,
         pathParameters: {},
@@ -219,6 +223,7 @@ class Reedmace {
   static ReedmaceClientMethodInvocation<gen0.String> getHeaders(
       {dynamic body,
       Encoding? encoding,
+      ReedmaceClient? client,
       required String $$Authorization,
       String? $$A,
       String? $$B}) {
@@ -229,7 +234,7 @@ class Reedmace {
     if ($$B != null) headerParameters['B'] = $$B;
 
     return $getHeaders.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,
         pathParameters: {},
@@ -237,13 +242,13 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> postTest(
-      gen0.String body) {
+  static ReedmaceClientMethodInvocation<gen0.String> postTest(gen0.String body,
+      {ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $postTest.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: null,
         pathParameters: {},
@@ -252,12 +257,13 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen0.String> anotherTest(
-      gen0.String body) {
+      gen0.String body,
+      {ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $anotherTest.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: null,
         pathParameters: {},
@@ -266,12 +272,13 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen0.String> anotherTest2(
-      gen0.String body) {
+      gen0.String body,
+      {ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $anotherTest2.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: null,
         pathParameters: {},
@@ -280,12 +287,13 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen0.String> extractName(
-      gen1.Person body) {
+      gen1.Person body,
+      {ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $extractName.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: null,
         pathParameters: {},
@@ -294,12 +302,12 @@ class Reedmace {
   }
 
   static ReedmaceClientMethodInvocation<gen1.Person> getPerson(
-      {dynamic body, Encoding? encoding}) {
+      {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $getPerson.createInvocation(
-        client: ReedmaceClient.global,
+        client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,
         pathParameters: {},

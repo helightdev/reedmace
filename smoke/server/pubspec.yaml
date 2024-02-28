@@ -9,7 +9,7 @@ environment:
 # Add regular dependencies here.
 dependencies:
   args: ^2.4.2
-  dogs_core: ^8.3.0
+  dogs_core: ^9.0.0
   reedmace: any
   shared:
     path: ../shared

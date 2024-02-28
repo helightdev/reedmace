@@ -13,6 +13,7 @@ class ReedmacePubCommand extends ReedmaceCommand {
 
   ReedmacePubCommand() {
     addSubcommand(ReedmacePubGetCommand());
+    addSubcommand(ReedmacePubUpgradeCommand());
   }
 }
 
@@ -25,35 +26,52 @@ class ReedmacePubGetCommand extends ReedmaceCommand {
 
   @override
   Future<int> run() async {
-    await runPubGet(sharedLibraryDirectory);
-    await runPubGet(serverDirectory);
-    await runPubGet(generatedClientDirectory);
-    await runPubGet(applicationDirectory);
+    await runPub(this, sharedLibraryDirectory, ["get"]);
+    await runPub(this, serverDirectory, ["get"]);
+    await runPub(this, generatedClientDirectory, ["get"]);
+    await runPub(this, applicationDirectory, ["get"]);
     return ExitCode.success.code;
   }
+}
 
-  Future<void> runPubGet(Directory directory) async {
-    var directoryName =
-        directory.uri.pathSegments.where((element) => element.isNotEmpty).last;
-    var progress = logger.interruptibleProgress(
-        "Running pub get in ${styleBold.wrap(directoryName)}");
-    var process = await Process.start("flutter", ["pub", "get"],
-        workingDirectory: directory.path);
-    process.stdout.listen((event) {
-      progress.insert(() => logger.detail(utf8.decode(event).trim()));
-    });
-    process.stderr.listen((event) {
-      progress.insert(() => logger.detail(utf8.decode(event).trim()));
-    });
+class ReedmacePubUpgradeCommand extends ReedmaceCommand {
+  @override
+  String get description => 'Run pub upgrade in all packages';
 
-    var pubExitCode = await process.exitCode;
-    if (pubExitCode != 0) {
-      flagFailGlobal();
-      progress.fail(
-          "Failed to resolve dependencies for ${styleBold.wrap(directoryName)}");
-    } else {
-      progress.complete(
-          "Finished resolving dependencies for ${styleBold.wrap(directoryName)}");
-    }
+  @override
+  String get name => 'upgrade';
+
+  @override
+  Future<int> run() async {
+    await runPub(this, sharedLibraryDirectory, ["upgrade"]);
+    await runPub(this, serverDirectory, ["upgrade"]);
+    await runPub(this, generatedClientDirectory, ["upgrade"]);
+    await runPub(this, applicationDirectory, ["upgrade"]);
+    return ExitCode.success.code;
+  }
+}
+
+Future<void> runPub(ReedmaceCommand command, Directory directory, List<String> subcommand) async {
+  var directoryName =
+      directory.uri.pathSegments.where((element) => element.isNotEmpty).last;
+  var progress = command.logger.interruptibleProgress(
+      "Running ${subcommand.join(" ")} get in ${styleBold.wrap(directoryName)}");
+  var process = await Process.start("flutter", ["pub", ...subcommand],
+      workingDirectory: directory.path);
+  process.stdout.listen((event) {
+    progress.insert(() => command.logger.detail(utf8.decode(event).trim()));
+  });
+  process.stderr.listen((event) {
+    progress.insert(() => command.logger.detail(utf8.decode(event).trim()));
+  });
+
+  var pubExitCode = await process.exitCode;
+  if (pubExitCode != 0) {
+    command.flagFailGlobal();
+    progress.fail(
+        "Failed to resolve dependencies for ${styleBold.wrap(directoryName)}");
+  } else {
+    progress.complete(
+        "Finished resolving dependencies for ${styleBold.wrap(directoryName)}");
   }
 }

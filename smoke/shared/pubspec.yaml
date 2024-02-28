@@ -8,7 +8,7 @@ environment:
 # Add regular dependencies here.
 dependencies:
   dio: ^5.4.0
-  dogs_core: ^8.3.0
+  dogs_core: ^9.0.0
 
   reedmace_shared: any
   reedmace_dogs: any
