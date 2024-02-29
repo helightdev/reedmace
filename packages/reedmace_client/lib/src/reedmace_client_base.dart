@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:lyell/lyell.dart';
+import 'package:reedmace_client/reedmace_client.dart';
 import 'package:reedmace_client/src/future.dart';
 import 'package:reedmace_shared/reedmace_shared.dart';
 import 'package:http/http.dart' as http;
@@ -82,19 +83,10 @@ class ReedmaceClientMethodInvocation<T> with FutureMixin<T> {
         pathParameters: pathParameters,
         queryParameters: queryParameters,
         headerParameters: headerParameters);
-    if (value == null) {
+    if (null is! T && value == null) {
       throw HttpClientException(404, "Response was empty");
     }
-    return value;
-  }
-
-  Future<T?> execOrNoContent() async {
-    return await method.send(client,
-        body: body,
-        encoding: encoding,
-        pathParameters: pathParameters,
-        queryParameters: queryParameters,
-        headerParameters: headerParameters);
+    return value as T;
   }
 
   ReedmaceClientMethodInvocation copyWith({
@@ -123,6 +115,8 @@ class ReedmaceClientMethodInvocation<T> with FutureMixin<T> {
   Future<T> get future => _future ??= exec();
 }
 
+typedef HttpExceptionHandler = dynamic Function(HttpClientException e);
+
 class ReedmaceClient {
   static ReedmaceClient global = ReedmaceClient();
 
@@ -139,6 +133,7 @@ class ReedmaceClient {
   Uri baseUri = Uri.http("localhost:8080");
   Map<String, String> defaultHeaders = {};
   List<RequestInterceptor> requestInterceptor = [];
+  HttpExceptionHandler? exceptionHandler;
 
   ReedmaceClient copyWith({
     http.Client? httpClient,
@@ -148,12 +143,14 @@ class ReedmaceClient {
     List<RequestInterceptor>? requestInterceptor,
     Map<String,String>? additionalHeaders,
     List<RequestInterceptor>? additionalRequestInterceptors,
+    HttpExceptionHandler? exceptionHandler,
   }) {
     return ReedmaceClient()
       ..sharedLibrary = sharedLibrary ?? this.sharedLibrary
       ..baseUri = baseUri ?? this.baseUri
       ..defaultHeaders = {...defaultHeaders ?? this.defaultHeaders, ...?additionalHeaders}
-      ..requestInterceptor = [...requestInterceptor ?? this.requestInterceptor, ...?additionalRequestInterceptors];
+      ..requestInterceptor = [...requestInterceptor ?? this.requestInterceptor, ...?additionalRequestInterceptors]
+      ..exceptionHandler = exceptionHandler ?? this.exceptionHandler;
   }
 
   Future<http.Request> createRequest(ReedmaceClientMethod method,
@@ -161,7 +158,8 @@ class ReedmaceClient {
       required Encoding? encoding,
       required Map<String, String> pathParameters,
       required Map<String, String> queryParameters,
-      required Map<String, String> headerParameters}) async {
+      required Map<String, String> headerParameters,
+      }) async {
     var path = method.path;
     for (var entry in pathParameters.entries) {
       path = path.replaceFirst("{${entry.key}}", entry.value);
@@ -208,14 +206,19 @@ class ReedmaceClient {
     if (streamedResponse.statusCode < 200 ||
         streamedResponse.statusCode >= 300) {
       var contentType = streamedResponse.headers['content-type'];
+      HttpClientException e;
       if (contentType == "application/problem+json") {
         var errorBody = await streamedResponse.stream.bytesToString();
         var errorJson = jsonDecode(errorBody);
-        throw HttpClientException(streamedResponse.statusCode, errorJson["error"]);
+        e = HttpClientException(streamedResponse.statusCode, errorJson["error"]);
       } else {
-        throw HttpClientException(streamedResponse.statusCode,
+        e = HttpClientException(streamedResponse.statusCode,
             "Request failed with status code ${streamedResponse.statusCode} and reason '${streamedResponse.reasonPhrase}'");
       }
+      if (exceptionHandler != null) {
+        exceptionHandler!(e);
+      }
+      throw e;
     }
 
     if (method.hasSchematicResponse) {
