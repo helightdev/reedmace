@@ -1,6 +1,6 @@
 name: reedmace_client
 description: Library used by auto-generated the reedmace client
-version: 1.0.0-dev.6
+version: 1.0.0-dev.7
 # repository: https://github.com/my_org/my_repo
 
 environment:

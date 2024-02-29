@@ -1,3 +1,7 @@
+## 1.0.0-dev.7
+
+ - **FEAT**: error res "problem+json" like handling.
+
 ## 1.0.0-dev.6
 
  - **FEAT**: copyable client and named client parameter.

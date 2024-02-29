@@ -15,6 +15,41 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`reedmace` - `v1.0.0-dev.7`](#reedmace---v100-dev7)
+ - [`reedmace_client` - `v1.0.0-dev.7`](#reedmace_client---v100-dev7)
+ - [`reedmace_client_generator` - `v1.0.0-dev.8`](#reedmace_client_generator---v100-dev8)
+ - [`reedmace_generator` - `v1.0.0-dev.7`](#reedmace_generator---v100-dev7)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `reedmace_client_generator` - `v1.0.0-dev.8`
+ - `reedmace_generator` - `v1.0.0-dev.7`
+
+---
+
+#### `reedmace` - `v1.0.0-dev.7`
+
+ - **FEAT**: error res "problem+json" like handling.
+
+#### `reedmace_client` - `v1.0.0-dev.7`
+
+ - **FEAT**: error res "problem+json" like handling.
+
+
+## 2024-02-29
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`reedmace` - `v1.0.0-dev.6`](#reedmace---v100-dev6)
  - [`reedmace_client_generator` - `v1.0.0-dev.7`](#reedmace_client_generator---v100-dev7)
  - [`reedmace_generator` - `v1.0.0-dev.6`](#reedmace_generator---v100-dev6)
