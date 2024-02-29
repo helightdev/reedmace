@@ -1,3 +1,7 @@
+## 1.0.0-dev.6
+
+ - **FIX**: gracefully handle 500 and no content.
+
 ## 1.0.0-dev.5
 
  - **FEAT**: start docs and some bugfixes and reworks.
