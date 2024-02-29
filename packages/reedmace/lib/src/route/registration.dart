@@ -50,7 +50,9 @@ class RouteRegistration {
         response = resultFuture.build(context);
       } else {
         var result = await resultFuture;
-        if (result is! Res) {
+        if (result == null) {
+          response = Res.noContent().build(context);
+        } else if (result is! Res) {
           throw Exception(
               "Result of route ${definition.routeAnnotation.path} is not a Res");
         }
@@ -59,7 +61,7 @@ class RouteRegistration {
     } on Res catch (e) {
       response = e.build(context);
     } catch (e, st) {
-      response = Response.internalServerError();
+      response = HttpExceptions.internalServerError().build(context);
       print("$e:\n$st");
     }
 
