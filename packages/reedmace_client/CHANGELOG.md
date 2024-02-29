@@ -1,3 +1,7 @@
+## 1.0.0-dev.8
+
+ - **FEAT**: add the possibility to add a single error handler in the client to pass errors on to the user.
+
 ## 1.0.0-dev.7
 
  - **FEAT**: error res "problem+json" like handling.
