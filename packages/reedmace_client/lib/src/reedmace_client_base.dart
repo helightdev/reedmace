@@ -207,8 +207,15 @@ class ReedmaceClient {
 
     if (streamedResponse.statusCode < 200 ||
         streamedResponse.statusCode >= 300) {
-      throw HttpClientException(streamedResponse.statusCode,
-          "Request failed with status code ${streamedResponse.reasonPhrase}");
+      var contentType = streamedResponse.headers['content-type'];
+      if (contentType == "application/problem+json") {
+        var errorBody = await streamedResponse.stream.bytesToString();
+        var errorJson = jsonDecode(errorBody);
+        throw HttpClientException(streamedResponse.statusCode, errorJson["error"]);
+      } else {
+        throw HttpClientException(streamedResponse.statusCode,
+            "Request failed with status code ${streamedResponse.statusCode} and reason '${streamedResponse.reasonPhrase}'");
+      }
     }
 
     if (method.hasSchematicResponse) {

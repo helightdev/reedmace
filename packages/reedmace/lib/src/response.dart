@@ -89,11 +89,15 @@ class ErrorRes<T> extends Res<T> {
   Response build(RequestContext context) {
     var headers = <String, Object>{
       ...context.defaultResponseHeaders,
-      ...?this.headers
+      ...?this.headers,
+      "content-type": "application/problem+json"
     };
 
-    return Response(statusCode,
-        body: message, headers: headers, encoding: utf8);
+    Map<String,dynamic> errorBody = {
+      "status": statusCode,
+      "error": message,
+    };
+    return Response(statusCode, body: jsonEncode(errorBody), headers: headers, encoding: utf8);
   }
 }
 
