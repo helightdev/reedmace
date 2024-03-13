@@ -11,7 +11,9 @@ ReedmaceConfig readConfig() {
 @serializable
 class ReedmaceConfig {
   final ReedmaceStructure structure;
-  ReedmaceConfig(this.structure);
+  final DevSettings? dev;
+
+  ReedmaceConfig(this.structure, this.dev);
 }
 
 @serializable
@@ -28,29 +30,10 @@ class ReedmaceStructure {
 }
 
 @serializable
-class ServerConfigSection {
-  String path;
+class DevSettings {
 
-  ServerConfigSection(this.path);
-}
+  @PropertyName("app_build_runner")
+  final bool? appBuildRunner;
 
-@serializable
-class SharedLibraryConfigSection {
-  String path;
-
-  SharedLibraryConfigSection(this.path);
-}
-
-@serializable
-class GeneratedClientConfigSection {
-  String path;
-
-  GeneratedClientConfigSection(this.path);
-}
-
-@serializable
-class ApplicationConfigSection {
-  String path;
-
-  ApplicationConfigSection(this.path);
+  DevSettings(this.appBuildRunner);
 }

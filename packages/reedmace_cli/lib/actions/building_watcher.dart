@@ -16,14 +16,14 @@ import 'package:reedmace_cli/utils/interruptable_progress.dart';
 import 'package:watcher/watcher.dart';
 import 'package:path/path.dart' as path;
 
-Future launchBuildingWatcher(Logger logger) async {
-  var action = BuildingWatcherAction(logger);
+Future launchBuildingWatcher(Logger logger, ReedmaceConfig config) async {
+  var action = BuildingWatcherAction(logger, config);
   await action.launch();
 }
 
-Future launchBuildingWatcherWithCallback(Logger logger,
+Future launchBuildingWatcherWithCallback(Logger logger, ReedmaceConfig config,
     void Function(int) callback, void Function(int) startCallback, void Function(int) cancelCallback) async {
-  var action = BuildingWatcherAction(logger);
+  var action = BuildingWatcherAction(logger, config);
   var subscription = action.buildController.stream.listen(callback);
   var startSubscription =
       action.buildStartController.stream.listen(startCallback);
@@ -41,9 +41,11 @@ class BuildStages {
 }
 
 class BuildingWatcherAction {
+
+  ReedmaceConfig config;
   Logger logger;
 
-  BuildingWatcherAction(this.logger);
+  BuildingWatcherAction(this.logger, this.config);
 
   int? enqueuedBuild = 0;
   Mutex mutex = Mutex();
@@ -205,12 +207,13 @@ class BuildScaffold with Cancellable {
     }
     if (hasBeenCancelled) return; // Yield
     var apiDefHash = currentApiDefHash;
-    if (apiDefHash != parent.latestApiDefHash) {
+    var hasApiChanged = parent.latestApiDefHash != apiDefHash;
+    if (hasApiChanged) {
       await buildGeneratedClient(parent.logger, config, throwOnFail: true, cancellationToken: cancellationToken);
       parent.latestApiDefHash = apiDefHash;
     }
     if (hasBeenCancelled) return; // Yield
-    if (stage <= BuildStages.application) {
+    if (stage <= BuildStages.application && hasApiChanged && (config.dev?.appBuildRunner ?? true)) {
       await runBuildRunner(parent.logger,
           getPathFromRoot(config.structure.application).path, "application",
           throwOnFail: true, cancellationToken: cancellationToken);

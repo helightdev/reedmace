@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:mason_logger/mason_logger.dart';
 import 'package:reedmace_cli/actions/build_openapi.dart';
+import 'package:reedmace_cli/actions/building_watcher.dart';
 import 'package:reedmace_cli/actions/run_buildrunner.dart';
 import 'package:reedmace_cli/command.dart';
 import 'package:reedmace_cli/config.dart';
@@ -27,7 +28,6 @@ class ReedmaceBuildCommand extends ReedmaceCommand {
   Future<int> run() async {
     var config = readConfig();
     var isClean = argResults?["clean"] as bool;
-
     await runBuildRunner(logger, sharedLibraryDirectory.path, "shared library",
         clean: isClean, throwOnFail: true);
     await runBuildRunner(logger, serverDirectory.path, "server",
@@ -37,7 +37,6 @@ class ReedmaceBuildCommand extends ReedmaceCommand {
         clean: isClean, throwOnFail: true);
     await runBuildRunner(logger, applicationDirectory.path, "application",
         clean: isClean, throwOnFail: true);
-
     return ExitCode.success.code;
   }
 }

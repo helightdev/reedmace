@@ -2,6 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, unused_field, unused_import, public_member_api_docs, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
 import 'dart:core';
 import 'package:dogs_core/dogs_core.dart' as gen;
 import 'package:lyell/lyell.dart' as gen;
@@ -9,40 +10,34 @@ import 'package:reedmace_cli/config.dart' as gen0;
 import 'dart:core' as gen1;
 import 'package:reedmace_cli/config.dart';
 
-class ReedmaceConfigConverter
-    extends gen.DefaultStructureConverter<gen0.ReedmaceConfig> {
+class ReedmaceConfigConverter extends gen.DefaultStructureConverter<gen0.ReedmaceConfig> {
   ReedmaceConfigConverter()
       : super(
             struct: const gen.DogStructure<gen0.ReedmaceConfig>(
                 'ReedmaceConfig',
                 gen.StructureConformity.basic,
                 [
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen0.ReedmaceStructure>(),
-                      gen.TypeToken<gen0.ReedmaceStructure>(),
-                      null,
-                      gen.IterableKind.none,
-                      'structure',
-                      false,
-                      true, [])
+                  gen.DogStructureField(gen.QualifiedTerminal<gen0.ReedmaceStructure>(), gen.TypeToken<gen0.ReedmaceStructure>(), null, gen.IterableKind.none, 'structure', false, true, []),
+                  gen.DogStructureField(gen.QualifiedTerminal<gen0.DevSettings>(), gen.TypeToken<gen0.DevSettings>(), null, gen.IterableKind.none, 'dev', true, true, [])
                 ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.ReedmaceConfig>(
-                    _activator, [_$structure], _values)));
+                gen.ObjectFactoryStructureProxy<gen0.ReedmaceConfig>(_activator, [_$structure, _$dev], _values)));
 
   static dynamic _$structure(gen0.ReedmaceConfig obj) => obj.structure;
 
-  static List<dynamic> _values(gen0.ReedmaceConfig obj) => [obj.structure];
+  static dynamic _$dev(gen0.ReedmaceConfig obj) => obj.dev;
+
+  static List<dynamic> _values(gen0.ReedmaceConfig obj) => [obj.structure, obj.dev];
 
   static gen0.ReedmaceConfig _activator(List list) {
-    return gen0.ReedmaceConfig(list[0]);
+    return gen0.ReedmaceConfig(list[0], list[1]);
   }
 }
 
 class ReedmaceConfigBuilder {
   ReedmaceConfigBuilder([gen0.ReedmaceConfig? $src]) {
     if ($src == null) {
-      $values = List.filled(1, null);
+      $values = List.filled(2, null);
     } else {
       $values = ReedmaceConfigConverter._values($src);
       this.$src = $src;
@@ -58,6 +53,12 @@ class ReedmaceConfigBuilder {
   }
 
   gen0.ReedmaceStructure get structure => $values[0];
+
+  set dev(gen0.DevSettings? value) {
+    $values[1] = value;
+  }
+
+  gen0.DevSettings? get dev => $values[1];
 
   gen0.ReedmaceConfig build() {
     var instance = ReedmaceConfigConverter._activator($values);
@@ -82,70 +83,30 @@ extension ReedmaceConfigDogsExtension on gen0.ReedmaceConfig {
   }
 }
 
-class ReedmaceStructureConverter
-    extends gen.DefaultStructureConverter<gen0.ReedmaceStructure> {
+class ReedmaceStructureConverter extends gen.DefaultStructureConverter<gen0.ReedmaceStructure> {
   ReedmaceStructureConverter()
       : super(
             struct: const gen.DogStructure<gen0.ReedmaceStructure>(
                 'ReedmaceStructure',
                 gen.StructureConformity.basic,
                 [
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen1.String>(),
-                      gen.TypeToken<gen1.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'server',
-                      false,
-                      false, []),
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen1.String>(),
-                      gen.TypeToken<gen1.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'shared_library',
-                      false,
-                      false, []),
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen1.String>(),
-                      gen.TypeToken<gen1.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'generated_client',
-                      false,
-                      false, []),
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen1.String>(),
-                      gen.TypeToken<gen1.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'application',
-                      false,
-                      false, [])
+                  gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'server', false, false, []),
+                  gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'shared_library', false, false, []),
+                  gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'generated_client', false, false, []),
+                  gen.DogStructureField(gen.QualifiedTerminal<gen1.String>(), gen.TypeToken<gen1.String>(), null, gen.IterableKind.none, 'application', false, false, [])
                 ],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.ReedmaceStructure>(
-                    _activator,
-                    [
-                      _$server,
-                      _$sharedLibrary,
-                      _$generatedClient,
-                      _$application
-                    ],
-                    _values)));
+                gen.ObjectFactoryStructureProxy<gen0.ReedmaceStructure>(_activator, [_$server, _$sharedLibrary, _$generatedClient, _$application], _values)));
 
   static dynamic _$server(gen0.ReedmaceStructure obj) => obj.server;
 
-  static dynamic _$sharedLibrary(gen0.ReedmaceStructure obj) =>
-      obj.sharedLibrary;
+  static dynamic _$sharedLibrary(gen0.ReedmaceStructure obj) => obj.sharedLibrary;
 
-  static dynamic _$generatedClient(gen0.ReedmaceStructure obj) =>
-      obj.generatedClient;
+  static dynamic _$generatedClient(gen0.ReedmaceStructure obj) => obj.generatedClient;
 
   static dynamic _$application(gen0.ReedmaceStructure obj) => obj.application;
 
-  static List<dynamic> _values(gen0.ReedmaceStructure obj) =>
-      [obj.server, obj.sharedLibrary, obj.generatedClient, obj.application];
+  static List<dynamic> _values(gen0.ReedmaceStructure obj) => [obj.server, obj.sharedLibrary, obj.generatedClient, obj.application];
 
   static gen0.ReedmaceStructure _activator(List list) {
     return gen0.ReedmaceStructure(list[0], list[1], list[2], list[3]);
@@ -213,307 +174,64 @@ extension ReedmaceStructureDogsExtension on gen0.ReedmaceStructure {
   }
 }
 
-class ServerConfigSectionConverter
-    extends gen.DefaultStructureConverter<gen0.ServerConfigSection> {
-  ServerConfigSectionConverter()
+class DevSettingsConverter extends gen.DefaultStructureConverter<gen0.DevSettings> {
+  DevSettingsConverter()
       : super(
-            struct: const gen.DogStructure<gen0.ServerConfigSection>(
-                'ServerConfigSection',
+            struct: const gen.DogStructure<gen0.DevSettings>(
+                'DevSettings',
                 gen.StructureConformity.basic,
-                [
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen1.String>(),
-                      gen.TypeToken<gen1.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'path',
-                      false,
-                      false, [])
-                ],
+                [gen.DogStructureField(gen.QualifiedTerminal<gen1.bool>(), gen.TypeToken<gen1.bool>(), null, gen.IterableKind.none, 'app_build_runner', true, false, [])],
                 [],
-                gen.ObjectFactoryStructureProxy<gen0.ServerConfigSection>(
-                    _activator, [_$path], _values)));
+                gen.ObjectFactoryStructureProxy<gen0.DevSettings>(_activator, [_$appBuildRunner], _values)));
 
-  static dynamic _$path(gen0.ServerConfigSection obj) => obj.path;
+  static dynamic _$appBuildRunner(gen0.DevSettings obj) => obj.appBuildRunner;
 
-  static List<dynamic> _values(gen0.ServerConfigSection obj) => [obj.path];
+  static List<dynamic> _values(gen0.DevSettings obj) => [obj.appBuildRunner];
 
-  static gen0.ServerConfigSection _activator(List list) {
-    return gen0.ServerConfigSection(list[0]);
+  static gen0.DevSettings _activator(List list) {
+    return gen0.DevSettings(list[0]);
   }
 }
 
-class ServerConfigSectionBuilder {
-  ServerConfigSectionBuilder([gen0.ServerConfigSection? $src]) {
+class DevSettingsBuilder {
+  DevSettingsBuilder([gen0.DevSettings? $src]) {
     if ($src == null) {
       $values = List.filled(1, null);
     } else {
-      $values = ServerConfigSectionConverter._values($src);
+      $values = DevSettingsConverter._values($src);
       this.$src = $src;
     }
   }
 
   late List<dynamic> $values;
 
-  gen0.ServerConfigSection? $src;
+  gen0.DevSettings? $src;
 
-  set path(gen1.String value) {
+  set appBuildRunner(gen1.bool? value) {
     $values[0] = value;
   }
 
-  gen1.String get path => $values[0];
+  gen1.bool? get appBuildRunner => $values[0];
 
-  gen0.ServerConfigSection build() {
-    var instance = ServerConfigSectionConverter._activator($values);
+  gen0.DevSettings build() {
+    var instance = DevSettingsConverter._activator($values);
 
     return instance;
   }
 }
 
-extension ServerConfigSectionDogsExtension on gen0.ServerConfigSection {
-  gen0.ServerConfigSection rebuild(Function(ServerConfigSectionBuilder b) f) {
-    var builder = ServerConfigSectionBuilder(this);
+extension DevSettingsDogsExtension on gen0.DevSettings {
+  gen0.DevSettings rebuild(Function(DevSettingsBuilder b) f) {
+    var builder = DevSettingsBuilder(this);
     f(builder);
     return builder.build();
   }
 
-  ServerConfigSectionBuilder toBuilder() {
-    return ServerConfigSectionBuilder(this);
+  DevSettingsBuilder toBuilder() {
+    return DevSettingsBuilder(this);
   }
 
   Map<String, dynamic> toNative() {
-    return gen.dogs.convertObjectToNative(this, gen0.ServerConfigSection);
-  }
-}
-
-class SharedLibraryConfigSectionConverter
-    extends gen.DefaultStructureConverter<gen0.SharedLibraryConfigSection> {
-  SharedLibraryConfigSectionConverter()
-      : super(
-            struct: const gen.DogStructure<gen0.SharedLibraryConfigSection>(
-                'SharedLibraryConfigSection',
-                gen.StructureConformity.basic,
-                [
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen1.String>(),
-                      gen.TypeToken<gen1.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'path',
-                      false,
-                      false, [])
-                ],
-                [],
-                gen.ObjectFactoryStructureProxy<
-                        gen0.SharedLibraryConfigSection>(
-                    _activator, [_$path], _values)));
-
-  static dynamic _$path(gen0.SharedLibraryConfigSection obj) => obj.path;
-
-  static List<dynamic> _values(gen0.SharedLibraryConfigSection obj) =>
-      [obj.path];
-
-  static gen0.SharedLibraryConfigSection _activator(List list) {
-    return gen0.SharedLibraryConfigSection(list[0]);
-  }
-}
-
-class SharedLibraryConfigSectionBuilder {
-  SharedLibraryConfigSectionBuilder([gen0.SharedLibraryConfigSection? $src]) {
-    if ($src == null) {
-      $values = List.filled(1, null);
-    } else {
-      $values = SharedLibraryConfigSectionConverter._values($src);
-      this.$src = $src;
-    }
-  }
-
-  late List<dynamic> $values;
-
-  gen0.SharedLibraryConfigSection? $src;
-
-  set path(gen1.String value) {
-    $values[0] = value;
-  }
-
-  gen1.String get path => $values[0];
-
-  gen0.SharedLibraryConfigSection build() {
-    var instance = SharedLibraryConfigSectionConverter._activator($values);
-
-    return instance;
-  }
-}
-
-extension SharedLibraryConfigSectionDogsExtension
-    on gen0.SharedLibraryConfigSection {
-  gen0.SharedLibraryConfigSection rebuild(
-      Function(SharedLibraryConfigSectionBuilder b) f) {
-    var builder = SharedLibraryConfigSectionBuilder(this);
-    f(builder);
-    return builder.build();
-  }
-
-  SharedLibraryConfigSectionBuilder toBuilder() {
-    return SharedLibraryConfigSectionBuilder(this);
-  }
-
-  Map<String, dynamic> toNative() {
-    return gen.dogs
-        .convertObjectToNative(this, gen0.SharedLibraryConfigSection);
-  }
-}
-
-class GeneratedClientConfigSectionConverter
-    extends gen.DefaultStructureConverter<gen0.GeneratedClientConfigSection> {
-  GeneratedClientConfigSectionConverter()
-      : super(
-            struct: const gen.DogStructure<gen0.GeneratedClientConfigSection>(
-                'GeneratedClientConfigSection',
-                gen.StructureConformity.basic,
-                [
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen1.String>(),
-                      gen.TypeToken<gen1.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'path',
-                      false,
-                      false, [])
-                ],
-                [],
-                gen.ObjectFactoryStructureProxy<
-                        gen0.GeneratedClientConfigSection>(
-                    _activator, [_$path], _values)));
-
-  static dynamic _$path(gen0.GeneratedClientConfigSection obj) => obj.path;
-
-  static List<dynamic> _values(gen0.GeneratedClientConfigSection obj) =>
-      [obj.path];
-
-  static gen0.GeneratedClientConfigSection _activator(List list) {
-    return gen0.GeneratedClientConfigSection(list[0]);
-  }
-}
-
-class GeneratedClientConfigSectionBuilder {
-  GeneratedClientConfigSectionBuilder(
-      [gen0.GeneratedClientConfigSection? $src]) {
-    if ($src == null) {
-      $values = List.filled(1, null);
-    } else {
-      $values = GeneratedClientConfigSectionConverter._values($src);
-      this.$src = $src;
-    }
-  }
-
-  late List<dynamic> $values;
-
-  gen0.GeneratedClientConfigSection? $src;
-
-  set path(gen1.String value) {
-    $values[0] = value;
-  }
-
-  gen1.String get path => $values[0];
-
-  gen0.GeneratedClientConfigSection build() {
-    var instance = GeneratedClientConfigSectionConverter._activator($values);
-
-    return instance;
-  }
-}
-
-extension GeneratedClientConfigSectionDogsExtension
-    on gen0.GeneratedClientConfigSection {
-  gen0.GeneratedClientConfigSection rebuild(
-      Function(GeneratedClientConfigSectionBuilder b) f) {
-    var builder = GeneratedClientConfigSectionBuilder(this);
-    f(builder);
-    return builder.build();
-  }
-
-  GeneratedClientConfigSectionBuilder toBuilder() {
-    return GeneratedClientConfigSectionBuilder(this);
-  }
-
-  Map<String, dynamic> toNative() {
-    return gen.dogs
-        .convertObjectToNative(this, gen0.GeneratedClientConfigSection);
-  }
-}
-
-class ApplicationConfigSectionConverter
-    extends gen.DefaultStructureConverter<gen0.ApplicationConfigSection> {
-  ApplicationConfigSectionConverter()
-      : super(
-            struct: const gen.DogStructure<gen0.ApplicationConfigSection>(
-                'ApplicationConfigSection',
-                gen.StructureConformity.basic,
-                [
-                  gen.DogStructureField(
-                      gen.QualifiedTerminal<gen1.String>(),
-                      gen.TypeToken<gen1.String>(),
-                      null,
-                      gen.IterableKind.none,
-                      'path',
-                      false,
-                      false, [])
-                ],
-                [],
-                gen.ObjectFactoryStructureProxy<gen0.ApplicationConfigSection>(
-                    _activator, [_$path], _values)));
-
-  static dynamic _$path(gen0.ApplicationConfigSection obj) => obj.path;
-
-  static List<dynamic> _values(gen0.ApplicationConfigSection obj) => [obj.path];
-
-  static gen0.ApplicationConfigSection _activator(List list) {
-    return gen0.ApplicationConfigSection(list[0]);
-  }
-}
-
-class ApplicationConfigSectionBuilder {
-  ApplicationConfigSectionBuilder([gen0.ApplicationConfigSection? $src]) {
-    if ($src == null) {
-      $values = List.filled(1, null);
-    } else {
-      $values = ApplicationConfigSectionConverter._values($src);
-      this.$src = $src;
-    }
-  }
-
-  late List<dynamic> $values;
-
-  gen0.ApplicationConfigSection? $src;
-
-  set path(gen1.String value) {
-    $values[0] = value;
-  }
-
-  gen1.String get path => $values[0];
-
-  gen0.ApplicationConfigSection build() {
-    var instance = ApplicationConfigSectionConverter._activator($values);
-
-    return instance;
-  }
-}
-
-extension ApplicationConfigSectionDogsExtension
-    on gen0.ApplicationConfigSection {
-  gen0.ApplicationConfigSection rebuild(
-      Function(ApplicationConfigSectionBuilder b) f) {
-    var builder = ApplicationConfigSectionBuilder(this);
-    f(builder);
-    return builder.build();
-  }
-
-  ApplicationConfigSectionBuilder toBuilder() {
-    return ApplicationConfigSectionBuilder(this);
-  }
-
-  Map<String, dynamic> toNative() {
-    return gen.dogs.convertObjectToNative(this, gen0.ApplicationConfigSection);
+    return gen.dogs.convertObjectToNative(this, gen0.DevSettings);
   }
 }

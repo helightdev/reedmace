@@ -13,7 +13,7 @@ class ReedmaceWatchCommand extends ReedmaceCommand {
 
   @override
   Future<int> run() async {
-    await launchBuildingWatcher(logger);
+    await launchBuildingWatcher(logger, config);
     return ExitCode.success.code;
   }
 }

@@ -24,7 +24,7 @@ class ReedmaceDevCommand extends ReedmaceCommand {
   @override
   Future<int> run() async {
     var runDevAction = RunDevAction(logger);
-    await launchBuildingWatcherWithCallback(logger, (stage) {
+    await launchBuildingWatcherWithCallback(logger, config,(stage) {
       if (stage <= BuildStages.server) {
         runDevAction.enqueueRestart();
       }
