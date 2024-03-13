@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`reedmace_cli` - `v1.0.0-dev.7`](#reedmace_cli---v100-dev7)
+
+---
+
+#### `reedmace_cli` - `v1.0.0-dev.7`
+
+ - **FEAT**: make buildOpenApiDocument cancellable.
+
+
+## 2024-03-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`reedmace_cli` - `v1.0.0-dev.6`](#reedmace_cli---v100-dev6)
 
 ---
