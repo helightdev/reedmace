@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-03-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`reedmace_cli` - `v1.0.0-dev.6`](#reedmace_cli---v100-dev6)
+
+---
+
+#### `reedmace_cli` - `v1.0.0-dev.6`
+
+ - **FEAT**: do not rebuild app if client didn't change and add option to never build the application in watching build modes.
+
+
 ## 2024-02-29
 
 ### Changes

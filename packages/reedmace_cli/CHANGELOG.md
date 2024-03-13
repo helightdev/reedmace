@@ -1,3 +1,7 @@
+## 1.0.0-dev.6
+
+ - **FEAT**: do not rebuild app if client didn't change and add option to never build the application in watching build modes.
+
 ## 1.0.0-dev.5
 
  - **FEAT**: copyable client and named client parameter.
