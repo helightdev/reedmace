@@ -2,14 +2,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:cancellation_token/cancellation_token.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:reedmace_cli/command.dart';
 import 'package:reedmace_cli/config.dart';
 
-Future buildOpenapiDocumentProgress(Logger logger) async {
+Future buildOpenapiDocumentProgress(Logger logger, CancellationToken token) async {
   var progress = logger.progress("Building OpenAPI document");
-  var result = await buildOpenapiDocument();
+  var result = await buildOpenapiDocument(token);
   if (result != null) {
     progress.fail(result);
   } else {
@@ -18,7 +19,7 @@ Future buildOpenapiDocumentProgress(Logger logger) async {
   return result;
 }
 
-Future<String?> buildOpenapiDocument() async {
+Future<String?> buildOpenapiDocument(CancellationToken token) async {
   String? returnMessage;
   var config = readConfig();
   createReedmaceCache();
@@ -45,7 +46,8 @@ Future<String?> buildOpenapiDocument() async {
     var result = await Future.any([
       callbackPort.first,
       exitPort.first,
-      errorsPort.first.then((value) => ErrorWrapper(value))
+      errorsPort.first.then((value) => ErrorWrapper(value)),
+      token.cancellation.then((value) => ErrorWrapper(["Cancelled",StackTrace.current])),
     ]);
     isolate.kill(priority: Isolate.immediate);
 

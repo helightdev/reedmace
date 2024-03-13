@@ -203,7 +203,7 @@ class BuildScaffold with Cancellable {
           parent.logger, getPathFromRoot(config.structure.server).path, "server",
           throwOnFail: true, cancellationToken: cancellationToken);
       if (hasBeenCancelled) return; // Yield
-      await buildOpenapiDocumentProgress(parent.logger);
+      await buildOpenapiDocumentProgress(parent.logger, cancellationToken);
     }
     if (hasBeenCancelled) return; // Yield
     var apiDefHash = currentApiDefHash;

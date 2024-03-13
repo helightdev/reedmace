@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:cancellation_token/cancellation_token.dart';
 import 'package:reedmace_cli/actions/build_openapi.dart';
 import 'package:reedmace_cli/command.dart';
 import 'package:shelf/shelf_io.dart' as io;
@@ -42,7 +43,7 @@ class ReedmaceOpenapiBuildCommand extends ReedmaceCommand {
 
   @override
   Future<int> run() async {
-    await buildOpenapiDocumentProgress(logger);
+    await buildOpenapiDocumentProgress(logger, CancellationToken());
     var specs = await getPathFromRoot(path.join(".reedmace", "api_specs.json"))
         .readAsString();
 
@@ -71,7 +72,7 @@ class ReedmaceOpenapiServeCommand extends ReedmaceCommand {
 
   @override
   Future<int> run() async {
-    await buildOpenapiDocumentProgress(logger);
+    await buildOpenapiDocumentProgress(logger, CancellationToken());
     final specs =
         await getPathFromRoot(path.join(".reedmace", "api_specs.json"))
             .readAsString();

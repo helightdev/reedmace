@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:cancellation_token/cancellation_token.dart';
+import 'package:cancellation_token/cancellation_token.dart';
 import 'package:path/path.dart' as path;
 import 'package:pointycastle/api.dart';
 
@@ -61,3 +64,32 @@ String bin2hex(List<int> data) {
 
 String get currentApiDefHash => combineHashes(
     [readCacheHash("api_specs.json"), readCacheHash("mapping.json")]);
+
+
+extension CancellationTokenExtension on CancellationToken {
+  CallbackCancellable registerCallback(void Function() callback) {
+    var cancellable = CallbackCancellable(callback);
+    attachCancellable(cancellable);
+    return cancellable;
+  }
+  
+  Future get cancellation {
+    var completer = Completer();
+    registerCallback(() {
+      completer.complete();
+    });
+    return completer.future;
+  }
+}
+
+class CallbackCancellable with Cancellable {
+  final void Function() _callback;
+
+  CallbackCancellable(this._callback);
+
+  @override
+  void onCancel(Exception cancelException) {
+    _callback();
+    super.onCancel(cancelException);
+  }
+}

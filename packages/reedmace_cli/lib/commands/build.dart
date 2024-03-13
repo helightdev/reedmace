@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cancellation_token/cancellation_token.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:reedmace_cli/actions/build_openapi.dart';
 import 'package:reedmace_cli/actions/building_watcher.dart';
@@ -32,7 +33,7 @@ class ReedmaceBuildCommand extends ReedmaceCommand {
         clean: isClean, throwOnFail: true);
     await runBuildRunner(logger, serverDirectory.path, "server",
         clean: isClean, throwOnFail: true);
-    await buildOpenapiDocumentProgress(logger);
+    await buildOpenapiDocumentProgress(logger, CancellationToken());
     await buildGeneratedClient(logger, config,
         clean: isClean, throwOnFail: true);
     await runBuildRunner(logger, applicationDirectory.path, "application",
