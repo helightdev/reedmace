@@ -1,3 +1,10 @@
+## 1.0.0-dev.8
+
+ - **FEAT**: start docs and some bugfixes and reworks.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: initial commit.
+
 ## 1.0.0-dev.7
 
  - Update a dependency to the latest release.

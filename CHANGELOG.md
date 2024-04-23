@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-04-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`reedmace` - `v1.0.0-dev.8`](#reedmace---v100-dev8)
+ - [`reedmace_cli` - `v1.0.0-dev.8`](#reedmace_cli---v100-dev8)
+ - [`reedmace_client` - `v1.0.0-dev.9`](#reedmace_client---v100-dev9)
+ - [`reedmace_client_generator` - `v1.0.0-dev.9`](#reedmace_client_generator---v100-dev9)
+ - [`reedmace_dogs` - `v1.0.0-dev.6`](#reedmace_dogs---v100-dev6)
+ - [`reedmace_generator` - `v1.0.0-dev.8`](#reedmace_generator---v100-dev8)
+ - [`reedmace_shared` - `v1.0.0-dev.5`](#reedmace_shared---v100-dev5)
+
+---
+
+#### `reedmace` - `v1.0.0-dev.8`
+
+ - **FIX**: gracefully handle 500 and no content.
+ - **FEAT**: sse support.
+ - **FEAT**: error res "problem+json" like handling.
+ - **FEAT**: start docs and some bugfixes and reworks.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: various updates (not tracking at this point).
+ - **FEAT**: initial commit.
+
+#### `reedmace_cli` - `v1.0.0-dev.8`
+
+ - **FIX**: update brick to reflect cli changes.
+ - **FEAT**: make buildOpenApiDocument cancellable.
+ - **FEAT**: do not rebuild app if client didn't change and add option to never build the application in watching build modes.
+ - **FEAT**: copyable client and named client parameter.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: various updates (not tracking at this point).
+ - **FEAT**: initial commit.
+
+#### `reedmace_client` - `v1.0.0-dev.9`
+
+ - **FEAT**: sse support.
+ - **FEAT**: add the possibility to add a single error handler in the client to pass errors on to the user.
+ - **FEAT**: error res "problem+json" like handling.
+ - **FEAT**: copyable client and named client parameter.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: add request interceptors.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: various updates (not tracking at this point).
+ - **FEAT**: initial commit.
+
+#### `reedmace_client_generator` - `v1.0.0-dev.9`
+
+ - **FEAT**: sse support.
+ - **FEAT**: copyable client and named client parameter.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: initial commit.
+
+#### `reedmace_dogs` - `v1.0.0-dev.6`
+
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: various updates (not tracking at this point).
+ - **FEAT**: initial commit.
+
+#### `reedmace_generator` - `v1.0.0-dev.8`
+
+ - **FEAT**: start docs and some bugfixes and reworks.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: initial commit.
+
+#### `reedmace_shared` - `v1.0.0-dev.5`
+
+ - **FEAT**: sse support.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: initial commit.
+
+
 ## 2024-03-13
 
 ### Changes

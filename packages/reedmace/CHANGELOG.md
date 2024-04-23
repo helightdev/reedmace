@@ -1,3 +1,15 @@
+## 1.0.0-dev.8
+
+ - **FIX**: gracefully handle 500 and no content.
+ - **FEAT**: sse support.
+ - **FEAT**: error res "problem+json" like handling.
+ - **FEAT**: start docs and some bugfixes and reworks.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: various updates (not tracking at this point).
+ - **FEAT**: initial commit.
+
 ## 1.0.0-dev.7
 
  - **FEAT**: error res "problem+json" like handling.

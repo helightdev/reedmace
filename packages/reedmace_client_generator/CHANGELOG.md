@@ -1,3 +1,11 @@
+## 1.0.0-dev.9
+
+ - **FEAT**: sse support.
+ - **FEAT**: copyable client and named client parameter.
+ - **FEAT**: fix cli not killing the process by adding stdin listener for "exit", various refactorings.
+ - **FEAT**: cleanup, cors/auth, major internal rework.
+ - **FEAT**: initial commit.
+
 ## 1.0.0-dev.8
 
  - Update a dependency to the latest release.
