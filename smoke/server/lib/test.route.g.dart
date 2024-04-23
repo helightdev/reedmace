@@ -13,6 +13,7 @@ import 'package:reedmace/src/response.dart' as gen2;
 import 'dart:core' as gen3;
 import 'package:smoke/test.dart' as gen4;
 import 'package:shared/models.dart' as gen5;
+import 'package:reedmace/src/interceptors/sse.dart' as gen6;
 import 'package:smoke/test.dart';
 
 const sync_descriptor = gen.RouteDefinition(
@@ -101,6 +102,16 @@ const getPerson_descriptor = gen.RouteDefinition(
     ],
     _$getPerson);
 FutureOr<gen2.Res<gen5.Person>> _$getPerson(List<dynamic> args) => gen4.getPerson(args[0]);
+const getPersonStream_descriptor = gen.RouteDefinition(
+    'getPersonStream',
+    gen1.POST('/personStream'),
+    [gen1.POST('/personStream'), gen6.sse],
+    gen.QualifiedTypeTreeN<gen2.Res<gen5.Person>, gen2.Res<dynamic>>([gen.QualifiedTerminal<gen5.Person>()]),
+    [
+      gen.MethodArgument(gen.QualifiedTypeTreeN<gen0.Req<dynamic>, gen0.Req<dynamic>>([gen.QualifiedTerminal<dynamic>()]), false, 'req', [])
+    ],
+    _$getPersonStream);
+FutureOr<gen2.Res<gen5.Person>> _$getPersonStream(List<dynamic> args) => gen4.getPersonStream(args[0]);
 const extractName_descriptor = gen.RouteDefinition(
     'extractName',
     gen1.POST('/person/name'),

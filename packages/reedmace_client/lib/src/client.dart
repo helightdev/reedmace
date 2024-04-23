@@ -4,60 +4,16 @@ import 'dart:convert';
 import 'package:lyell/lyell.dart';
 import 'package:reedmace_client/reedmace_client.dart';
 import 'package:reedmace_client/src/future.dart';
+import 'package:reedmace_client/src/sse_response.dart';
 import 'package:reedmace_shared/reedmace_shared.dart';
 import 'package:http/http.dart' as http;
 
 typedef RequestInterceptor = FutureOr<http.Request> Function(
     http.Request request);
+class ReedmaceClientMethodInvocation<T,SERIAL> with FutureMixin<T> {
 
-class ReedmaceClientMethod<T> {
-  final String verb;
-  final String path;
-  final bool hasSchematicBody;
-  final bool hasSchematicResponse;
-  final TypeTree reqBodyType;
-  final TypeTree resBodyType;
-
-  const ReedmaceClientMethod(this.verb, this.path, this.hasSchematicBody,
-      this.hasSchematicResponse, this.reqBodyType, this.resBodyType);
-
-  Future<T?> send(ReedmaceClient client,
-      {required Object? body,
-      required Encoding? encoding,
-      required Map<String, String> pathParameters,
-      required Map<String, String> queryParameters,
-      required Map<String, String> headerParameters}) async {
-    var request = await client.createRequest(this,
-        body: body,
-        encoding: encoding,
-        pathParameters: pathParameters,
-        queryParameters: queryParameters,
-        headerParameters: headerParameters);
-    return await client.sendRequest(request, this) as T?;
-  }
-
-  ReedmaceClientMethodInvocation<T> createInvocation(
-      {required ReedmaceClient client,
-      required Object? body,
-      required Encoding? encoding,
-      required Map<String, String> pathParameters,
-      required Map<String, String> queryParameters,
-      required Map<String, String> headerParameters}) {
-    return ReedmaceClientMethodInvocation(
-      client: client,
-      method: this,
-      body: body,
-      encoding: encoding,
-      pathParameters: pathParameters,
-      queryParameters: queryParameters,
-      headerParameters: headerParameters,
-    );
-  }
-}
-
-class ReedmaceClientMethodInvocation<T> with FutureMixin<T> {
   final ReedmaceClient client;
-  final ReedmaceClientMethod<T> method;
+  final ReedmaceClientMethod<T,SERIAL> method;
 
   // Request Args
   final Object? body;
@@ -89,9 +45,18 @@ class ReedmaceClientMethodInvocation<T> with FutureMixin<T> {
     return value as T;
   }
 
+  Future<http.Request> createRequest() {
+    return client.createRequest(method,
+        body: body,
+        encoding: encoding,
+        pathParameters: pathParameters,
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
   ReedmaceClientMethodInvocation copyWith({
     ReedmaceClient? client,
-    ReedmaceClientMethod<T>? method,
+    ReedmaceClientMethod<T, SERIAL>? method,
     Object? body,
     Encoding? encoding,
     Map<String, String>? pathParameters,
@@ -141,25 +106,32 @@ class ReedmaceClient {
     Uri? baseUri,
     Map<String, String>? defaultHeaders,
     List<RequestInterceptor>? requestInterceptor,
-    Map<String,String>? additionalHeaders,
+    Map<String, String>? additionalHeaders,
     List<RequestInterceptor>? additionalRequestInterceptors,
     HttpExceptionHandler? exceptionHandler,
   }) {
     return ReedmaceClient()
       ..sharedLibrary = sharedLibrary ?? this.sharedLibrary
       ..baseUri = baseUri ?? this.baseUri
-      ..defaultHeaders = {...defaultHeaders ?? this.defaultHeaders, ...?additionalHeaders}
-      ..requestInterceptor = [...requestInterceptor ?? this.requestInterceptor, ...?additionalRequestInterceptors]
+      ..defaultHeaders = {
+        ...defaultHeaders ?? this.defaultHeaders,
+        ...?additionalHeaders
+      }
+      ..requestInterceptor = [
+        ...requestInterceptor ?? this.requestInterceptor,
+        ...?additionalRequestInterceptors
+      ]
       ..exceptionHandler = exceptionHandler ?? this.exceptionHandler;
   }
 
-  Future<http.Request> createRequest(ReedmaceClientMethod method,
-      {required Object? body,
-      required Encoding? encoding,
-      required Map<String, String> pathParameters,
-      required Map<String, String> queryParameters,
-      required Map<String, String> headerParameters,
-      }) async {
+  Future<http.Request> createRequest(
+    ReedmaceClientMethod method, {
+    required Object? body,
+    required Encoding? encoding,
+    required Map<String, String> pathParameters,
+    required Map<String, String> queryParameters,
+    required Map<String, String> headerParameters,
+  }) async {
     var path = method.path;
     for (var entry in pathParameters.entries) {
       path = path.replaceFirst("{${entry.key}}", entry.value);
@@ -210,7 +182,8 @@ class ReedmaceClient {
       if (contentType == "application/problem+json") {
         var errorBody = await streamedResponse.stream.bytesToString();
         var errorJson = jsonDecode(errorBody);
-        e = HttpClientException(streamedResponse.statusCode, errorJson["error"]);
+        e = HttpClientException(
+            streamedResponse.statusCode, errorJson["error"]);
       } else {
         e = HttpClientException(streamedResponse.statusCode,
             "Request failed with status code ${streamedResponse.statusCode} and reason '${streamedResponse.reasonPhrase}'");
@@ -221,12 +194,27 @@ class ReedmaceClient {
       throw e;
     }
 
+    var contentType = streamedResponse.headers['content-type'];
     if (method.hasSchematicResponse) {
       if (streamedResponse.statusCode == 204) {
         return null;
       }
+      if (contentType == "text/event-stream") {
+        return method.serialType.consumeType<Stream>(<A>() {
+          Stream<A> createStream() async* {
+            await for (var event in sseStreamFromResponse(streamedResponse)) {
+              yield await resBodySerializer.deserialize(Stream.value(utf8.encode(event.data)));
+            }
+          }
+          return createStream();
+        });
+      }
+
       return await resBodySerializer.deserialize(streamedResponse.stream);
     } else {
+      if (contentType == "text/event-stream") {
+        return sseStreamFromResponse(streamedResponse);
+      }
       return await http.Response.fromStream(streamedResponse);
     }
   }
@@ -237,4 +225,10 @@ class HttpClientException implements Exception {
   final String message;
 
   HttpClientException(this.statusCode, this.message);
+}
+
+extension StreamFutureExtension<T> on ReedmaceClientMethodInvocation<Stream<T>, T> {
+  Stream<T> unwrap() async* {
+    yield* await this;
+  }
 }

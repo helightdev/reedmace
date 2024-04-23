@@ -12,6 +12,7 @@ import 'package:reedmace/src/annotations.dart' as gen1;
 import 'package:reedmace/src/response.dart' as gen2;
 import 'dart:core' as gen3;
 import 'package:smoke/health.dart' as gen4;
+import 'package:reedmace/src/interceptors/sse.dart' as gen5;
 import 'package:smoke/health.dart';
 
 const health_descriptor = gen.RouteDefinition(
@@ -24,3 +25,13 @@ const health_descriptor = gen.RouteDefinition(
     ],
     _$health);
 FutureOr<gen2.Res<gen3.String>> _$health(List<dynamic> args) => gen4.health(args[0]);
+const healthStream_descriptor = gen.RouteDefinition(
+    'healthStream',
+    gen1.GET('/health-stream'),
+    [gen1.GET('/health-stream'), gen5.sse],
+    gen.QualifiedTypeTreeN<gen2.Res<dynamic>, gen2.Res<dynamic>>([gen.QualifiedTerminal<dynamic>()]),
+    [
+      gen.MethodArgument(gen.QualifiedTypeTreeN<gen0.Req<dynamic>, gen0.Req<dynamic>>([gen.QualifiedTerminal<dynamic>()]), false, 'req', [])
+    ],
+    _$healthStream);
+FutureOr<gen2.Res<dynamic>> _$healthStream(List<dynamic> args) => gen4.healthStream(args[0]);

@@ -27,6 +27,7 @@ class ClientBuilder extends Builder {
       AliasImport("dart:convert", null),
       AliasImport("package:dio/dio.dart", null),
       AliasImport("package:reedmace_client/reedmace_client.dart", null),
+      AliasImport("package:reedmace_shared/reedmace_shared.dart", null),
       AliasImport("package:http/http.dart", "http"),
       AliasImport.gen("package:lyell/lyell.dart"),
     ];
@@ -107,13 +108,27 @@ class ClientBuilder extends Builder {
 
       final pathMap = "{${pathParams.map((e) => "'${sqsLiteralEscape(e)}': $e").join(",")}}";
 
-      var returnType = switch (returns is DynamicType) {
-        true => "http.Response",
+      var isSseStream = opmode.responses?["200"]?.content?.keys.contains("text/event-stream") ?? false;
+
+      String serial = switch (returns is DynamicType) {
+        true => "dynamic",
         false => cachedCounter.get(returns)
       };
+      String returnType;
+      if (isSseStream) {
+        returnType = "Stream<${switch (returns is DynamicType) {
+          true => "SseChunk",
+          false => cachedCounter.get(returns)
+        }}>";
+      } else {
+        returnType = switch (returns is DynamicType) {
+          true => "http.Response",
+          false => cachedCounter.get(returns)
+        };
+      }
 
       methodBuffer.writeln("""
-static const ReedmaceClientMethod<$returnType> \$$operationId = ReedmaceClientMethod(
+static const ReedmaceClientMethod<$returnType,$serial> \$$operationId = ReedmaceClientMethod(
   '${sqsLiteralEscape(verb.toUpperCase())}', '${sqsLiteralEscape(path)}',
   ${takes is DynamicType ? "false" : "true"},
   ${returns is DynamicType ? "false" : "true"},
@@ -123,7 +138,7 @@ static const ReedmaceClientMethod<$returnType> \$$operationId = ReedmaceClientMe
 """);
 
       invocationBuffer.writeln("""
-static ReedmaceClientMethodInvocation<$returnType> $operationId($parts) {
+static ReedmaceClientMethodInvocation<$returnType, $serial> $operationId($parts) {
   var queryParameters = <String,String>{};
   var headerParameters = <String,String>{};
   ${bodyInserts.join("\n")}

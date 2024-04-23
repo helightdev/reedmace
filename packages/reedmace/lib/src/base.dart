@@ -24,7 +24,8 @@ class Reedmace {
   ];
   final List<RegistrationInterceptor> registrationInterceptors = [
     AutomaticHeadInterceptor(),
-    CorsRegistrationInterceptor()
+    CorsRegistrationInterceptor(),
+    SseInterceptor()
   ];
   final List<StartupHookFunction> startupFunctions = [];
   SharedLibrary? _sharedLibrary;

@@ -14,4 +14,11 @@ Future main() async {
   print(await Reedmace.getPerson());
   print(await Reedmace.extractName(Person("Mannie", 60, "mammoth")));
   print(await Reedmace.anotherTest("body"));
+
+  await for (var event in Reedmace.healthStream().unwrap()) {
+    print(event);
+  }
+  await for (var event in Reedmace.getPersonStream().unwrap()) {
+    print(event);
+  }
 }

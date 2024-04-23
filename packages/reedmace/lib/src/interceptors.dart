@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:conduit_open_api/v3.dart';
 import 'package:glob/glob.dart';
 import 'package:reedmace/reedmace.dart';
 import 'package:shelf/shelf.dart';
@@ -7,6 +8,7 @@ import 'package:shelf/shelf.dart';
 export 'interceptors/head.dart';
 export 'interceptors/cors.dart';
 export 'features/auth.dart';
+export 'interceptors/sse.dart';
 
 enum InterceptorType {
   before,
@@ -34,6 +36,11 @@ abstract class RegistrationInterceptor {
   RegistrationInterceptor restrictedTo(String pathGlob) {
     return RestrictedInterceptor(this, Glob(pathGlob));
   }
+
+  void modifyApiOperation(Reedmace reedmace, RouteDefinition definition, APIOperation operation) {}
+
+  void modifyDefaultResponse(Reedmace reedmace, RouteDefinition definition, APIResponse response) {}
+
 }
 
 class RestrictedInterceptor extends RegistrationInterceptor {

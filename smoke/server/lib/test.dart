@@ -44,6 +44,15 @@ Future<Res<Person>> getPerson(Req req) async {
   return Res.content(Person("Alex", 25, "male"));
 }
 
+@POST('/personStream')
+@sse Res<Person> getPersonStream(Req req) {
+  return Res.sse(create: () async* {
+    yield Person("Alex", 25, "male");
+    await Future.delayed(Duration(seconds: 1));
+    yield Person("Emily", 30, "female");
+  });
+}
+
 @POST('/person/name')
 Res<String> extractName(ValReq<Person> req) {
   return Res.ok(req.value.name);

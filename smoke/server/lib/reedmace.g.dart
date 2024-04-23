@@ -11,10 +11,11 @@ import 'package:reedmace/reedmace.dart' as gen;
 import 'package:smoke/health.route.g.dart' as gen0;
 import 'package:smoke/test.route.g.dart' as gen1;
 
-const String _incrementalBuildId = "df8f6a69-b82a-46bd-9960-a9b660c22fcf";
+const String _incrementalBuildId = "4475beb7-b759-4f70-9a2e-ae7089159447";
 
 const generatedRoutes = [
   gen0.health_descriptor,
+  gen0.healthStream_descriptor,
   gen1.sync_descriptor,
   gen1.getTest_descriptor,
   gen1.postTest_descriptor,
@@ -23,6 +24,7 @@ const generatedRoutes = [
   gen1.getHeaders_descriptor,
   gen1.getUntypedResponse_descriptor,
   gen1.getPerson_descriptor,
+  gen1.getPersonStream_descriptor,
   gen1.extractName_descriptor,
   gen1.anotherTest_descriptor,
   gen1.anotherTest2_descriptor

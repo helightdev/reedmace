@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:reedmace_client/reedmace_client.dart';
+import 'package:reedmace_shared/reedmace_shared.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyell/lyell.dart' as gen;
 import 'dart:core' as gen0;
@@ -11,8 +12,18 @@ class Reedmace {
   Reedmace._();
 
 // Method Definitions
-  static const ReedmaceClientMethod<http.Response> $getUntypedResponse =
+  static const ReedmaceClientMethod<Stream<SseChunk>, dynamic> $healthStream =
       ReedmaceClientMethod(
+    'GET',
+    '/health-stream',
+    false,
+    false,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<dynamic>(),
+  );
+
+  static const ReedmaceClientMethod<http.Response, dynamic>
+      $getUntypedResponse = ReedmaceClientMethod(
     'POST',
     '/untyped',
     false,
@@ -21,7 +32,8 @@ class Reedmace {
     gen.QualifiedTerminal<dynamic>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $health = ReedmaceClientMethod(
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $health =
+      ReedmaceClientMethod(
     'GET',
     '/health',
     false,
@@ -30,7 +42,8 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $sync = ReedmaceClientMethod(
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $sync =
+      ReedmaceClientMethod(
     'GET',
     '/sync',
     false,
@@ -39,7 +52,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $getTest =
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $getTest =
       ReedmaceClientMethod(
     'GET',
     '/test',
@@ -49,7 +62,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $getUser =
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $getUser =
       ReedmaceClientMethod(
     'GET',
     '/user/{id}',
@@ -59,7 +72,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $getQuery =
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $getQuery =
       ReedmaceClientMethod(
     'GET',
     '/query',
@@ -69,7 +82,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $getHeaders =
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $getHeaders =
       ReedmaceClientMethod(
     'GET',
     '/headers',
@@ -79,7 +92,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $postTest =
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $postTest =
       ReedmaceClientMethod(
     'POST',
     '/test',
@@ -89,7 +102,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $anotherTest =
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $anotherTest =
       ReedmaceClientMethod(
     'GET',
     '/anotherTest',
@@ -99,7 +112,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $anotherTest2 =
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $anotherTest2 =
       ReedmaceClientMethod(
     'GET',
     '/anotherTest2',
@@ -109,7 +122,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen0.String> $extractName =
+  static const ReedmaceClientMethod<gen0.String, gen0.String> $extractName =
       ReedmaceClientMethod(
     'POST',
     '/person/name',
@@ -119,7 +132,7 @@ class Reedmace {
     gen.QualifiedTerminal<gen0.String>(),
   );
 
-  static const ReedmaceClientMethod<gen1.Person> $getPerson =
+  static const ReedmaceClientMethod<gen1.Person, gen1.Person> $getPerson =
       ReedmaceClientMethod(
     'GET',
     '/person',
@@ -129,9 +142,34 @@ class Reedmace {
     gen.QualifiedTerminal<gen1.Person>(),
   );
 
+  static const ReedmaceClientMethod<Stream<gen1.Person>, gen1.Person>
+      $getPersonStream = ReedmaceClientMethod(
+    'POST',
+    '/personStream',
+    false,
+    true,
+    gen.QualifiedTerminal<dynamic>(),
+    gen.QualifiedTerminal<gen1.Person>(),
+  );
+
 // Method Invocations
-  static ReedmaceClientMethodInvocation<http.Response> getUntypedResponse(
+  static ReedmaceClientMethodInvocation<Stream<SseChunk>, dynamic> healthStream(
       {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+
+    return $healthStream.createInvocation(
+        client: client ?? ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<http.Response, dynamic>
+      getUntypedResponse(
+          {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
@@ -144,7 +182,7 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> health(
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> health(
       {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
@@ -158,7 +196,7 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> sync(
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> sync(
       {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
@@ -172,7 +210,7 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> getTest(
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> getTest(
       {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
@@ -186,8 +224,11 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> getUser(String id,
-      {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> getUser(
+      String id,
+      {dynamic body,
+      Encoding? encoding,
+      ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
@@ -200,7 +241,7 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> getQuery(
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> getQuery(
       {dynamic body,
       Encoding? encoding,
       ReedmaceClient? client,
@@ -220,7 +261,7 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> getHeaders(
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> getHeaders(
       {dynamic body,
       Encoding? encoding,
       ReedmaceClient? client,
@@ -242,7 +283,8 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> postTest(gen0.String body,
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> postTest(
+      gen0.String body,
       {ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
@@ -256,7 +298,7 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> anotherTest(
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> anotherTest(
       gen0.String body,
       {ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
@@ -271,7 +313,7 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> anotherTest2(
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> anotherTest2(
       gen0.String body,
       {ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
@@ -286,7 +328,7 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen0.String> extractName(
+  static ReedmaceClientMethodInvocation<gen0.String, gen0.String> extractName(
       gen1.Person body,
       {ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
@@ -301,12 +343,27 @@ class Reedmace {
         headerParameters: headerParameters);
   }
 
-  static ReedmaceClientMethodInvocation<gen1.Person> getPerson(
+  static ReedmaceClientMethodInvocation<gen1.Person, gen1.Person> getPerson(
       {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
     var queryParameters = <String, String>{};
     var headerParameters = <String, String>{};
 
     return $getPerson.createInvocation(
+        client: client ?? ReedmaceClient.global,
+        body: body,
+        encoding: encoding,
+        pathParameters: {},
+        queryParameters: queryParameters,
+        headerParameters: headerParameters);
+  }
+
+  static ReedmaceClientMethodInvocation<Stream<gen1.Person>, gen1.Person>
+      getPersonStream(
+          {dynamic body, Encoding? encoding, ReedmaceClient? client}) {
+    var queryParameters = <String, String>{};
+    var headerParameters = <String, String>{};
+
+    return $getPersonStream.createInvocation(
         client: client ?? ReedmaceClient.global,
         body: body,
         encoding: encoding,

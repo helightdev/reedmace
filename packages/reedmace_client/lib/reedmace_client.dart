@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library;
 
-export 'src/reedmace_client_base.dart';
+export 'src/client.dart';
+export 'src/method.dart';
 
 // TODO: Export any libraries intended for clients of this package.

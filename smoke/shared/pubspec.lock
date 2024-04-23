@@ -455,21 +455,21 @@ packages:
       path: "../../packages/reedmace"
       relative: true
     source: path
-    version: "1.0.0-dev.5"
+    version: "1.0.0-dev.7"
   reedmace_client:
     dependency: "direct overridden"
     description:
       path: "../../packages/reedmace_client"
       relative: true
     source: path
-    version: "1.0.0-dev.5"
+    version: "1.0.0-dev.8"
   reedmace_client_generator:
     dependency: "direct overridden"
     description:
       path: "../../packages/reedmace_client_generator"
       relative: true
     source: path
-    version: "1.0.0-dev.5"
+    version: "1.0.0-dev.8"
   reedmace_dogs:
     dependency: "direct main"
     description:
@@ -483,7 +483,7 @@ packages:
       path: "../../packages/reedmace_generator"
       relative: true
     source: path
-    version: "1.0.0-dev.5"
+    version: "1.0.0-dev.7"
   reedmace_shared:
     dependency: "direct main"
     description:

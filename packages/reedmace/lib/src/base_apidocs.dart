@@ -44,11 +44,20 @@ extension ApiDocExtension on Reedmace {
           bodySerializer.getSchema() ?? APISchemaObject.freeForm()),
     };
 
+
+    for (var element in registrationInterceptors) {
+      element.modifyDefaultResponse(this, definition, response);
+    }
+
     var operation = APIOperation(definition.functionName, {
       "200": response,
     });
 
     operation.extensions["x-response-identifier"] = bodySerializer.identifier;
+
+    for (var element in registrationInterceptors) {
+      element.modifyApiOperation(this, definition, operation);
+    }
 
     for (var (i, supplier) in registration.assemblerSuppliers.indexed) {
       var argument = registration.definition.arguments[i];
